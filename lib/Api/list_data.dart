@@ -24,6 +24,10 @@ class ListData {
         color: json['color'],
         pantone_value: json['pantone_value']);
   }
+  @override
+  String toString() {
+    return 'ListData{id: $id, name: $name, year: $year, color: $color, pantone_value: $pantone_value}';
+  }
 
   static Future<List<ListData>> connectToAPI() async {
     Uri apiUrl = Uri.parse("https://reqres.in/api/unknown");

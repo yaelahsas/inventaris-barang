@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:inventaris_barang/Api/list_data.dart';
 import 'package:inventaris_barang/constants.dart';
 import 'package:qrscan/qrscan.dart' as scanner;
@@ -83,6 +84,7 @@ class _BarangMasukState extends State<BarangMasuk> {
             SingleChildScrollView(
               scrollDirection: Axis.horizontal,
               child: DataTable(
+                  showCheckboxColumn: false,
                   columnSpacing: 38,
                   sortColumnIndex: _currentSortColumn,
                   sortAscending: _isAscending,
@@ -146,6 +148,16 @@ class _BarangMasukState extends State<BarangMasuk> {
                           DataCell(Text(_listDataFiltered[i].color)),
                           DataCell(Text(_listDataFiltered[i].pantone_value)),
                         ],
+                        onSelectChanged: (value) {
+                          Fluttertoast.showToast(
+                              msg: "Selected ${_listDataFiltered[i].name}",
+                              toastLength: Toast.LENGTH_SHORT,
+                              gravity: ToastGravity.BOTTOM,
+                              timeInSecForIosWeb: 1,
+                              backgroundColor: kPrimaryColor,
+                              textColor: Colors.white,
+                              fontSize: 16.0);
+                        },
                       ),
                   ]),
             ),
