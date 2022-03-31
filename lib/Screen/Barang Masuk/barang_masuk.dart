@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:inventaris_barang/Api/list_data.dart';
+import 'package:inventaris_barang/Screen/Barang%20Masuk/componen/app_bar.dart';
+import 'package:inventaris_barang/Screen/Barang%20Masuk/tambah_barang_masuk.dart';
 import 'package:inventaris_barang/constants.dart';
-import 'package:qrscan/qrscan.dart' as scanner;
 
 class BarangMasuk extends StatefulWidget {
   const BarangMasuk({Key? key}) : super(key: key);
@@ -33,21 +34,7 @@ class _BarangMasukState extends State<BarangMasuk> {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      appBar: AppBar(
-        title: Text('Barang Masuk'),
-        actions: <Widget>[
-          IconButton(
-            icon: Icon(
-              Icons.qr_code,
-              color: Colors.white,
-            ),
-            onPressed: () async {
-              String? cameraScanResult = await scanner.scan();
-              print(cameraScanResult);
-            },
-          ),
-        ],
-      ),
+      appBar: AppBarBarang(judul: "Barang Masuk"),
       body: Container(
         width: double.infinity,
         padding: EdgeInsets.symmetric(horizontal: 5, vertical: 5),
@@ -81,86 +68,78 @@ class _BarangMasukState extends State<BarangMasuk> {
                 ),
               ),
             ),
-            SingleChildScrollView(
-              scrollDirection: Axis.horizontal,
-              child: DataTable(
-                  showCheckboxColumn: false,
-                  columnSpacing: 38,
-                  sortColumnIndex: _currentSortColumn,
-                  sortAscending: _isAscending,
-                  headingTextStyle: MaterialStateTextStyle.resolveWith(
-                      (states) => const TextStyle(color: kPrimaryLightColor)),
-                  headingRowColor: MaterialStateProperty.resolveWith(
-                      (states) => kPrimaryColor),
-                  columns: [
-                    DataColumn(label: Text('Id'), numeric: true),
-                    DataColumn(
-                        label: Text('Name'),
-                        onSort: (index, _) {
-                          setState(() {
-                            _currentSortColumn = index;
+            DataTable(
+                showCheckboxColumn: false,
+                columnSpacing: 38,
+                sortColumnIndex: _currentSortColumn,
+                sortAscending: _isAscending,
+                headingTextStyle: MaterialStateTextStyle.resolveWith(
+                    (states) => const TextStyle(color: kPrimaryLightColor)),
+                headingRowColor: MaterialStateProperty.resolveWith(
+                    (states) => kPrimaryColor),
+                columns: [
+                  DataColumn(
+                      label: Text('Id'),
+                      numeric: true,
+                      onSort: (index, _) {
+                        setState(() {
+                          _currentSortColumn = index;
 
-                            if (_isAscending == true) {
-                              _isAscending = false;
+                          if (_isAscending == true) {
+                            _isAscending = false;
+                          } else {
+                            _isAscending = true;
+                          }
+                          _listData.sort((a, b) {
+                            if (_isAscending) {
+                              return a.id.compareTo(b.id);
                             } else {
-                              _isAscending = true;
+                              return b.id.compareTo(a.id);
                             }
-                            _listData.sort((a, b) {
-                              if (_isAscending) {
-                                return a.name.compareTo(b.name);
-                              } else {
-                                return b.name.compareTo(a.name);
-                              }
-                            });
                           });
-                        }),
-                    DataColumn(
-                        label: Text('Year'),
-                        numeric: true,
-                        onSort: (index, _) {
-                          setState(() {
-                            _currentSortColumn = index;
+                        });
+                      }),
+                  DataColumn(
+                      label: Text('Name'),
+                      onSort: (index, _) {
+                        setState(() {
+                          _currentSortColumn = index;
 
-                            if (_isAscending == true) {
-                              _isAscending = false;
+                          if (_isAscending == true) {
+                            _isAscending = false;
+                          } else {
+                            _isAscending = true;
+                          }
+                          _listData.sort((a, b) {
+                            if (_isAscending) {
+                              return a.name.compareTo(b.name);
                             } else {
-                              _isAscending = true;
+                              return b.name.compareTo(a.name);
                             }
-                            _listData.sort((a, b) {
-                              if (_isAscending) {
-                                return a.year.compareTo(b.year);
-                              } else {
-                                return b.year.compareTo(a.year);
-                              }
-                            });
                           });
-                        }),
-                    DataColumn(label: Text('Color')),
-                    DataColumn(label: Text('Pantone')),
-                  ],
-                  rows: [
-                    for (var i = 0; i < _listDataFiltered.length; i++)
-                      DataRow(
-                        cells: [
-                          DataCell(Text(_listDataFiltered[i].id.toString())),
-                          DataCell(Text(_listDataFiltered[i].name)),
-                          DataCell(Text(_listDataFiltered[i].year.toString())),
-                          DataCell(Text(_listDataFiltered[i].color)),
-                          DataCell(Text(_listDataFiltered[i].pantone_value)),
-                        ],
-                        onSelectChanged: (value) {
-                          Fluttertoast.showToast(
-                              msg: "Selected ${_listDataFiltered[i].name}",
-                              toastLength: Toast.LENGTH_SHORT,
-                              gravity: ToastGravity.BOTTOM,
-                              timeInSecForIosWeb: 1,
-                              backgroundColor: kPrimaryColor,
-                              textColor: Colors.white,
-                              fontSize: 16.0);
-                        },
-                      ),
-                  ]),
-            ),
+                        });
+                      }),
+                ],
+                rows: [
+                  for (var i = 0; i < _listDataFiltered.length; i++)
+                    DataRow(
+                      cells: [
+                        DataCell(Text(_listDataFiltered[i].id.toString())),
+                        DataCell(Container(
+                            width: size.width,
+                            child: Text(_listDataFiltered[i].name))),
+                      ],
+                      onSelectChanged: (value) {
+                        // Kirim Data Ke Screen Lain
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) =>
+                                  TambahBarangMasuk(data: _listDataFiltered[i]),
+                            ));
+                      },
+                    ),
+                ]),
           ],
         ),
       ),
