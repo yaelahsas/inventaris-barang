@@ -1,14 +1,16 @@
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
-class LoginApi {
+import 'package:inventaris_barang/Api/url.dart';
+
+class AuthApi {
   bool? success;
   String? message;
   Data? data;
 
-  LoginApi({this.success, this.message, this.data});
+  AuthApi({this.success, this.message, this.data});
 
-  LoginApi.fromJson(Map<String, dynamic> json) {
+  AuthApi.fromJson(Map<String, dynamic> json) {
     success = json['success'];
     message = json['message'];
     data = json['data'] != null ? new Data.fromJson(json['data']) : null;
@@ -29,15 +31,28 @@ class LoginApi {
     return 'LoginApi{success: $success, message: $message, data: $data}';
   }
 
-  static Future<LoginApi> connectToAPI(String email, String password) async {
-    Uri apiUrl = Uri.parse("http://10.46.1.25:80/ap/api/login");
+  static Future<AuthApi> loginAPI(String email, String password) async {
+    Uri apiUrl = Uri.parse(Url.web + "login");
 
     var result = await http.post(apiUrl, body: {
       'username': email,
       'password': password,
     });
     var jsonResult = json.decode(result.body);
-    return LoginApi.fromJson(jsonResult);
+    return AuthApi.fromJson(jsonResult);
+  }
+
+  static Future<AuthApi> daftarAPI(
+      String username, String password, String nama) async {
+    Uri apiUrl = Uri.parse(Url.web + "daftar");
+
+    var result = await http.post(apiUrl, body: {
+      'username': username,
+      'password': password,
+      'name': nama,
+    });
+    var jsonResult = json.decode(result.body);
+    return AuthApi.fromJson(jsonResult);
   }
 }
 

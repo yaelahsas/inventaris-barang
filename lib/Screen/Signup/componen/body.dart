@@ -1,9 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:inventaris_barang/Api/login.dart';
 
 import '../../../constants.dart';
 
-class BodySignup extends StatelessWidget {
+class BodySignup extends StatefulWidget {
   const BodySignup({Key? key}) : super(key: key);
+
+  @override
+  State<BodySignup> createState() => _BodySignupState();
+}
+
+class _BodySignupState extends State<BodySignup> {
+  TextEditingController _cNama = TextEditingController();
+  TextEditingController _cUsername = TextEditingController();
+  TextEditingController _cPassword = TextEditingController();
+  AuthApi? result;
 
   @override
   Widget build(BuildContext context) {
@@ -37,6 +49,20 @@ class BodySignup extends StatelessWidget {
             Container(
               margin: const EdgeInsets.only(bottom: 20, left: 20, right: 20),
               child: TextField(
+                controller: _cNama,
+                decoration: InputDecoration(
+                  prefixIcon: const Icon(Icons.person),
+                  labelText: "Nama",
+                  prefixIconColor: Colors.red,
+                  border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(8)),
+                ),
+              ),
+            ),
+            Container(
+              margin: const EdgeInsets.only(bottom: 20, left: 20, right: 20),
+              child: TextField(
+                controller: _cUsername,
                 decoration: InputDecoration(
                   prefixIcon: const Icon(Icons.person),
                   labelText: "Username",
@@ -49,7 +75,10 @@ class BodySignup extends StatelessWidget {
             Container(
               margin: const EdgeInsets.only(bottom: 15, left: 20, right: 20),
               child: TextField(
-                autofocus: true,
+                controller: _cPassword,
+                obscureText: true,
+                enableSuggestions: false,
+                autocorrect: false,
                 decoration: InputDecoration(
                   prefixIcon: const Icon(Icons.password),
                   labelText: "Password",
@@ -60,19 +89,42 @@ class BodySignup extends StatelessWidget {
               ),
             ),
             Container(
-              alignment: Alignment.bottomRight,
-              margin: const EdgeInsets.only(right: 20),
-              child: const Text(
-                "Lupa Kata Sandi ?",
-                textAlign: TextAlign.end,
-                style: TextStyle(color: Colors.black),
-              ),
-            ),
-            Container(
               margin: const EdgeInsets.only(top: 20),
               child: ElevatedButton(
                 child: const Text("Daftar"),
-                onPressed: () {},
+                onPressed: () {
+                  AuthApi.daftarAPI(
+                          _cUsername.text, _cPassword.text, _cNama.text)
+                      .then(
+                    (value) {
+                      result = value;
+                      if (result?.success == true) {
+                        Fluttertoast.showToast(
+                            msg: result!.message!,
+                            toastLength: Toast.LENGTH_SHORT,
+                            gravity: ToastGravity.BOTTOM,
+                            timeInSecForIosWeb: 1,
+                            backgroundColor: kPrimaryColor,
+                            textColor: Colors.white,
+                            fontSize: 16.0);
+                        // Navigator.pushReplacement(
+                        //     context,
+                        //     MaterialPageRoute(
+                        //         builder: (context) =>
+                        //             const DashboarAffair()));
+                      } else {
+                        Fluttertoast.showToast(
+                            msg: result!.message!,
+                            toastLength: Toast.LENGTH_SHORT,
+                            gravity: ToastGravity.BOTTOM,
+                            timeInSecForIosWeb: 1,
+                            backgroundColor: Colors.red,
+                            textColor: Colors.white,
+                            fontSize: 16.0);
+                      }
+                    },
+                  );
+                },
                 style: ElevatedButton.styleFrom(
                     primary: kPrimaryColor,
                     padding: const EdgeInsets.symmetric(

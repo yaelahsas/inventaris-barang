@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:intl/intl.dart';
+import 'package:inventaris_barang/Api/tambah_barang.dart';
 import 'package:inventaris_barang/Screen/Barang%20Masuk/componen/app_bar.dart';
 import 'package:inventaris_barang/constants.dart';
 
@@ -21,6 +25,7 @@ class _TambahBarangMasukState extends State<TambahBarangMasuk> {
   TextEditingController _cNamaSpesifikasi = TextEditingController();
   TextEditingController _cTanggal = TextEditingController();
   TextEditingController _cJumlah = TextEditingController();
+  String date = '';
 
   @override
   void initState() {
@@ -43,16 +48,16 @@ class _TambahBarangMasukState extends State<TambahBarangMasuk> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       appBar: const AppBarBarang(judul: "Tambah Barang Masuk"),
-      body: Container(
-        width: double.infinity,
-        alignment: Alignment.center,
+      body: SingleChildScrollView(
         child: Container(
-          padding: const EdgeInsets.symmetric(horizontal: 15),
+          width: double.infinity,
+          padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 20),
           height: MediaQuery.of(context).size.height,
           child: Form(
               child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.start,
             children: [
               TextField(
                 controller: _cId,
@@ -120,11 +125,48 @@ class _TambahBarangMasukState extends State<TambahBarangMasuk> {
               const SizedBox(
                 height: 10,
               ),
-              TextFormField(),
+              TextFormField(
+                  controller: _cTanggal,
+                  onTap: () {
+                    showDatePicker(
+                      context: context,
+                      initialDate: time,
+                      firstDate: DateTime(2015),
+                      lastDate: DateTime(2100),
+                    ).then((hasil) {
+                      if (hasil == null) return;
+                      date = DateFormat.yMd().format(hasil);
+                      _cTanggal.text = date;
+                      setState() {}
+                    });
+                  },
+                  decoration: const InputDecoration(
+                      focusedBorder: OutlineInputBorder(
+                        borderSide:
+                            BorderSide(color: Colors.greenAccent, width: 1.0),
+                      ),
+                      enabledBorder: OutlineInputBorder(
+                        borderSide: BorderSide(color: Colors.red, width: 1.0),
+                      ),
+                      hintText: 'masukkan tanggal',
+                      labelText: 'Tanggal')),
               const SizedBox(
                 height: 10,
               ),
-              TextFormField(),
+              TextFormField(
+                  controller: _cJumlah,
+                  keyboardType: TextInputType.number,
+                  inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+                  decoration: const InputDecoration(
+                      focusedBorder: OutlineInputBorder(
+                        borderSide:
+                            BorderSide(color: Colors.greenAccent, width: 1.0),
+                      ),
+                      enabledBorder: OutlineInputBorder(
+                        borderSide: BorderSide(color: Colors.red, width: 1.0),
+                      ),
+                      hintText: '0',
+                      labelText: 'Jumlah')),
               const SizedBox(
                 height: 10,
               ),
@@ -135,7 +177,29 @@ class _TambahBarangMasukState extends State<TambahBarangMasuk> {
                       primary: kPrimaryColor,
                       textStyle: const TextStyle(fontSize: 20)),
                   onPressed: () {
-                    print(widget.data.id);
+                    TambahBarang.barangMasuk(
+                            _cId.text, _cTanggal.text, _cJumlah.text)
+                        .then((hasil) {
+                      if (hasil.success == true) {
+                        Fluttertoast.showToast(
+                            msg: hasil.message!,
+                            toastLength: Toast.LENGTH_SHORT,
+                            gravity: ToastGravity.BOTTOM,
+                            timeInSecForIosWeb: 1,
+                            backgroundColor: kPrimaryColor,
+                            textColor: Colors.white,
+                            fontSize: 16.0);
+                      } else {
+                        Fluttertoast.showToast(
+                            msg: hasil.message!,
+                            toastLength: Toast.LENGTH_SHORT,
+                            gravity: ToastGravity.BOTTOM,
+                            timeInSecForIosWeb: 1,
+                            backgroundColor: Colors.red,
+                            textColor: Colors.white,
+                            fontSize: 16.0);
+                      }
+                    });
                   },
                   child: const Text("Tambah"),
                 ),

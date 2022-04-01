@@ -9,13 +9,13 @@ class BodyAffair extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
-    return Container(
-      height: size.height,
-      width: size.width,
-      color: kPrimaryColor,
-      alignment: Alignment.center,
-      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
-      child: Expanded(
+    return Scaffold(
+      body: Container(
+        height: size.height,
+        width: size.width,
+        color: kPrimaryColor,
+        alignment: Alignment.center,
+        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
         child: GridView.count(
           mainAxisSpacing: 10,
           crossAxisSpacing: 10,

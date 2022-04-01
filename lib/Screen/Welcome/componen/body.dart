@@ -13,7 +13,7 @@ class BodySignin extends StatefulWidget {
 }
 
 class _BodySigninState extends State<BodySignin> {
-  LoginApi? result;
+  AuthApi? result;
 
   TextEditingController _emailController = TextEditingController();
   TextEditingController _passwordController = TextEditingController();
@@ -103,7 +103,7 @@ class _BodySigninState extends State<BodySignin> {
                         setState(() {
                           isLoading = true;
                         });
-                        LoginApi.connectToAPI(
+                        AuthApi.loginAPI(
                                 _emailController.text, _passwordController.text)
                             .then((value) {
                           result = value;

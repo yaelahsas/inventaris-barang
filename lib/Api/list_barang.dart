@@ -1,12 +1,19 @@
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
+import 'package:inventaris_barang/Api/url.dart';
+
 class ListBarang {
   List<Data>? data;
+  Data? dataScan;
 
-  ListBarang({this.data});
+  bool? success;
+  String? message;
+  ListBarang({this.data, this.success, this.message});
 
   ListBarang.fromJson(Map<String, dynamic> json) {
+    success = json['success'];
+    message = json['message'];
     if (json['data'] != null) {
       data = <Data>[];
       json['data'].forEach((v) {
@@ -14,7 +21,11 @@ class ListBarang {
       });
     }
   }
-
+  ListBarang.scanFromJson(Map<String, dynamic> json) {
+    success = json['success'];
+    message = json['message'];
+    dataScan = json['data'] != null ? new Data.fromJson(json['data']) : null;
+  }
   @override
   String toString() {
     return 'ListBarang{data: $data}';
@@ -22,14 +33,26 @@ class ListBarang {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['success'] = this.success;
+    data['message'] = this.message;
     if (this.data != null) {
       data['data'] = this.data!.map((v) => v.toJson()).toList();
     }
     return data;
   }
 
+  Map<String, dynamic> scanToJson() {
+    final Map<String, dynamic> scan = new Map<String, dynamic>();
+    scan['success'] = this.success;
+    scan['message'] = this.message;
+    if (this.dataScan != null) {
+      scan['data'] = this.dataScan!.toJson();
+    }
+    return scan;
+  }
+
   static Future<List<Data>> connectToAPI() async {
-    Uri apiUrl = Uri.parse("http://10.46.1.25:80/ap/api/barang/masuk");
+    Uri apiUrl = Uri.parse(Url.web + "barang/masuk");
 
     var hasil = await http.get(apiUrl);
     var result = jsonDecode(hasil.body);
@@ -40,6 +63,14 @@ class ListBarang {
       datas.add(Data.fromJson(listHasil[i]));
     }
     return datas;
+  }
+
+  static Future<ListBarang> scanData(String id) async {
+    Uri apiUrl = Uri.parse(Url.web + "barang/masuk/" + id);
+
+    var hasil = await http.get(apiUrl);
+    var result = jsonDecode(hasil.body);
+    return ListBarang.scanFromJson(result);
   }
 }
 

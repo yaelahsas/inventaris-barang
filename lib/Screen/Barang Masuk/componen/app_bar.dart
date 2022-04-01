@@ -1,7 +1,10 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:inventaris_barang/Api/list_barang.dart';
 import 'package:qrscan/qrscan.dart' as scanner;
+
+import '../tambah_barang_masuk.dart';
 
 class AppBarBarang extends StatelessWidget implements PreferredSizeWidget {
   const AppBarBarang({Key? key, required this.judul}) : super(key: key);
@@ -18,14 +21,15 @@ class AppBarBarang extends StatelessWidget implements PreferredSizeWidget {
           ),
           onPressed: () async {
             String? cameraScanResult = await scanner.scan();
-            var a = jsonDecode(cameraScanResult!);
-            // var hasil = Data.t(a);
-
-            // Navigator.push(
-            //     context,
-            //     MaterialPageRoute(
-            //       builder: (context) => TambahBarangMasuk(data: hasil),
-            //     ));
+            var a = cameraScanResult!;
+            ListBarang.scanData(a).then((hasil) {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) =>
+                        TambahBarangMasuk(data: hasil.dataScan!),
+                  ));
+            });
           },
         ),
       ],
