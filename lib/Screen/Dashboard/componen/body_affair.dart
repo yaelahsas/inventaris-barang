@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:inventaris_barang/Screen/Barang%20Masuk/barang_masuk.dart';
 import 'package:inventaris_barang/constants.dart';
 
 class BodyAffair extends StatelessWidget {
@@ -10,65 +12,97 @@ class BodyAffair extends StatelessWidget {
     return Container(
       height: size.height,
       width: size.width,
+      color: kPrimaryColor,
       alignment: Alignment.center,
-      margin: EdgeInsets.only(top: 50),
-      padding: EdgeInsets.symmetric(horizontal: 20, vertical: 5),
-      child: Column(
-        children: [
-          Container(
-            height: size.height * 0.2,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    primary: kPrimaryColor,
-                    padding: EdgeInsets.symmetric(horizontal: 25, vertical: 20),
-                    textStyle:
-                        TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
+      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
+      child: Expanded(
+        child: GridView.count(
+          mainAxisSpacing: 10,
+          crossAxisSpacing: 10,
+          crossAxisCount: 2,
+          shrinkWrap: true,
+          primary: false,
+          children: [
+            InkWell(
+              onTap: () {
+                Navigator.push(context, MaterialPageRoute(builder: (context) {
+                  return BarangMasuk();
+                }));
+              },
+              child: Card(
+                elevation: 4,
+                margin: const EdgeInsets.all(10),
+                child: Column(children: [
+                  Icon(
+                    Icons.warehouse_rounded,
+                    size: 120,
+                    color: Colors.blueAccent,
                   ),
-                  onPressed: () {},
-                  child: Text('Looks like '),
-                ),
-                ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    primary: Colors.purple,
-                    padding: EdgeInsets.symmetric(horizontal: 25, vertical: 20),
-                    textStyle:
-                        TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
-                  ),
-                  onPressed: () {},
-                  child: Text('Looks like '),
-                ),
-              ],
+                  Text("Barang Masuk",
+                      style:
+                          TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+                ]),
+              ),
             ),
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  primary: kPrimaryColor,
-                  padding: EdgeInsets.symmetric(horizontal: 25, vertical: 20),
-                  textStyle:
-                      TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
+            Card(
+              elevation: 4,
+              margin: const EdgeInsets.all(10),
+              child: Column(children: [
+                Icon(
+                  Icons.exit_to_app_rounded,
+                  size: 120,
+                  color: Colors.blueAccent,
                 ),
-                onPressed: () {},
-                child: Text('Looks like '),
-              ),
-              ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  primary: Colors.purple,
-                  padding: EdgeInsets.symmetric(horizontal: 25, vertical: 20),
-                  textStyle:
-                      TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
+                Text("Barang Keluar",
+                    style:
+                        TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+              ]),
+            ),
+            Card(
+              elevation: 4,
+              margin: const EdgeInsets.all(10),
+              child: Column(children: [
+                Icon(
+                  Icons.menu_book_rounded,
+                  color: Colors.blueAccent,
+                  size: 120,
                 ),
-                onPressed: () {},
-                child: Text('Looks like '),
-              ),
-            ],
-          ),
-        ],
+                Text(
+                  "Lihat Laporan",
+                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                ),
+              ]),
+            ),
+            Card(
+              elevation: 4,
+              margin: const EdgeInsets.all(10),
+              child: Column(children: [
+                Icon(
+                  Icons.bookmark_add_rounded,
+                  color: Colors.blueAccent,
+                  size: 120,
+                ),
+                Text("Rekap Barang",
+                    style:
+                        TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+              ]),
+            ),
+            Card(
+              elevation: 4,
+              margin: const EdgeInsets.all(10),
+              child: Column(children: [
+                Icon(
+                  Icons.history_edu_rounded,
+                  size: 120,
+                  color: Colors.blueAccent,
+                ),
+                Text("Riwayat Barang",
+                    style:
+                        TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+              ]),
+            )
+          ],
+        ),
       ),
     );
   }

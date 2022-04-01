@@ -18,7 +18,7 @@ class MyApp extends StatelessWidget {
       title: 'Inventaris App',
       theme: ThemeData(
           primaryColor: kPrimaryColor, scaffoldBackgroundColor: Colors.white),
-      home: BarangMasuk(),
+      home: WelcomeScreen(),
       debugShowCheckedModeBanner: false,
     );
   }
