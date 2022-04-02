@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:inventaris_barang/Api/list_barang.dart';
 import 'package:inventaris_barang/Screen/Barang%20Masuk/componen/app_bar.dart';
 import 'package:inventaris_barang/Screen/Barang%20Masuk/tambah_barang_masuk.dart';
+import 'package:inventaris_barang/Screen/Barang%20Masuk/tambah_barang_masuk_baru.dart';
 import 'package:inventaris_barang/constants.dart';
 
 class BarangMasuk extends StatefulWidget {
@@ -16,7 +17,7 @@ class _BarangMasukState extends State<BarangMasuk> {
   bool _isAscending = true;
   late List<Data> _listData = [];
   late List<Data> _listDataFiltered = [];
-  TextEditingController _searchController = TextEditingController();
+  final TextEditingController _searchController = TextEditingController();
   String _searchResult = '';
 
   @override
@@ -26,6 +27,7 @@ class _BarangMasukState extends State<BarangMasuk> {
     ListBarang.connectToAPI().then((value) {
       _listData = value;
       _listDataFiltered = _listData;
+      setState(() {});
     });
   }
 
@@ -39,19 +41,19 @@ class _BarangMasukState extends State<BarangMasuk> {
       },
       child: Scaffold(
         resizeToAvoidBottomInset: false,
-        appBar: AppBarBarang(judul: "Barang Masuk"),
+        appBar: const AppBarBarang(judul: "Barang Masuk"),
         body: Container(
           width: double.infinity,
-          padding: EdgeInsets.symmetric(horizontal: 5, vertical: 5),
-          margin: EdgeInsets.only(top: 10),
+          padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 5),
+          margin: const EdgeInsets.only(top: 10),
           child: Column(
             children: [
               Card(
                 child: ListTile(
-                  leading: Icon(Icons.search),
+                  leading: const Icon(Icons.search),
                   title: TextField(
                       controller: _searchController,
-                      decoration: new InputDecoration(
+                      decoration: const InputDecoration(
                           hintText: 'Search', border: InputBorder.none),
                       onChanged: (value) {
                         setState(() {
@@ -63,7 +65,7 @@ class _BarangMasukState extends State<BarangMasuk> {
                         });
                       }),
                   trailing: IconButton(
-                    icon: Icon(Icons.cancel),
+                    icon: const Icon(Icons.cancel),
                     onPressed: () {
                       setState(() {
                         _searchController.clear();
@@ -85,7 +87,7 @@ class _BarangMasukState extends State<BarangMasuk> {
                       (states) => kPrimaryColor),
                   columns: [
                     DataColumn(
-                        label: Text('Id'),
+                        label: const Text('Id'),
                         numeric: true,
                         onSort: (index, _) {
                           setState(() {
@@ -106,7 +108,7 @@ class _BarangMasukState extends State<BarangMasuk> {
                           });
                         }),
                     DataColumn(
-                        label: Text('Name'),
+                        label: const Text('Name'),
                         onSort: (index, _) {
                           setState(() {
                             _currentSortColumn = index;
@@ -131,7 +133,7 @@ class _BarangMasukState extends State<BarangMasuk> {
                       DataRow(
                         cells: [
                           DataCell(Text(_listDataFiltered[i].id.toString())),
-                          DataCell(Container(
+                          DataCell(SizedBox(
                               width: size.width,
                               child: Text(_listDataFiltered[i].namaBarang!))),
                         ],
@@ -150,9 +152,21 @@ class _BarangMasukState extends State<BarangMasuk> {
           ),
         ),
         floatingActionButton: FloatingActionButton(
-          onPressed: () {},
+          onPressed: () {
+            Navigator.push(context, MaterialPageRoute(builder: (context) {
+              return const TambahBarangMasukBaru();
+            })).then((value) {
+              if (value) {
+                ListBarang.connectToAPI().then((value) {
+                  _listData = value;
+                  _listDataFiltered = _listData;
+                  setState(() {});
+                });
+              }
+            });
+          },
           backgroundColor: kPrimaryColor,
-          child: Icon(Icons.add),
+          child: const Icon(Icons.add),
         ),
         backgroundColor: Colors.white,
       ),

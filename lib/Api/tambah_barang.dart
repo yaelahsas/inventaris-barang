@@ -15,9 +15,9 @@ class TambahBarang {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['success'] = this.success;
-    data['message'] = this.message;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['success'] = success;
+    data['message'] = message;
     return data;
   }
 
@@ -26,6 +26,21 @@ class TambahBarang {
     Uri apiUrl = Uri.parse(Url.web + "barang/masuk/edit/" + id);
 
     var result = await http.post(apiUrl, body: {
+      'tanggal_masuk': tanggal,
+      'jumlah_barang': jumlah,
+    });
+    var jsonResult = json.decode(result.body);
+    return TambahBarang.fromJson(jsonResult);
+  }
+
+  static Future<TambahBarang> barangMasukBaru(String nama, String spesifikasi,
+      String idDivisi, String tanggal, String jumlah) async {
+    Uri apiUrl = Uri.parse(Url.web + "barang/masuk/tambah");
+
+    var result = await http.post(apiUrl, body: {
+      'nama_barang': nama,
+      'spesifikasi': spesifikasi,
+      'id_divisi': idDivisi,
       'tanggal_masuk': tanggal,
       'jumlah_barang': jumlah,
     });

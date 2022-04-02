@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:inventaris_barang/Api/list_barang.dart';
 import 'package:qrscan/qrscan.dart' as scanner;
@@ -15,7 +13,7 @@ class AppBarBarang extends StatelessWidget implements PreferredSizeWidget {
       title: Text(judul),
       actions: <Widget>[
         IconButton(
-          icon: Icon(
+          icon: const Icon(
             Icons.qr_code,
             color: Colors.white,
           ),
@@ -37,5 +35,5 @@ class AppBarBarang extends StatelessWidget implements PreferredSizeWidget {
   }
 
   @override
-  Size get preferredSize => Size.fromHeight(50.0);
+  Size get preferredSize => const Size.fromHeight(50.0);
 }

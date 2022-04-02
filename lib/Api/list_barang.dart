@@ -17,14 +17,14 @@ class ListBarang {
     if (json['data'] != null) {
       data = <Data>[];
       json['data'].forEach((v) {
-        data!.add(new Data.fromJson(v));
+        data!.add(Data.fromJson(v));
       });
     }
   }
   ListBarang.scanFromJson(Map<String, dynamic> json) {
     success = json['success'];
     message = json['message'];
-    dataScan = json['data'] != null ? new Data.fromJson(json['data']) : null;
+    dataScan = json['data'] != null ? Data.fromJson(json['data']) : null;
   }
   @override
   String toString() {
@@ -32,9 +32,9 @@ class ListBarang {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['success'] = this.success;
-    data['message'] = this.message;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['success'] = success;
+    data['message'] = message;
     if (this.data != null) {
       data['data'] = this.data!.map((v) => v.toJson()).toList();
     }
@@ -42,11 +42,11 @@ class ListBarang {
   }
 
   Map<String, dynamic> scanToJson() {
-    final Map<String, dynamic> scan = new Map<String, dynamic>();
-    scan['success'] = this.success;
-    scan['message'] = this.message;
-    if (this.dataScan != null) {
-      scan['data'] = this.dataScan!.toJson();
+    final Map<String, dynamic> scan = <String, dynamic>{};
+    scan['success'] = success;
+    scan['message'] = message;
+    if (dataScan != null) {
+      scan['data'] = dataScan!.toJson();
     }
     return scan;
   }
@@ -123,19 +123,19 @@ class Data {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['nama_status'] = this.namaStatus;
-    data['created_at'] = this.createdAt;
-    data['updated_at'] = this.updatedAt;
-    data['nama_divisi'] = this.namaDivisi;
-    data['nama_barang'] = this.namaBarang;
-    data['spesifikasi'] = this.spesifikasi;
-    data['jumlah_barang'] = this.jumlahBarang;
-    data['tanggal_masuk'] = this.tanggalMasuk;
-    data['id_divisi'] = this.idDivisi;
-    data['kode_qrcode'] = this.kodeQrcode;
-    data['id_status_barang'] = this.idStatusBarang;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
+    data['nama_status'] = namaStatus;
+    data['created_at'] = createdAt;
+    data['updated_at'] = updatedAt;
+    data['nama_divisi'] = namaDivisi;
+    data['nama_barang'] = namaBarang;
+    data['spesifikasi'] = spesifikasi;
+    data['jumlah_barang'] = jumlahBarang;
+    data['tanggal_masuk'] = tanggalMasuk;
+    data['id_divisi'] = idDivisi;
+    data['kode_qrcode'] = kodeQrcode;
+    data['id_status_barang'] = idStatusBarang;
     return data;
   }
 }

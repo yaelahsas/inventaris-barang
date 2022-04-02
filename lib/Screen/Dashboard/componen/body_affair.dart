@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:inventaris_barang/Screen/Barang%20Masuk/barang_masuk.dart';
+import 'package:inventaris_barang/Screen/Rekap%20Barang/rekap_barang.dart';
+import 'package:inventaris_barang/Screen/Riwayat%20Barang/riwayat_barang.dart';
 import 'package:inventaris_barang/constants.dart';
 
 class BodyAffair extends StatelessWidget {
@@ -26,13 +27,13 @@ class BodyAffair extends StatelessWidget {
             InkWell(
               onTap: () {
                 Navigator.push(context, MaterialPageRoute(builder: (context) {
-                  return BarangMasuk();
+                  return const BarangMasuk();
                 }));
               },
               child: Card(
                 elevation: 4,
                 margin: const EdgeInsets.all(10),
-                child: Column(children: [
+                child: Column(children: const [
                   Icon(
                     Icons.warehouse_rounded,
                     size: 120,
@@ -47,7 +48,7 @@ class BodyAffair extends StatelessWidget {
             Card(
               elevation: 4,
               margin: const EdgeInsets.all(10),
-              child: Column(children: [
+              child: Column(children: const [
                 Icon(
                   Icons.exit_to_app_rounded,
                   size: 120,
@@ -61,7 +62,7 @@ class BodyAffair extends StatelessWidget {
             Card(
               elevation: 4,
               margin: const EdgeInsets.all(10),
-              child: Column(children: [
+              child: Column(children: const [
                 Icon(
                   Icons.menu_book_rounded,
                   color: Colors.blueAccent,
@@ -73,33 +74,47 @@ class BodyAffair extends StatelessWidget {
                 ),
               ]),
             ),
-            Card(
-              elevation: 4,
-              margin: const EdgeInsets.all(10),
-              child: Column(children: [
-                Icon(
-                  Icons.bookmark_add_rounded,
-                  color: Colors.blueAccent,
-                  size: 120,
-                ),
-                Text("Rekap Barang",
-                    style:
-                        TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
-              ]),
+            InkWell(
+              onTap: () {
+                Navigator.push(context, MaterialPageRoute(builder: (context) {
+                  return const RekapBarang();
+                }));
+              },
+              child: Card(
+                elevation: 4,
+                margin: const EdgeInsets.all(10),
+                child: Column(children: const [
+                  Icon(
+                    Icons.bookmark_add_rounded,
+                    color: Colors.blueAccent,
+                    size: 120,
+                  ),
+                  Text("Rekap Barang",
+                      style:
+                          TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+                ]),
+              ),
             ),
-            Card(
-              elevation: 4,
-              margin: const EdgeInsets.all(10),
-              child: Column(children: [
-                Icon(
-                  Icons.history_edu_rounded,
-                  size: 120,
-                  color: Colors.blueAccent,
-                ),
-                Text("Riwayat Barang",
-                    style:
-                        TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
-              ]),
+            InkWell(
+              onTap: () {
+                Navigator.push(context, MaterialPageRoute(builder: (context) {
+                  return const RiwayatBarang();
+                }));
+              },
+              child: Card(
+                elevation: 4,
+                margin: const EdgeInsets.all(10),
+                child: Column(children: const [
+                  Icon(
+                    Icons.history_edu_rounded,
+                    size: 120,
+                    color: Colors.blueAccent,
+                  ),
+                  Text("Riwayat Barang",
+                      style:
+                          TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+                ]),
+              ),
             )
           ],
         ),

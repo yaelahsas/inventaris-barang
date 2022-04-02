@@ -19,18 +19,17 @@ class TambahBarangMasuk extends StatefulWidget {
 
 class _TambahBarangMasukState extends State<TambahBarangMasuk> {
   DateTime time = DateTime.now();
-  TextEditingController _cName = TextEditingController();
-  TextEditingController _cId = TextEditingController();
-  TextEditingController _cNamaDivisi = TextEditingController();
-  TextEditingController _cNamaSpesifikasi = TextEditingController();
-  TextEditingController _cTanggal = TextEditingController();
-  TextEditingController _cJumlah = TextEditingController();
+  final TextEditingController _cName = TextEditingController();
+  final TextEditingController _cId = TextEditingController();
+  final TextEditingController _cNamaDivisi = TextEditingController();
+  final TextEditingController _cNamaSpesifikasi = TextEditingController();
+  final TextEditingController _cTanggal = TextEditingController();
+  final TextEditingController _cJumlah = TextEditingController();
   String date = '';
 
   @override
   void initState() {
     super.initState();
-    print(widget.data.namaBarang);
 
     _cId.text = widget.data.id.toString();
     _cName.text = widget.data.namaBarang!;
@@ -43,6 +42,10 @@ class _TambahBarangMasukState extends State<TambahBarangMasuk> {
     super.dispose();
     _cId.dispose();
     _cName.dispose();
+    _cNamaDivisi.dispose();
+    _cNamaSpesifikasi.dispose();
+    _cTanggal.dispose();
+    _cJumlah.dispose();
   }
 
   @override
@@ -59,20 +62,6 @@ class _TambahBarangMasukState extends State<TambahBarangMasuk> {
               child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
-              TextField(
-                controller: _cId,
-                readOnly: true,
-                decoration: const InputDecoration(
-                    focusedBorder: OutlineInputBorder(
-                      borderSide:
-                          BorderSide(color: Colors.greenAccent, width: 1.0),
-                    ),
-                    enabledBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: Colors.red, width: 1.0),
-                    ),
-                    hintText: 'id',
-                    labelText: 'id'),
-              ),
               const SizedBox(
                 height: 10,
               ),
@@ -137,7 +126,6 @@ class _TambahBarangMasukState extends State<TambahBarangMasuk> {
                       if (hasil == null) return;
                       date = DateFormat.yMd().format(hasil);
                       _cTanggal.text = date;
-                      setState() {}
                     });
                   },
                   decoration: const InputDecoration(
@@ -170,7 +158,7 @@ class _TambahBarangMasukState extends State<TambahBarangMasuk> {
               const SizedBox(
                 height: 10,
               ),
-              Container(
+              SizedBox(
                 width: MediaQuery.of(context).size.width,
                 child: ElevatedButton(
                   style: ElevatedButton.styleFrom(

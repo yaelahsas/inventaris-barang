@@ -12,9 +12,9 @@ class BodySignup extends StatefulWidget {
 }
 
 class _BodySignupState extends State<BodySignup> {
-  TextEditingController _cNama = TextEditingController();
-  TextEditingController _cUsername = TextEditingController();
-  TextEditingController _cPassword = TextEditingController();
+  final TextEditingController _cNama = TextEditingController();
+  final TextEditingController _cUsername = TextEditingController();
+  final TextEditingController _cPassword = TextEditingController();
   AuthApi? result;
 
   @override

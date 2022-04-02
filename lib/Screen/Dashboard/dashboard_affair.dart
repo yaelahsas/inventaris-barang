@@ -7,7 +7,7 @@ class DashboarAffair extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return const Scaffold(
       appBar: AppBarBarang(judul: "Dashboard Affair"),
       body: BodyAffair(),
     );

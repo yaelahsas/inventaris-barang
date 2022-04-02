@@ -15,8 +15,8 @@ class BodySignin extends StatefulWidget {
 class _BodySigninState extends State<BodySignin> {
   AuthApi? result;
 
-  TextEditingController _emailController = TextEditingController();
-  TextEditingController _passwordController = TextEditingController();
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
   bool isLoading = false;
 
   @override
@@ -36,7 +36,7 @@ class _BodySigninState extends State<BodySignin> {
           ])),
       child: Center(
         child: isLoading
-            ? Center(
+            ? const Center(
                 child: CircularProgressIndicator(),
               )
             : Column(
@@ -145,7 +145,7 @@ class _BodySigninState extends State<BodySignin> {
                     ),
                   ),
                   Container(
-                    padding: EdgeInsets.only(top: 20),
+                    padding: const EdgeInsets.only(top: 20),
                     child: const Text("Atau"),
                   ),
                   Container(

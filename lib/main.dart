@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:inventaris_barang/Screen/Barang%20Masuk/barang_masuk.dart';
-import 'package:inventaris_barang/Screen/Dashboard/dashboard_affair.dart';
 import 'package:inventaris_barang/Screen/Welcome/welcome_screen.dart';
 import 'package:inventaris_barang/constants.dart';
 
@@ -18,7 +16,7 @@ class MyApp extends StatelessWidget {
       title: 'Inventaris App',
       theme: ThemeData(
           primaryColor: kPrimaryColor, scaffoldBackgroundColor: Colors.white),
-      home: WelcomeScreen(),
+      home: const WelcomeScreen(),
       debugShowCheckedModeBanner: false,
     );
   }
