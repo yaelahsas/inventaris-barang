@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:inventaris_barang/Screen/Rekap%20Barang/Masuk/rekap_barang_masuk.dart';
 
 import '../../constants.dart';
 
@@ -32,7 +33,13 @@ class RekapBarang extends StatelessWidget {
                 style: ElevatedButton.styleFrom(
                     primary: kPrimaryColor,
                     textStyle: const TextStyle(fontSize: 20)),
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => RekapBarangMasuk(),
+                      ));
+                },
                 child: const Text("Rekapan barang masuk"),
               ),
             ),

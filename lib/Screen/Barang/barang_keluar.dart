@@ -1,18 +1,18 @@
 import 'package:flutter/material.dart';
-import 'package:inventaris_barang/Api/list_barang.dart';
-import 'package:inventaris_barang/Screen/Barang%20Masuk/componen/app_bar.dart';
-import 'package:inventaris_barang/Screen/Barang%20Masuk/tambah_barang_masuk.dart';
-import 'package:inventaris_barang/Screen/Barang%20Masuk/tambah_barang_masuk_baru.dart';
+import 'package:inventaris_barang/Screen/Barang/componen/app_bar.dart';
+import 'package:inventaris_barang/Screen/Barang/tambah_barang_keluar.dart';
 import 'package:inventaris_barang/constants.dart';
 
-class BarangMasuk extends StatefulWidget {
-  const BarangMasuk({Key? key}) : super(key: key);
+import '../../Api/list_barang.dart';
+
+class BarangKeluar extends StatefulWidget {
+  const BarangKeluar({Key? key}) : super(key: key);
 
   @override
-  State<BarangMasuk> createState() => _BarangMasukState();
+  State<BarangKeluar> createState() => _BarangKeluarState();
 }
 
-class _BarangMasukState extends State<BarangMasuk> {
+class _BarangKeluarState extends State<BarangKeluar> {
   int _currentSortColumn = 0;
   bool _isAscending = true;
   late List<Data> _listData = [];
@@ -41,7 +41,7 @@ class _BarangMasukState extends State<BarangMasuk> {
       },
       child: Scaffold(
         resizeToAvoidBottomInset: false,
-        appBar: const AppBarBarang(judul: "Barang Masuk"),
+        appBar: const AppBarBarang(judul: "Barang Keluar"),
         body: Container(
           width: double.infinity,
           padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 5),
@@ -142,7 +142,7 @@ class _BarangMasukState extends State<BarangMasuk> {
                           Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) => TambahBarangMasuk(
+                                builder: (context) => TambahBarangKeluar(
                                     data: _listDataFiltered[i]),
                               ));
                         },
@@ -150,23 +150,6 @@ class _BarangMasukState extends State<BarangMasuk> {
                   ]),
             ],
           ),
-        ),
-        floatingActionButton: FloatingActionButton(
-          onPressed: () {
-            Navigator.push(context, MaterialPageRoute(builder: (context) {
-              return const TambahBarangMasukBaru();
-            })).then((value) {
-              if (value) {
-                ListBarang.connectToAPI().then((value) {
-                  _listData = value;
-                  _listDataFiltered = _listData;
-                  setState(() {});
-                });
-              }
-            });
-          },
-          backgroundColor: kPrimaryColor,
-          child: const Icon(Icons.add),
         ),
         backgroundColor: Colors.white,
       ),

@@ -3,7 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:intl/intl.dart';
 import 'package:inventaris_barang/Api/tambah_barang.dart';
-import 'package:inventaris_barang/Screen/Barang%20Masuk/componen/app_bar.dart';
+import 'package:inventaris_barang/Screen/Barang/componen/app_bar.dart';
 import 'package:inventaris_barang/constants.dart';
 
 import '../../Api/list_barang.dart';
@@ -137,7 +137,7 @@ class _TambahBarangMasukState extends State<TambahBarangMasuk> {
                         borderSide: BorderSide(color: Colors.red, width: 1.0),
                       ),
                       hintText: 'masukkan tanggal',
-                      labelText: 'Tanggal')),
+                      labelText: 'Tanggal Masuk')),
               const SizedBox(
                 height: 10,
               ),

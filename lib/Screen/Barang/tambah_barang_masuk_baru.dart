@@ -4,7 +4,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:intl/intl.dart';
 import 'package:inventaris_barang/Api/list_divisi.dart';
 import 'package:inventaris_barang/Api/tambah_barang.dart';
-import 'package:inventaris_barang/Screen/Barang%20Masuk/componen/app_bar.dart';
+import 'package:inventaris_barang/Screen/Barang/componen/app_bar.dart';
 import 'package:inventaris_barang/constants.dart';
 
 import '../../Api/list_barang.dart';

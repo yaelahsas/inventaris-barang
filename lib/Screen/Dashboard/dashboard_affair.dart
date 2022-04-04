@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:inventaris_barang/Screen/Barang%20Masuk/componen/app_bar.dart';
+import '../Barang/componen/app_bar.dart';
 import 'package:inventaris_barang/Screen/Dashboard/componen/body_affair.dart';
 
 class DashboarAffair extends StatelessWidget {

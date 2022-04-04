@@ -48,92 +48,147 @@ class _RiwayatBarangState extends State<RiwayatBarang> {
                 ),
               ),
             ),
+            Card(
+              child: ListTile(
+                leading: const Icon(Icons.search),
+                title: TextField(
+                    controller: _searchController,
+                    decoration: const InputDecoration(
+                        hintText: 'Search', border: InputBorder.none),
+                    onChanged: (value) {
+                      setState(() {
+                        _searchResult = value;
+                        _listDataFiltered = _listData
+                            .where((user) => user.inventaris!
+                                .toLowerCase()
+                                .contains(_searchResult))
+                            .toList();
+                      });
+                    }),
+                trailing: IconButton(
+                  icon: const Icon(Icons.cancel),
+                  onPressed: () {
+                    setState(() {
+                      _searchController.clear();
+                      _searchResult = '';
+                      _listDataFiltered = _listData;
+                    });
+                  },
+                ),
+              ),
+            ),
             Expanded(
               child: ListView(
+                scrollDirection: Axis.horizontal,
                 children: [
-                  DataTable(
-                      showCheckboxColumn: false,
-                      columnSpacing: 38,
-                      // sortColumnIndex: _currentSortColumn,
-                      // sortAscending: _isAscending,
-                      headingTextStyle: MaterialStateTextStyle.resolveWith(
-                          (states) =>
-                              const TextStyle(color: kPrimaryLightColor)),
-                      headingRowColor: MaterialStateProperty.resolveWith(
-                          (states) => kPrimaryColor),
-                      columns: [
-                        DataColumn(
-                            label: const Text('Id'),
-                            numeric: true,
-                            onSort: (index, _) {
-                              setState(() {
-                                _currentSortColumn = index;
+                  SingleChildScrollView(
+                    scrollDirection: Axis.vertical,
+                    child: DataTable(
+                        showCheckboxColumn: false,
+                        columnSpacing: 20,
+                        // sortColumnIndex: _currentSortColumn,
+                        // sortAscending: _isAscending,
+                        headingTextStyle: MaterialStateTextStyle.resolveWith(
+                            (states) =>
+                                const TextStyle(color: kPrimaryLightColor)),
+                        headingRowColor: MaterialStateProperty.resolveWith(
+                            (states) => kPrimaryColor),
+                        columns: [
+                          DataColumn(
+                              label: const Text('Name'),
+                              onSort: (index, _) {
+                                setState(() {
+                                  _currentSortColumn = index;
 
-                                if (_isAscending == true) {
-                                  _isAscending = false;
-                                } else {
-                                  _isAscending = true;
-                                }
-                                _listData.sort((a, b) {
-                                  if (_isAscending) {
-                                    return a.id!.compareTo(b.id!);
+                                  if (_isAscending == true) {
+                                    _isAscending = false;
                                   } else {
-                                    return b.id!.compareTo(a.id!);
+                                    _isAscending = true;
                                   }
+                                  _listData.sort((a, b) {
+                                    if (_isAscending) {
+                                      return a.inventaris!
+                                          .compareTo(b.inventaris!);
+                                    } else {
+                                      return b.inventaris!
+                                          .compareTo(a.inventaris!);
+                                    }
+                                  });
                                 });
-                              });
-                            }),
-                        DataColumn(
-                            label: const Text('Name'),
-                            onSort: (index, _) {
-                              setState(() {
-                                _currentSortColumn = index;
+                              }),
+                          DataColumn(label: const Text('Tanggal')),
+                          DataColumn(
+                              label: const Text('Jumlah'),
+                              onSort: (index, _) {
+                                setState(() {
+                                  _currentSortColumn = index;
 
-                                if (_isAscending == true) {
-                                  _isAscending = false;
-                                } else {
-                                  _isAscending = true;
-                                }
-                                _listData.sort((a, b) {
-                                  if (_isAscending) {
-                                    return a.inventaris!
-                                        .compareTo(b.inventaris!);
+                                  if (_isAscending == true) {
+                                    _isAscending = false;
                                   } else {
-                                    return b.inventaris!
-                                        .compareTo(a.inventaris!);
+                                    _isAscending = true;
                                   }
+                                  _listData.sort((a, b) {
+                                    if (_isAscending) {
+                                      return a.jumlahAkhir!
+                                          .compareTo(b.jumlahAkhir!);
+                                    } else {
+                                      return b.jumlahAkhir!
+                                          .compareTo(a.jumlahAkhir!);
+                                    }
+                                  });
                                 });
-                              });
-                            }),
-                        DataColumn(label: const Text('Tanggal')),
-                        DataColumn(label: const Text('Jumlah')),
-                      ],
-                      rows: [
-                        for (var i = 0; i < _listDataFiltered.length; i++)
-                          DataRow(
-                            cells: [
-                              DataCell(
-                                  Text(_listDataFiltered[i].id.toString())),
-                              DataCell(SizedBox(
-                                  // width: MediaQuery.of(context).size.width,
-                                  child:
-                                      Text(_listDataFiltered[i].inventaris!))),
-                              DataCell(Text(_listDataFiltered[i].tanggal!)),
-                              DataCell(Text(_listDataFiltered[i]
-                                  .jumlahAkhir!
-                                  .toString())),
-                            ],
-                            onSelectChanged: (value) {
-                              // Kirim Data Ke Screen Lain
-                              // Navigator.push(
-                              //     context,
-                              //     MaterialPageRoute(
-                              //       builder: (context) =>
-                              //           TambahBarangMasuk(data: _listDataFiltered[i]),
-                              //     ));
-                            },
-                          ),
-                      ])
+                              }),
+                          DataColumn(
+                              label: const Text('Keterangan'),
+                              onSort: (index, _) {
+                                setState(() {
+                                  _currentSortColumn = index;
+
+                                  if (_isAscending == true) {
+                                    _isAscending = false;
+                                  } else {
+                                    _isAscending = true;
+                                  }
+                                  _listData.sort((a, b) {
+                                    if (_isAscending) {
+                                      return a.namaStatus!
+                                          .compareTo(b.namaStatus!);
+                                    } else {
+                                      return b.namaStatus!
+                                          .compareTo(a.namaStatus!);
+                                    }
+                                  });
+                                });
+                              }),
+                        ],
+                        rows: [
+                          for (var i = 0; i < _listDataFiltered.length; i++)
+                            DataRow(
+                              cells: [
+                                DataCell(SizedBox(
+                                    // width: MediaQuery.of(context).size.width,
+                                    child: Text(
+                                        _listDataFiltered[i].inventaris!))),
+                                DataCell(Text(_listDataFiltered[i].tanggal!)),
+                                DataCell(Text(_listDataFiltered[i]
+                                    .jumlahAkhir!
+                                    .toString())),
+                                DataCell(
+                                    Text(_listDataFiltered[i].namaStatus!)),
+                              ],
+                              onSelectChanged: (value) {
+                                // Kirim Data Ke Screen Lain
+                                // Navigator.push(
+                                //     context,
+                                //     MaterialPageRoute(
+                                //       builder: (context) =>
+                                //           TambahBarangMasuk(data: _listDataFiltered[i]),
+                                //     ));
+                              },
+                            ),
+                        ]),
+                  )
                 ],
               ),
             )
