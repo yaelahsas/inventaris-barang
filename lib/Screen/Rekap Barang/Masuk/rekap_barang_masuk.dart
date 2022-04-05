@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:inventaris_barang/Api/list_barang.dart';
+import 'package:inventaris_barang/Api/list_rekap.dart';
 import 'package:inventaris_barang/Screen/Barang/componen/app_bar.dart';
 import 'package:inventaris_barang/Screen/Rekap%20Barang/Masuk/tambah_rekap_masuk.dart';
 import 'package:inventaris_barang/constants.dart';
@@ -14,8 +15,8 @@ class RekapBarangMasuk extends StatefulWidget {
 class _RekapBarangMasukState extends State<RekapBarangMasuk> {
   int _currentSortColumn = 0;
   bool _isAscending = true;
-  late List<Data> _listData = [];
-  late List<Data> _listDataFiltered = [];
+  late List<Rekap> _listData = [];
+  late List<Rekap> _listDataFiltered = [];
   final TextEditingController _searchController = TextEditingController();
   String _searchResult = '';
 
@@ -23,7 +24,7 @@ class _RekapBarangMasukState extends State<RekapBarangMasuk> {
   void initState() {
     super.initState();
 
-    ListBarang.connectToAPI().then((value) {
+    ListRekap.getRekap("4").then((value) {
       _listData = value;
       _listDataFiltered = _listData;
       setState(() {});
@@ -59,7 +60,7 @@ class _RekapBarangMasukState extends State<RekapBarangMasuk> {
                           _searchResult = value;
                           _listDataFiltered = _listData
                               .where((user) =>
-                                  user.namaBarang!.contains(_searchResult))
+                                  user.inventaris!.contains(_searchResult))
                               .toList();
                         });
                       }),
@@ -77,7 +78,7 @@ class _RekapBarangMasukState extends State<RekapBarangMasuk> {
               ),
               DataTable(
                   showCheckboxColumn: false,
-                  columnSpacing: 38,
+                  columnSpacing: 30,
                   sortColumnIndex: _currentSortColumn,
                   sortAscending: _isAscending,
                   headingTextStyle: MaterialStateTextStyle.resolveWith(
@@ -85,27 +86,6 @@ class _RekapBarangMasukState extends State<RekapBarangMasuk> {
                   headingRowColor: MaterialStateProperty.resolveWith(
                       (states) => kPrimaryColor),
                   columns: [
-                    DataColumn(
-                        label: const Text('Id'),
-                        numeric: true,
-                        onSort: (index, _) {
-                          setState(() {
-                            _currentSortColumn = index;
-
-                            if (_isAscending == true) {
-                              _isAscending = false;
-                            } else {
-                              _isAscending = true;
-                            }
-                            _listData.sort((a, b) {
-                              if (_isAscending) {
-                                return a.id!.compareTo(b.id!);
-                              } else {
-                                return b.id!.compareTo(a.id!);
-                              }
-                            });
-                          });
-                        }),
                     DataColumn(
                         label: const Text('Name'),
                         onSort: (index, _) {
@@ -119,9 +99,69 @@ class _RekapBarangMasukState extends State<RekapBarangMasuk> {
                             }
                             _listData.sort((a, b) {
                               if (_isAscending) {
-                                return a.namaBarang!.compareTo(b.namaBarang!);
+                                return a.inventaris!.compareTo(b.inventaris!);
                               } else {
-                                return b.namaBarang!.compareTo(a.namaBarang!);
+                                return b.inventaris!.compareTo(a.inventaris!);
+                              }
+                            });
+                          });
+                        }),
+                    DataColumn(
+                        label: const Text('Jumlah'),
+                        onSort: (index, _) {
+                          setState(() {
+                            _currentSortColumn = index;
+
+                            if (_isAscending == true) {
+                              _isAscending = false;
+                            } else {
+                              _isAscending = true;
+                            }
+                            _listData.sort((a, b) {
+                              if (_isAscending) {
+                                return a.jumlahAwal!.compareTo(b.jumlahAwal!);
+                              } else {
+                                return b.jumlahAwal!.compareTo(a.jumlahAwal!);
+                              }
+                            });
+                          });
+                        }),
+                    DataColumn(
+                        label: const Text('Tanggal'),
+                        onSort: (index, _) {
+                          setState(() {
+                            _currentSortColumn = index;
+
+                            if (_isAscending == true) {
+                              _isAscending = false;
+                            } else {
+                              _isAscending = true;
+                            }
+                            _listData.sort((a, b) {
+                              if (_isAscending) {
+                                return a.tanggal!.compareTo(b.tanggal!);
+                              } else {
+                                return b.tanggal!.compareTo(a.tanggal!);
+                              }
+                            });
+                          });
+                        }),
+                    DataColumn(
+                        label: const Text('Keterangan'),
+                        onSort: (index, _) {
+                          setState(() {
+                            _currentSortColumn = index;
+
+                            if (_isAscending == true) {
+                              _isAscending = false;
+                            } else {
+                              _isAscending = true;
+                            }
+                            _listData.sort((a, b) {
+                              if (_isAscending) {
+                                return a.namaStatus!.compareTo(b.namaStatus!);
+                              } else {
+                                return b.namaStatus!.compareTo(a.namaStatus!);
                               }
                             });
                           });
@@ -131,10 +171,14 @@ class _RekapBarangMasukState extends State<RekapBarangMasuk> {
                     for (var i = 0; i < _listDataFiltered.length; i++)
                       DataRow(
                         cells: [
-                          DataCell(Text(_listDataFiltered[i].id.toString())),
                           DataCell(SizedBox(
-                              width: size.width,
-                              child: Text(_listDataFiltered[i].namaBarang!))),
+                              child: Text(_listDataFiltered[i].inventaris!))),
+                          DataCell(SizedBox(
+                              child: Text(_listDataFiltered[i].jumlahAwal!))),
+                          DataCell(SizedBox(
+                              child: Text(_listDataFiltered[i].tanggal!))),
+                          DataCell(SizedBox(
+                              child: Text(_listDataFiltered[i].namaStatus!))),
                         ],
                         onSelectChanged: (value) {
                           // Kirim Data Ke Screen Lain
@@ -156,7 +200,7 @@ class _RekapBarangMasukState extends State<RekapBarangMasuk> {
               return const TambahRekapMasuk();
             })).then((value) {
               if (value) {
-                ListBarang.connectToAPI().then((value) {
+                ListRekap.getRekap("4").then((value) {
                   _listData = value;
                   _listDataFiltered = _listData;
                   setState(() {});

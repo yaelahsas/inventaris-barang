@@ -5,7 +5,9 @@ import 'package:intl/intl.dart';
 import 'package:inventaris_barang/Api/list_divisi.dart';
 import 'package:inventaris_barang/Api/list_status.dart';
 import 'package:inventaris_barang/Api/tambah_barang.dart';
+import 'package:inventaris_barang/Api/tambah_rekap.dart';
 import 'package:inventaris_barang/Screen/Barang/componen/app_bar.dart';
+import 'package:inventaris_barang/Screen/Rekap%20Barang/Masuk/rekap_barang_masuk.dart';
 import 'package:inventaris_barang/constants.dart';
 
 class TambahRekapMasuk extends StatefulWidget {
@@ -214,25 +216,38 @@ class _TambahRekapMasukState extends State<TambahRekapMasuk> {
                         primary: kPrimaryColor,
                         textStyle: const TextStyle(fontSize: 20)),
                     onPressed: () {
-                      // if (hasil.success == true) {
-                      //   Fluttertoast.showToast(
-                      //       msg: hasil.message!,
-                      //       toastLength: Toast.LENGTH_SHORT,
-                      //       gravity: ToastGravity.BOTTOM,
-                      //       timeInSecForIosWeb: 1,
-                      //       backgroundColor: kPrimaryColor,
-                      //       textColor: Colors.white,
-                      //       fontSize: 16.0);
-                      // } else {
-                      //   Fluttertoast.showToast(
-                      //       msg: hasil.message!,
-                      //       toastLength: Toast.LENGTH_SHORT,
-                      //       gravity: ToastGravity.BOTTOM,
-                      //       timeInSecForIosWeb: 1,
-                      //       backgroundColor: Colors.red,
-                      //       textColor: Colors.white,
-                      //       fontSize: 16.0);
-                      // }
+                      TambahRekap.barangMasuk(
+                              _cPIC.text,
+                              _cInventaris.text,
+                              _cSpesifikasi.text,
+                              DateFormat.yMd().format(time),
+                              _cJumlahAwal.text,
+                              _cJumlahAkhir.text,
+                              dropdownValue!.id.toString())
+                          .then((value) => {
+                                if (value.success == true)
+                                  {
+                                    Fluttertoast.showToast(
+                                        msg: value.message!,
+                                        toastLength: Toast.LENGTH_SHORT,
+                                        gravity: ToastGravity.BOTTOM,
+                                        timeInSecForIosWeb: 1,
+                                        backgroundColor: kPrimaryColor,
+                                        textColor: Colors.white,
+                                        fontSize: 16.0)
+                                  }
+                                else
+                                  {
+                                    Fluttertoast.showToast(
+                                        msg: value.message!,
+                                        toastLength: Toast.LENGTH_SHORT,
+                                        gravity: ToastGravity.BOTTOM,
+                                        timeInSecForIosWeb: 1,
+                                        backgroundColor: Colors.red,
+                                        textColor: Colors.white,
+                                        fontSize: 16.0)
+                                  }
+                              });
                     },
                     child: const Text("Tambah"),
                   ),
