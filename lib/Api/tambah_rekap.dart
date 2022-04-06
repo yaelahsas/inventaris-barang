@@ -28,7 +28,8 @@ class TambahRekap {
       String tanggal,
       String jumlah_awal,
       String jumlah_akhir,
-      String id_divisi) async {
+      String id_divisi,
+      String id_status_barang) async {
     Uri apiUrl = Uri.parse(Url.web + "rekap/tambah/masuk");
 
     var result = await http.post(apiUrl, body: {
@@ -39,6 +40,7 @@ class TambahRekap {
       'jumlah_awal': jumlah_awal,
       'jumlah_akhir': jumlah_akhir,
       'id_divisi': id_divisi,
+      'id_status_barang': id_status_barang
     }, headers: {
       'Connection': 'keep-alive',
     });

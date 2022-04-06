@@ -7,14 +7,14 @@ import 'package:inventaris_barang/Api/tambah_rekap.dart';
 import 'package:inventaris_barang/Screen/Barang/componen/app_bar.dart';
 import 'package:inventaris_barang/constants.dart';
 
-class TambahRekapMasuk extends StatefulWidget {
-  const TambahRekapMasuk({Key? key}) : super(key: key);
+class TambahRekapKeluar extends StatefulWidget {
+  const TambahRekapKeluar({Key? key}) : super(key: key);
 
   @override
-  State<TambahRekapMasuk> createState() => _TambahRekapMasukState();
+  State<TambahRekapKeluar> createState() => _TambahRekapKeluarState();
 }
 
-class _TambahRekapMasukState extends State<TambahRekapMasuk> {
+class _TambahRekapKeluarState extends State<TambahRekapKeluar> {
   DateTime time = DateTime.now();
   final TextEditingController _cInventaris = TextEditingController();
   final TextEditingController _cSpesifikasi = TextEditingController();
@@ -61,7 +61,7 @@ class _TambahRekapMasukState extends State<TambahRekapMasuk> {
       },
       child: Scaffold(
         resizeToAvoidBottomInset: false,
-        appBar: const AppBarBarang(judul: "Tambah Barang Masuk"),
+        appBar: const AppBarBarang(judul: "Tambah Barang Keluar"),
         body: SingleChildScrollView(
           child: Container(
             width: double.infinity,
@@ -193,7 +193,7 @@ class _TambahRekapMasukState extends State<TambahRekapMasuk> {
                               _cJumlahAwal.text,
                               _cJumlahAkhir.text,
                               dropdownValue!.id.toString(),
-                              "4")
+                              "5")
                           .then((value) => {
                                 if (value.success == true)
                                   {

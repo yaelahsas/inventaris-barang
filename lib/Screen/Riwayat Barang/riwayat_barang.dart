@@ -85,7 +85,7 @@ class _RiwayatBarangState extends State<RiwayatBarang> {
                     scrollDirection: Axis.vertical,
                     child: DataTable(
                         showCheckboxColumn: false,
-                        columnSpacing: 20,
+                        columnSpacing: 30,
                         // sortColumnIndex: _currentSortColumn,
                         // sortAscending: _isAscending,
                         headingTextStyle: MaterialStateTextStyle.resolveWith(

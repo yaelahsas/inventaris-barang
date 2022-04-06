@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:inventaris_barang/Screen/Rekap%20Barang/Hilang/rekap_barang_hilang.dart';
+import 'package:inventaris_barang/Screen/Rekap%20Barang/Keluar/rekap_barang_keluar.dart';
 import 'package:inventaris_barang/Screen/Rekap%20Barang/Masuk/rekap_barang_masuk.dart';
 
 import '../../constants.dart';
+import 'Ganti/rekap_barang_ganti.dart';
 
 class RekapBarang extends StatelessWidget {
   const RekapBarang({Key? key}) : super(key: key);
@@ -50,7 +53,13 @@ class RekapBarang extends StatelessWidget {
                 style: ElevatedButton.styleFrom(
                     primary: kPrimaryColor,
                     textStyle: const TextStyle(fontSize: 20)),
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => RekapBarangKeluar(),
+                      ));
+                },
                 child: const Text("Rekapan barang keluar"),
               ),
             ),
@@ -61,7 +70,13 @@ class RekapBarang extends StatelessWidget {
                 style: ElevatedButton.styleFrom(
                     primary: kPrimaryColor,
                     textStyle: const TextStyle(fontSize: 20)),
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => RekapBarangHilang(),
+                      ));
+                },
                 child: const Text("Rekapan barang hilang"),
               ),
             ),
@@ -72,7 +87,13 @@ class RekapBarang extends StatelessWidget {
                 style: ElevatedButton.styleFrom(
                     primary: kPrimaryColor,
                     textStyle: const TextStyle(fontSize: 20)),
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => RekapBarangGanti(),
+                      ));
+                },
                 child: const Text("Rekapan barang ganti baru"),
               ),
             ),

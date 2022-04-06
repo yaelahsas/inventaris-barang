@@ -2,17 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:inventaris_barang/Api/list_rekap.dart';
 import 'package:inventaris_barang/Screen/Barang/componen/app_bar.dart';
+import 'package:inventaris_barang/Screen/Rekap%20Barang/Hilang/tambah_rekap_hilang.dart';
 import 'package:inventaris_barang/Screen/Rekap%20Barang/Masuk/tambah_rekap_masuk.dart';
 import 'package:inventaris_barang/constants.dart';
 
-class RekapBarangMasuk extends StatefulWidget {
-  const RekapBarangMasuk({Key? key}) : super(key: key);
+class RekapBarangHilang extends StatefulWidget {
+  const RekapBarangHilang({Key? key}) : super(key: key);
 
   @override
-  State<RekapBarangMasuk> createState() => _RekapBarangMasukState();
+  State<RekapBarangHilang> createState() => _RekapBarangHilangState();
 }
 
-class _RekapBarangMasukState extends State<RekapBarangMasuk> {
+class _RekapBarangHilangState extends State<RekapBarangHilang> {
   int _currentSortColumn = 0;
   bool _isAscending = true;
   late List<Rekap> _listData = [];
@@ -24,7 +25,7 @@ class _RekapBarangMasukState extends State<RekapBarangMasuk> {
   void initState() {
     super.initState();
 
-    ListRekap.getRekap("4").then((value) {
+    ListRekap.getRekap("3").then((value) {
       if (value.length == 0) {
         Fluttertoast.showToast(
             msg: "Data tidak ditemukan",
@@ -51,7 +52,7 @@ class _RekapBarangMasukState extends State<RekapBarangMasuk> {
       },
       child: Scaffold(
         resizeToAvoidBottomInset: false,
-        appBar: const AppBarBarang(judul: "Rekap Barang Masuk"),
+        appBar: const AppBarBarang(judul: "Rekap Barang Hilang"),
         body: Container(
           width: double.infinity,
           padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 5),
@@ -195,7 +196,7 @@ class _RekapBarangMasukState extends State<RekapBarangMasuk> {
                           // Navigator.push(
                           //     context,
                           //     MaterialPageRoute(
-                          //       builder: (context) => TambahRekapBarangMasuk(
+                          //       builder: (context) => TambahRekapBarangHilang(
                           //           data: _listDataFiltered[i]),
                           //     ));
                         },
@@ -207,10 +208,10 @@ class _RekapBarangMasukState extends State<RekapBarangMasuk> {
         floatingActionButton: FloatingActionButton(
           onPressed: () {
             Navigator.push(context, MaterialPageRoute(builder: (context) {
-              return const TambahRekapMasuk();
+              return const TambahRekapHilang();
             })).then((value) {
               if (value) {
-                ListRekap.getRekap("4").then((value) {
+                ListRekap.getRekap("3").then((value) {
                   _listData = value;
                   _listDataFiltered = _listData;
                   setState(() {});
