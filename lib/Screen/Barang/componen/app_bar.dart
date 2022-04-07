@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:inventaris_barang/Api/list_barang.dart';
+import 'package:inventaris_barang/Screen/Barang/tambah_barang_keluar.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:qrscan/qrscan.dart' as scanner;
 
 import '../tambah_barang_masuk.dart';
@@ -18,16 +20,32 @@ class AppBarBarang extends StatelessWidget implements PreferredSizeWidget {
             color: Colors.white,
           ),
           onPressed: () async {
-            String? cameraScanResult = await scanner.scan();
-            var a = cameraScanResult!;
-            ListBarang.scanData(a).then((hasil) {
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) =>
-                        TambahBarangMasuk(data: hasil.dataScan!),
-                  ));
-            });
+            var status = await Permission.storage.status;
+            if (status.isGranted) {
+              if (judul.contains('Barang Masuk')) {
+                String? cameraScanResult = await scanner.scan();
+                var a = cameraScanResult!;
+                ListBarang.scanData(a).then((hasil) {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) =>
+                            TambahBarangMasuk(data: hasil.dataScan!),
+                      ));
+                });
+              } else {
+                String? cameraScanResult = await scanner.scan();
+                var a = cameraScanResult!;
+                ListBarang.scanData(a).then((hasil) {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) =>
+                            TambahBarangKeluar(data: hasil.dataScan!),
+                      ));
+                });
+              }
+            }
           },
         ),
       ],

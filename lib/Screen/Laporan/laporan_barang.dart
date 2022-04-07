@@ -18,17 +18,15 @@ class LaporanBarang extends StatefulWidget {
 }
 
 class _LaporanBarangState extends State<LaporanBarang> {
-  ReceivePort _port = ReceivePort();
-  _aw() async {}
+  final ReceivePort _port = ReceivePort();
+
   @override
   initState() {
     super.initState();
     IsolateNameServer.registerPortWithName(
         _port.sendPort, 'downloader_send_port');
     _port.listen((dynamic data) {
-      String id = data[0];
       DownloadTaskStatus status = data[1];
-      int progress = data[2];
       if (status == DownloadTaskStatus.complete) {
         Fluttertoast.showToast(
             msg: "Download Selesai",
@@ -78,11 +76,11 @@ class _LaporanBarangState extends State<LaporanBarang> {
       },
       child: Scaffold(
         appBar: AppBar(
-          title: Text("Laporan"),
+          title: const Text("Laporan"),
           actions: [
             IconButton(
               color: kPrimaryLightColor,
-              icon: Icon(Icons.file_download),
+              icon: const Icon(Icons.file_download),
               onPressed: () {
                 _downloadPdf();
               },

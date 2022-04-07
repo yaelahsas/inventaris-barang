@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import '../Barang/componen/app_bar.dart';
 import 'package:inventaris_barang/Screen/Dashboard/componen/body_affair.dart';
 
 class DashboarAffair extends StatelessWidget {
@@ -7,9 +6,9 @@ class DashboarAffair extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
-      appBar: AppBarBarang(judul: "Dashboard Affair"),
-      body: BodyAffair(),
+    return Scaffold(
+      appBar: AppBar(title: const Text('Dashboard Affair')),
+      body: const BodyAffair(),
     );
   }
 }

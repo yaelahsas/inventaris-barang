@@ -52,7 +52,7 @@ class _TambahBarangKeluarState extends State<TambahBarangKeluar> {
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      appBar: const AppBarBarang(judul: "Tambah Barang Masuk"),
+      appBar: const AppBarBarang(judul: "Tambah Barang Keluar"),
       body: SingleChildScrollView(
         child: Container(
           width: double.infinity,
@@ -124,7 +124,7 @@ class _TambahBarangKeluarState extends State<TambahBarangKeluar> {
                       lastDate: DateTime(2100),
                     ).then((hasil) {
                       if (hasil == null) return;
-                      date = DateFormat.yMd().format(hasil);
+                      date = DateFormat('yyyy-MM-dd').format(hasil);
                       _cTanggal.text = date;
                     });
                   },
@@ -165,7 +165,7 @@ class _TambahBarangKeluarState extends State<TambahBarangKeluar> {
                       primary: kPrimaryColor,
                       textStyle: const TextStyle(fontSize: 20)),
                   onPressed: () {
-                    TambahBarang.barangMasuk(
+                    TambahBarang.barangKeluar(
                             _cId.text, _cTanggal.text, _cJumlah.text)
                         .then((hasil) {
                       if (hasil.success == true) {

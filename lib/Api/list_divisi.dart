@@ -16,7 +16,7 @@ class ListDivisi {
     if (json['data'] != null) {
       data = <Divisi>[];
       json['data'].forEach((v) {
-        data!.add(new Divisi.fromJson(v));
+        data!.add(Divisi.fromJson(v));
       });
     }
   }
@@ -27,9 +27,9 @@ class ListDivisi {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['success'] = this.success;
-    data['message'] = this.message;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['success'] = success;
+    data['message'] = message;
     if (this.data != null) {
       data['data'] = this.data!.map((v) => v.toJson()).toList();
     }
@@ -77,13 +77,13 @@ class Divisi {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['nama_divisi'] = this.namaDivisi;
-    data['nama_barang'] = this.namaBarang;
-    data['jumlah_barang'] = this.jumlahBarang;
-    data['created_at'] = this.createdAt;
-    data['updated_at'] = this.updatedAt;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
+    data['nama_divisi'] = namaDivisi;
+    data['nama_barang'] = namaBarang;
+    data['jumlah_barang'] = jumlahBarang;
+    data['created_at'] = createdAt;
+    data['updated_at'] = updatedAt;
     return data;
   }
 

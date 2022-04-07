@@ -7,8 +7,6 @@ import 'package:inventaris_barang/Api/tambah_barang.dart';
 import 'package:inventaris_barang/Screen/Barang/componen/app_bar.dart';
 import 'package:inventaris_barang/constants.dart';
 
-import '../../Api/list_barang.dart';
-
 class TambahBarangMasukBaru extends StatefulWidget {
   const TambahBarangMasukBaru({Key? key}) : super(key: key);
 
@@ -19,8 +17,6 @@ class TambahBarangMasukBaru extends StatefulWidget {
 class _TambahBarangMasukBaruState extends State<TambahBarangMasukBaru> {
   DateTime time = DateTime.now();
   final TextEditingController _cName = TextEditingController();
-  final TextEditingController _cId = TextEditingController();
-  final TextEditingController _cNamaDivisi = TextEditingController();
   final TextEditingController _cNamaSpesifikasi = TextEditingController();
   final TextEditingController _cTanggal = TextEditingController();
   final TextEditingController _cJumlah = TextEditingController();
@@ -118,7 +114,6 @@ class _TambahBarangMasukBaruState extends State<TambahBarangMasukBaru> {
                       onChanged: (data) {
                         setState(() {
                           dropdownValue = data;
-                          print(dropdownValue);
                         });
                       },
                       items: spinnerItems?.map((Divisi value) {

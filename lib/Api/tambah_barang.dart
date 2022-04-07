@@ -50,7 +50,7 @@ class TambahBarang {
 
   static Future<TambahBarang> barangKeluar(
       String id, String tanggal, String jumlah) async {
-    Uri apiUrl = Uri.parse(Url.web + "barang/masuk/edit/" + id);
+    Uri apiUrl = Uri.parse(Url.web + "barang/keluar/edit/" + id);
 
     var result = await http.post(apiUrl, body: {
       'tanggal_masuk': tanggal,

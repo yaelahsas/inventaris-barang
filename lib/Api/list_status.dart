@@ -16,7 +16,7 @@ class ListStatus {
     if (json['data'] != null) {
       data = <Status>[];
       json['data'].forEach((v) {
-        data!.add(new Status.fromJson(v));
+        data!.add(Status.fromJson(v));
       });
     }
   }
@@ -27,9 +27,9 @@ class ListStatus {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['success'] = this.success;
-    data['message'] = this.message;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['success'] = success;
+    data['message'] = message;
     if (this.data != null) {
       data['data'] = this.data!.map((v) => v.toJson()).toList();
     }
@@ -68,9 +68,9 @@ class Status {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['nama_status'] = this.namaStatus;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
+    data['nama_status'] = namaStatus;
     return data;
   }
 }

@@ -15,9 +15,9 @@ class TambahRekap {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['success'] = this.success;
-    data['message'] = this.message;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['success'] = success;
+    data['message'] = message;
     return data;
   }
 
@@ -26,10 +26,10 @@ class TambahRekap {
       String inventaris,
       String spesifikasi,
       String tanggal,
-      String jumlah_awal,
-      String jumlah_akhir,
-      String id_divisi,
-      String id_status_barang) async {
+      String jumlahAwal,
+      String jumlahAkhir,
+      String idDivisi,
+      String idStatusBarang) async {
     Uri apiUrl = Uri.parse(Url.web + "rekap/tambah/masuk");
 
     var result = await http.post(apiUrl, body: {
@@ -37,10 +37,10 @@ class TambahRekap {
       'inventaris': inventaris,
       'spesifikasi': spesifikasi,
       'tanggal': tanggal,
-      'jumlah_awal': jumlah_awal,
-      'jumlah_akhir': jumlah_akhir,
-      'id_divisi': id_divisi,
-      'id_status_barang': id_status_barang
+      'jumlah_awal': jumlahAwal,
+      'jumlah_akhir': jumlahAkhir,
+      'id_divisi': idDivisi,
+      'id_status_barang': idStatusBarang
     }, headers: {
       'Connection': 'keep-alive',
     });

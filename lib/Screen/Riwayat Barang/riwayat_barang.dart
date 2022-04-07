@@ -59,7 +59,7 @@ class _RiwayatBarangState extends State<RiwayatBarang> {
                       setState(() {
                         _searchResult = value;
                         _listDataFiltered = _listData
-                            .where((user) => user.inventaris!
+                            .where((user) => user.namaBarang!
                                 .toLowerCase()
                                 .contains(_searchResult))
                             .toList();
@@ -107,11 +107,11 @@ class _RiwayatBarangState extends State<RiwayatBarang> {
                                   }
                                   _listData.sort((a, b) {
                                     if (_isAscending) {
-                                      return a.inventaris!
-                                          .compareTo(b.inventaris!);
+                                      return a.namaBarang!
+                                          .compareTo(b.namaBarang!);
                                     } else {
-                                      return b.inventaris!
-                                          .compareTo(a.inventaris!);
+                                      return b.namaBarang!
+                                          .compareTo(a.namaBarang!);
                                     }
                                   });
                                 });
@@ -130,11 +130,11 @@ class _RiwayatBarangState extends State<RiwayatBarang> {
                                   }
                                   _listData.sort((a, b) {
                                     if (_isAscending) {
-                                      return a.jumlahAkhir!
-                                          .compareTo(b.jumlahAkhir!);
+                                      return a.jumlahBarang!
+                                          .compareTo(b.jumlahBarang!);
                                     } else {
-                                      return b.jumlahAkhir!
-                                          .compareTo(a.jumlahAkhir!);
+                                      return b.jumlahBarang!
+                                          .compareTo(a.jumlahBarang!);
                                     }
                                   });
                                 });
@@ -169,10 +169,10 @@ class _RiwayatBarangState extends State<RiwayatBarang> {
                                 DataCell(SizedBox(
                                     // width: MediaQuery.of(context).size.width,
                                     child: Text(
-                                        _listDataFiltered[i].inventaris!))),
+                                        _listDataFiltered[i].namaBarang!))),
                                 DataCell(Text(_listDataFiltered[i].tanggal!)),
                                 DataCell(Text(_listDataFiltered[i]
-                                    .jumlahAkhir!
+                                    .jumlahBarang!
                                     .toString())),
                                 DataCell(
                                     Text(_listDataFiltered[i].namaStatus!)),

@@ -60,6 +60,7 @@ class Data {
   int? id;
   String? name;
   String? username;
+  int? idRole;
   String? createdAt;
   String? updatedAt;
 
@@ -69,6 +70,7 @@ class Data {
     id = json['id'];
     name = json['name'];
     username = json['username'];
+    idRole = json['id_role'];
     createdAt = json['created_at'];
     updatedAt = json['updated_at'];
   }
@@ -83,6 +85,7 @@ class Data {
     data['id'] = id;
     data['name'] = name;
     data['username'] = username;
+    data['id_role'] = idRole;
     data['created_at'] = createdAt;
     data['updated_at'] = updatedAt;
     return data;

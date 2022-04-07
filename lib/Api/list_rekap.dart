@@ -16,7 +16,7 @@ class ListRekap {
     if (json['data'] != null) {
       data = <Rekap>[];
       json['data'].forEach((v) {
-        data!.add(new Rekap.fromJson(v));
+        data!.add(Rekap.fromJson(v));
       });
     }
   }
@@ -41,9 +41,9 @@ class ListRekap {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['success'] = this.success;
-    data['message'] = this.message;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['success'] = success;
+    data['message'] = message;
     if (this.data != null) {
       data['data'] = this.data!.map((v) => v.toJson()).toList();
     }
@@ -103,20 +103,20 @@ class Rekap {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['nama_status'] = this.namaStatus;
-    data['created_at'] = this.createdAt;
-    data['updated_at'] = this.updatedAt;
-    data['nama_divisi'] = this.namaDivisi;
-    data['nama'] = this.nama;
-    data['inventaris'] = this.inventaris;
-    data['spesifikasi'] = this.spesifikasi;
-    data['tanggal'] = this.tanggal;
-    data['jumlah_awal'] = this.jumlahAwal;
-    data['jumlah_akhir'] = this.jumlahAkhir;
-    data['id_divisi'] = this.idDivisi;
-    data['id_status_barang'] = this.idStatusBarang;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
+    data['nama_status'] = namaStatus;
+    data['created_at'] = createdAt;
+    data['updated_at'] = updatedAt;
+    data['nama_divisi'] = namaDivisi;
+    data['nama'] = nama;
+    data['inventaris'] = inventaris;
+    data['spesifikasi'] = spesifikasi;
+    data['tanggal'] = tanggal;
+    data['jumlah_awal'] = jumlahAwal;
+    data['jumlah_akhir'] = jumlahAkhir;
+    data['id_divisi'] = idDivisi;
+    data['id_status_barang'] = idStatusBarang;
     return data;
   }
 }

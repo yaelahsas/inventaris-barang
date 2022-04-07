@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:inventaris_barang/Api/login.dart';
 import 'package:inventaris_barang/Screen/Dashboard/dashboard_affair.dart';
+import 'package:inventaris_barang/Screen/Dashboard/dashboard_petugas.dart';
 import 'package:inventaris_barang/Screen/Signup/signup_screen.dart';
 import 'package:inventaris_barang/constants.dart';
 
@@ -116,11 +117,19 @@ class _BodySigninState extends State<BodySignin> {
                                 backgroundColor: kPrimaryColor,
                                 textColor: Colors.white,
                                 fontSize: 16.0);
-                            Navigator.pushReplacement(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) =>
-                                        const DashboarAffair()));
+                            if (result!.data!.idRole == 2) {
+                              Navigator.pushReplacement(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          const DashboarPetugas()));
+                            } else if (result!.data!.idRole == 3) {
+                              Navigator.pushReplacement(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          const DashboarAffair()));
+                            }
                           } else {
                             Fluttertoast.showToast(
                                 msg: result!.message!,

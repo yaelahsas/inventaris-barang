@@ -16,7 +16,7 @@ class ListRiwayat {
     if (json['data'] != null) {
       data = <Data>[];
       json['data'].forEach((v) {
-        data!.add(new Data.fromJson(v));
+        data!.add(Data.fromJson(v));
       });
     }
   }
@@ -26,9 +26,9 @@ class ListRiwayat {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['success'] = this.success;
-    data['message'] = this.message;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['success'] = success;
+    data['message'] = message;
     if (this.data != null) {
       data['data'] = this.data!.map((v) => v.toJson()).toList();
     }
@@ -36,7 +36,7 @@ class ListRiwayat {
   }
 
   static Future<List<Data>> getRiwayat() async {
-    Uri apiUrl = Uri.parse(Url.web + "rekap");
+    Uri apiUrl = Uri.parse(Url.web + "riwayat");
 
     var hasil = await http.get(apiUrl);
     var result = jsonDecode(hasil.body);
@@ -52,70 +52,62 @@ class ListRiwayat {
 
 class Data {
   int? id;
-  String? namaStatus;
-  String? createdAt;
-  String? updatedAt;
-  String? namaDivisi;
-  String? nama;
-  String? inventaris;
+  String? namaBarang;
   String? spesifikasi;
+  String? jumlahBarang;
   String? tanggal;
-  String? jumlahAwal;
-  String? jumlahAkhir;
   int? idDivisi;
   int? idStatusBarang;
+  String? createdAt;
+  String? updatedAt;
+  String? namaStatus;
+  String? namaDivisi;
 
   Data(
       {this.id,
-      this.namaStatus,
+      this.namaBarang,
+      this.spesifikasi,
+      this.jumlahBarang,
+      this.tanggal,
+      this.idDivisi,
+      this.idStatusBarang,
       this.createdAt,
       this.updatedAt,
-      this.namaDivisi,
-      this.nama,
-      this.inventaris,
-      this.spesifikasi,
-      this.tanggal,
-      this.jumlahAwal,
-      this.jumlahAkhir,
-      this.idDivisi,
-      this.idStatusBarang});
-
-  @override
-  String toString() {
-    return 'Data{id: $id, namaStatus: $namaStatus, createdAt: $createdAt, updatedAt: $updatedAt, namaDivisi: $namaDivisi, nama: $nama, inventaris: $inventaris, spesifikasi: $spesifikasi, tanggal: $tanggal, jumlahAwal: $jumlahAwal, jumlahAkhir: $jumlahAkhir, idDivisi: $idDivisi, idStatusBarang: $idStatusBarang}';
-  }
+      this.namaStatus,
+      this.namaDivisi});
 
   Data.fromJson(Map<String, dynamic> json) {
     id = json['id'];
-    namaStatus = json['nama_status'];
-    createdAt = json['created_at'];
-    updatedAt = json['updated_at'];
-    namaDivisi = json['nama_divisi'];
-    nama = json['nama'];
-    inventaris = json['inventaris'];
+    namaBarang = json['nama_barang'];
     spesifikasi = json['spesifikasi'];
+    jumlahBarang = json['jumlah_barang'];
     tanggal = json['tanggal'];
-    jumlahAwal = json['jumlah_awal'];
-    jumlahAkhir = json['jumlah_akhir'];
     idDivisi = json['id_divisi'];
     idStatusBarang = json['id_status_barang'];
+    createdAt = json['created_at'];
+    updatedAt = json['updated_at'];
+    namaStatus = json['nama_status'];
+    namaDivisi = json['nama_divisi'];
+  }
+
+  @override
+  String toString() {
+    return 'Data{id: $id, namaBarang: $namaBarang, spesifikasi: $spesifikasi, jumlahBarang: $jumlahBarang, tanggal: $tanggal, idDivisi: $idDivisi, idStatusBarang: $idStatusBarang, createdAt: $createdAt, updatedAt: $updatedAt, namaStatus: $namaStatus, namaDivisi: $namaDivisi}';
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['nama_status'] = this.namaStatus;
-    data['created_at'] = this.createdAt;
-    data['updated_at'] = this.updatedAt;
-    data['nama_divisi'] = this.namaDivisi;
-    data['nama'] = this.nama;
-    data['inventaris'] = this.inventaris;
-    data['spesifikasi'] = this.spesifikasi;
-    data['tanggal'] = this.tanggal;
-    data['jumlah_awal'] = this.jumlahAwal;
-    data['jumlah_akhir'] = this.jumlahAkhir;
-    data['id_divisi'] = this.idDivisi;
-    data['id_status_barang'] = this.idStatusBarang;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
+    data['nama_barang'] = namaBarang;
+    data['spesifikasi'] = spesifikasi;
+    data['jumlah_barang'] = jumlahBarang;
+    data['tanggal'] = tanggal;
+    data['id_divisi'] = idDivisi;
+    data['id_status_barang'] = idStatusBarang;
+    data['created_at'] = createdAt;
+    data['updated_at'] = updatedAt;
+    data['nama_status'] = namaStatus;
+    data['nama_divisi'] = namaDivisi;
     return data;
   }
 }
