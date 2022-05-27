@@ -8,8 +8,8 @@ import 'package:inventaris_barang/Screen/Barang/componen/app_bar.dart';
 import 'package:inventaris_barang/constants.dart';
 
 class TambahRekapHilang extends StatefulWidget {
-  const TambahRekapHilang({Key? key}) : super(key: key);
-
+  const TambahRekapHilang({Key? key, required this.idRekap}) : super(key: key);
+  final String idRekap;
   @override
   State<TambahRekapHilang> createState() => _TambahRekapHilangState();
 }
@@ -45,11 +45,11 @@ class _TambahRekapHilangState extends State<TambahRekapHilang> {
   void dispose() {
     super.dispose();
 
-    // _cName.dispose();
-    // _cNamaDivisi.dispose();
-    // _cNamaSpesifikasi.dispose();
-    // _cTanggal.dispose();
-    // _cJumlah.dispose();
+    _cInventaris.dispose();
+    _cSpesifikasi.dispose();
+    _cJumlahAwal.dispose();
+    _cJumlahAkhir.dispose();
+    _cPIC.dispose();
   }
 
   @override
@@ -189,11 +189,12 @@ class _TambahRekapHilangState extends State<TambahRekapHilang> {
                               _cPIC.text,
                               _cInventaris.text,
                               _cSpesifikasi.text,
-                              DateFormat.yMd().format(time),
+                              DateFormat('yyyy-MM-dd').format(time),
                               _cJumlahAwal.text,
                               _cJumlahAkhir.text,
                               dropdownValue!.id.toString(),
-                              "3")
+                              "3",
+                              widget.idRekap)
                           .then((value) => {
                                 if (value.success == true)
                                   {

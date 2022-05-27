@@ -1,3 +1,4 @@
+import 'package:date_format/date_format.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:inventaris_barang/Api/list_rekap.dart';
@@ -7,7 +8,8 @@ import 'package:inventaris_barang/Screen/Rekap%20Barang/Masuk/tambah_rekap_masuk
 import 'package:inventaris_barang/constants.dart';
 
 class RekapBarangKeluar extends StatefulWidget {
-  const RekapBarangKeluar({Key? key}) : super(key: key);
+  const RekapBarangKeluar({Key? key, required this.idRekap}) : super(key: key);
+  final String idRekap;
 
   @override
   State<RekapBarangKeluar> createState() => _RekapBarangKeluarState();
@@ -25,7 +27,7 @@ class _RekapBarangKeluarState extends State<RekapBarangKeluar> {
   void initState() {
     super.initState();
 
-    ListRekap.getRekap("5").then((value) {
+    ListRekap.getRekap("5", widget.idRekap).then((value) {
       if (value.length == 0) {
         Fluttertoast.showToast(
             msg: "Data tidak ditemukan",
@@ -208,10 +210,12 @@ class _RekapBarangKeluarState extends State<RekapBarangKeluar> {
         floatingActionButton: FloatingActionButton(
           onPressed: () {
             Navigator.push(context, MaterialPageRoute(builder: (context) {
-              return const TambahRekapKeluar();
+              return TambahRekapKeluar(
+                idRekap: widget.idRekap,
+              );
             })).then((value) {
               if (value) {
-                ListRekap.getRekap("5").then((value) {
+                ListRekap.getRekap("5", widget.idRekap).then((value) {
                   _listData = value;
                   _listDataFiltered = _listData;
                   setState(() {});

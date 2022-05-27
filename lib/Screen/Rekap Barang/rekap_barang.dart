@@ -7,8 +7,8 @@ import '../../constants.dart';
 import 'Ganti/rekap_barang_ganti.dart';
 
 class RekapBarang extends StatelessWidget {
-  const RekapBarang({Key? key}) : super(key: key);
-
+  const RekapBarang({Key? key, required this.id}) : super(key: key);
+  final String id;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -40,7 +40,7 @@ class RekapBarang extends StatelessWidget {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => RekapBarangMasuk(),
+                        builder: (context) => RekapBarangMasuk(idRekap: id),
                       ));
                 },
                 child: const Text("Rekapan barang masuk"),
@@ -57,7 +57,7 @@ class RekapBarang extends StatelessWidget {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => RekapBarangKeluar(),
+                        builder: (context) => RekapBarangKeluar(idRekap: id),
                       ));
                 },
                 child: const Text("Rekapan barang keluar"),
@@ -74,7 +74,7 @@ class RekapBarang extends StatelessWidget {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => RekapBarangHilang(),
+                        builder: (context) => RekapBarangHilang(idRekap: id),
                       ));
                 },
                 child: const Text("Rekapan barang hilang"),
@@ -91,7 +91,7 @@ class RekapBarang extends StatelessWidget {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => RekapBarangGanti(),
+                        builder: (context) => RekapBarangGanti(idRekap: id),
                       ));
                 },
                 child: const Text("Rekapan barang ganti baru"),

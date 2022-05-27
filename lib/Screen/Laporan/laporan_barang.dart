@@ -11,7 +11,8 @@ import 'package:flutter_downloader/flutter_downloader.dart';
 import 'package:path_provider/path_provider.dart';
 
 class LaporanBarang extends StatefulWidget {
-  const LaporanBarang({Key? key}) : super(key: key);
+  const LaporanBarang({Key? key, required this.bulan}) : super(key: key);
+  final String bulan;
 
   @override
   State<LaporanBarang> createState() => _LaporanBarangState();
@@ -89,7 +90,7 @@ class _LaporanBarangState extends State<LaporanBarang> {
         ),
         body: Container(
             color: kPrimaryColor,
-            child: SfPdfViewer.network(Url.web + 'laporan')),
+            child: SfPdfViewer.network(Url.web + 'laporan/' + widget.bulan)),
       ),
     );
   }
@@ -98,7 +99,7 @@ class _LaporanBarangState extends State<LaporanBarang> {
     var status = await Permission.storage.status;
     if (status.isGranted) {
       final baseDir = await getExternalStorageDirectory();
-      final String url = Url.web + 'laporan/download';
+      final String url = Url.web + 'laporan/download/' + widget.bulan;
       final taskId = await FlutterDownloader.enqueue(
         url: url,
         fileName: "Laporan.pdf",

@@ -7,8 +7,8 @@ import 'package:inventaris_barang/Screen/Rekap%20Barang/Masuk/tambah_rekap_masuk
 import 'package:inventaris_barang/constants.dart';
 
 class RekapBarangHilang extends StatefulWidget {
-  const RekapBarangHilang({Key? key}) : super(key: key);
-
+  const RekapBarangHilang({Key? key, required this.idRekap}) : super(key: key);
+  final String idRekap;
   @override
   State<RekapBarangHilang> createState() => _RekapBarangHilangState();
 }
@@ -25,7 +25,7 @@ class _RekapBarangHilangState extends State<RekapBarangHilang> {
   void initState() {
     super.initState();
 
-    ListRekap.getRekap("3").then((value) {
+    ListRekap.getRekap("3", widget.idRekap).then((value) {
       if (value.length == 0) {
         Fluttertoast.showToast(
             msg: "Data tidak ditemukan",
@@ -40,6 +40,12 @@ class _RekapBarangHilangState extends State<RekapBarangHilang> {
       _listDataFiltered = _listData;
       setState(() {});
     });
+  }
+
+  @override
+  void dispose() {
+    _searchController.dispose();
+    super.dispose();
   }
 
   @override
@@ -208,10 +214,12 @@ class _RekapBarangHilangState extends State<RekapBarangHilang> {
         floatingActionButton: FloatingActionButton(
           onPressed: () {
             Navigator.push(context, MaterialPageRoute(builder: (context) {
-              return const TambahRekapHilang();
+              return TambahRekapHilang(
+                idRekap: widget.idRekap,
+              );
             })).then((value) {
               if (value) {
-                ListRekap.getRekap("3").then((value) {
+                ListRekap.getRekap("3", widget.idRekap).then((value) {
                   _listData = value;
                   _listDataFiltered = _listData;
                   setState(() {});

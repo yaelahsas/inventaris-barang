@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:inventaris_barang/Screen/Barang/barang_keluar.dart';
 import 'package:inventaris_barang/Screen/Barang/barang_masuk.dart';
+import 'package:inventaris_barang/Screen/Dashboard/info_barang.dart';
 import 'package:inventaris_barang/Screen/Laporan/laporan_barang.dart';
+import 'package:inventaris_barang/Screen/Laporan/laporan_bulan.dart';
 import 'package:inventaris_barang/Screen/Rekap%20Barang/rekap_barang.dart';
+import 'package:inventaris_barang/Screen/Rekap%20Barang/rekap_list_nama.dart';
 import 'package:inventaris_barang/Screen/Riwayat%20Barang/riwayat_barang.dart';
 import 'package:inventaris_barang/constants.dart';
 
@@ -71,7 +74,7 @@ class BodyAffair extends StatelessWidget {
             InkWell(
               onTap: () {
                 Navigator.push(context, MaterialPageRoute(builder: (context) {
-                  return const LaporanBarang();
+                  return const LaporanBulan();
                 }));
               },
               child: Card(
@@ -93,7 +96,7 @@ class BodyAffair extends StatelessWidget {
             InkWell(
               onTap: () {
                 Navigator.push(context, MaterialPageRoute(builder: (context) {
-                  return const RekapBarang();
+                  return const RekapListNama();
                 }));
               },
               child: Card(

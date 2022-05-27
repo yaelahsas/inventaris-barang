@@ -21,8 +21,8 @@ class ListRekap {
     }
   }
 
-  static Future<List<Rekap>> getRekap(String id) async {
-    Uri apiUrl = Uri.parse(Url.web + "rekap/" + id);
+  static Future<List<Rekap>> getRekap(String id, String idRekap) async {
+    Uri apiUrl = Uri.parse(Url.web + 'rekap/' + id + '/' + idRekap);
 
     var hasil = await http.get(apiUrl);
     var result = jsonDecode(hasil.body);

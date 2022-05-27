@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:inventaris_barang/Screen/Barang/barang_keluar.dart';
 import 'package:inventaris_barang/Screen/Barang/barang_masuk.dart';
+import 'package:inventaris_barang/Screen/Riwayat%20Barang/riwayat_barang.dart';
 import 'package:inventaris_barang/constants.dart';
 
 class BodyPetugas extends StatelessWidget {
@@ -47,7 +48,7 @@ class BodyPetugas extends StatelessWidget {
             InkWell(
               onTap: () {
                 Navigator.push(context, MaterialPageRoute(builder: (context) {
-                  return const BarangKeluar();
+                  return const RiwayatBarang();
                 }));
               },
               child: Card(
@@ -55,11 +56,11 @@ class BodyPetugas extends StatelessWidget {
                 margin: const EdgeInsets.all(10),
                 child: Column(children: const [
                   Icon(
-                    Icons.exit_to_app_rounded,
+                    Icons.history_edu_rounded,
                     size: 120,
                     color: Colors.blueAccent,
                   ),
-                  Text("Barang Keluar",
+                  Text("Riwayat Barang",
                       style:
                           TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
                 ]),

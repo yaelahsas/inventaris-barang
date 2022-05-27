@@ -20,8 +20,14 @@ class AppBarBarang extends StatelessWidget implements PreferredSizeWidget {
             color: Colors.white,
           ),
           onPressed: () async {
-            var status = await Permission.storage.status;
-            if (status.isGranted) {
+            Map<Permission, PermissionStatus> statuses = await [
+              Permission.camera,
+              Permission.storage,
+            ].request();
+            if (statuses[Permission.camera]!.isPermanentlyDenied) {
+              openAppSettings();
+            }
+            if (statuses[Permission.camera]!.isGranted) {
               if (judul.contains('Barang Masuk')) {
                 String? cameraScanResult = await scanner.scan();
                 var a = cameraScanResult!;
