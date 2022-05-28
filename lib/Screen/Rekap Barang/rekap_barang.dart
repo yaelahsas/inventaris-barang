@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:inventaris_barang/Screen/Rekap%20Barang/Hilang/rekap_barang_hilang.dart';
 import 'package:inventaris_barang/Screen/Rekap%20Barang/Keluar/rekap_barang_keluar.dart';
 import 'package:inventaris_barang/Screen/Rekap%20Barang/Masuk/rekap_barang_masuk.dart';
+import 'package:inventaris_barang/Screen/Rekap%20Barang/rekap_pdf.dart';
 
 import '../../constants.dart';
 import 'Ganti/rekap_barang_ganti.dart';
@@ -14,6 +15,18 @@ class RekapBarang extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text("Rekap Barang"),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.print_rounded),
+            onPressed: () {
+              Navigator.push(context, MaterialPageRoute(builder: (context) {
+                return RekapPdf(
+                  idRekap: id,
+                );
+              }));
+            },
+          ),
+        ],
       ),
       body: Container(
         height: MediaQuery.of(context).size.height,

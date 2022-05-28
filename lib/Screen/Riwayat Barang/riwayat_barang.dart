@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 import '../../Api/list_riwayat.dart';
 import '../../constants.dart';
@@ -23,6 +24,16 @@ class _RiwayatBarangState extends State<RiwayatBarang> {
     super.initState();
 
     ListRiwayat.getRiwayat().then((value) {
+      if (value.length == 0) {
+        Fluttertoast.showToast(
+            msg: "Data tidak ditemukan",
+            toastLength: Toast.LENGTH_SHORT,
+            gravity: ToastGravity.BOTTOM,
+            timeInSecForIosWeb: 1,
+            backgroundColor: Colors.red,
+            textColor: Colors.white,
+            fontSize: 16.0);
+      }
       _listData = value;
       _listDataFiltered = _listData;
       setState(() {});

@@ -2,23 +2,23 @@ import 'dart:isolate';
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_downloader/flutter_downloader.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:inventaris_barang/Api/url.dart';
 import 'package:inventaris_barang/constants.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:syncfusion_flutter_pdfviewer/pdfviewer.dart';
-import 'package:flutter_downloader/flutter_downloader.dart';
-import 'package:path_provider/path_provider.dart';
 
-class LaporanBarang extends StatefulWidget {
-  const LaporanBarang({Key? key, required this.bulan}) : super(key: key);
-  final String bulan;
+import '../../Api/url.dart';
 
+class RekapPdf extends StatefulWidget {
+  const RekapPdf({Key? key, required this.idRekap}) : super(key: key);
+  final String idRekap;
   @override
-  State<LaporanBarang> createState() => _LaporanBarangState();
+  State<RekapPdf> createState() => _RekapPdfState();
 }
 
-class _LaporanBarangState extends State<LaporanBarang> {
+class _RekapPdfState extends State<RekapPdf> {
   final ReceivePort _port = ReceivePort();
 
   @override
@@ -69,13 +69,7 @@ class _LaporanBarangState extends State<LaporanBarang> {
 
   @override
   Widget build(BuildContext context) {
-    return WillPopScope(
-      onWillPop: () {
-        Navigator.pop(context);
-        // dispose();
-        return Future.value(false);
-      },
-      child: Scaffold(
+    return Scaffold(
         appBar: AppBar(
           title: const Text("Laporan"),
           actions: [
@@ -89,42 +83,33 @@ class _LaporanBarangState extends State<LaporanBarang> {
           ],
         ),
         body: Container(
-            color: kPrimaryColor,
-            child: SfPdfViewer.network(Url.web + 'laporan/' + widget.bulan)),
-      ),
-    );
+          color: kPrimaryColor,
+          child: SfPdfViewer.network(Url.web + 'rekap/pdf/' + widget.idRekap),
+        ));
   }
 
   void _downloadPdf() async {
     var status = await Permission.storage.status;
     if (status.isGranted) {
       final baseDir = await getExternalStorageDirectory();
-      final String url = Url.web + 'laporan/download/' + widget.bulan;
-      final String url2 = Url.web + 'laporan/excel/' + widget.bulan;
+      final String url = Url.web + 'rekap/download/' + widget.idRekap;
+      final String url2 = Url.web + 'rekap/excel/' + widget.idRekap;
 
       final taskId = await FlutterDownloader.enqueue(
         url: url,
-        fileName: "Laporan.pdf",
+        fileName: "Rekap.pdf",
         savedDir: baseDir!.path,
         showNotification: true,
         openFileFromNotification: true,
       );
       final taskId2 = await FlutterDownloader.enqueue(
         url: url2,
-        fileName: "Laporan_excel.xlsx",
+        fileName: "Rekap_excel.xlsx",
         savedDir: baseDir.path,
         showNotification: true,
         openFileFromNotification: true,
       );
     } else {
-      Fluttertoast.showToast(
-          msg: "Izin Penyimpanan Harus Diaktifkan",
-          toastLength: Toast.LENGTH_SHORT,
-          gravity: ToastGravity.BOTTOM,
-          timeInSecForIosWeb: 1,
-          backgroundColor: Colors.red,
-          textColor: Colors.white,
-          fontSize: 16.0);
       await Permission.storage.request();
     }
   }

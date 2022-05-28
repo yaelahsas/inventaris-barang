@@ -11,6 +11,7 @@ class BodyPetugas extends StatelessWidget {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
+      resizeToAvoidBottomInset: true,
       body: Container(
         height: size.height,
         width: size.width,
