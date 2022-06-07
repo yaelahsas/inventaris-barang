@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:inventaris_barang/Screen/Rekap%20Barang/Hilang/rekap_barang_hilang.dart';
 import 'package:inventaris_barang/Screen/Rekap%20Barang/Keluar/rekap_barang_keluar.dart';
-import 'package:inventaris_barang/Screen/Rekap%20Barang/Masuk/rekap_barang_masuk.dart';
 import 'package:inventaris_barang/Screen/Rekap%20Barang/rekap_pdf.dart';
 
 import '../../constants.dart';
 import 'Ganti/rekap_barang_ganti.dart';
+import 'Hilang/rekap_barang_hilang.dart';
 
 class RekapBarang extends StatelessWidget {
   const RekapBarang({Key? key, required this.id}) : super(key: key);
@@ -40,23 +39,6 @@ class RekapBarang extends StatelessWidget {
                   "Pilih Jenis Rekapan",
                   style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
                 ),
-              ),
-            ),
-            Container(
-              width: MediaQuery.of(context).size.width,
-              padding: const EdgeInsets.symmetric(horizontal: 10),
-              child: ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                    primary: kPrimaryColor,
-                    textStyle: const TextStyle(fontSize: 20)),
-                onPressed: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => RekapBarangMasuk(idRekap: id),
-                      ));
-                },
-                child: const Text("Rekapan barang masuk"),
               ),
             ),
             Container(

@@ -58,11 +58,11 @@ class Rekap {
   String? updatedAt;
   String? namaDivisi;
   String? nama;
-  String? inventaris;
+  // String? inventaris;
   String? spesifikasi;
   String? tanggal;
-  String? jumlahAwal;
-  String? jumlahAkhir;
+  // String? jumlahAwal;
+  // String? jumlahAkhir;
   int? idDivisi;
   int? idStatusBarang;
 
@@ -73,11 +73,11 @@ class Rekap {
       this.updatedAt,
       this.namaDivisi,
       this.nama,
-      this.inventaris,
+      // this.inventaris,
       this.spesifikasi,
       this.tanggal,
-      this.jumlahAwal,
-      this.jumlahAkhir,
+      // this.jumlahAwal,
+      // this.jumlahAkhir,
       this.idDivisi,
       this.idStatusBarang});
 
@@ -88,18 +88,18 @@ class Rekap {
     updatedAt = json['updated_at'];
     namaDivisi = json['nama_divisi'];
     nama = json['nama'];
-    inventaris = json['inventaris'];
+    // inventaris = json['inventaris'];
     spesifikasi = json['spesifikasi'];
     tanggal = json['tanggal'];
-    jumlahAwal = json['jumlah_awal'];
-    jumlahAkhir = json['jumlah_akhir'];
+    // jumlahAwal = json['jumlah_awal'];
+    // jumlahAkhir = json['jumlah_akhir'];
     idDivisi = json['id_divisi'];
     idStatusBarang = json['id_status_barang'];
   }
 
   @override
   String toString() {
-    return 'Rekap{id: $id, namaStatus: $namaStatus, createdAt: $createdAt, updatedAt: $updatedAt, namaDivisi: $namaDivisi, nama: $nama, inventaris: $inventaris, spesifikasi: $spesifikasi, tanggal: $tanggal, jumlahAwal: $jumlahAwal, jumlahAkhir: $jumlahAkhir, idDivisi: $idDivisi, idStatusBarang: $idStatusBarang}';
+    return 'Rekap{id: $id, namaStatus: $namaStatus, createdAt: $createdAt, updatedAt: $updatedAt, namaDivisi: $namaDivisi, nama: $nama, spesifikasi: $spesifikasi, tanggal: $tanggal,  idDivisi: $idDivisi, idStatusBarang: $idStatusBarang}';
   }
 
   Map<String, dynamic> toJson() {
@@ -110,11 +110,11 @@ class Rekap {
     data['updated_at'] = updatedAt;
     data['nama_divisi'] = namaDivisi;
     data['nama'] = nama;
-    data['inventaris'] = inventaris;
+    // data['inventaris'] = inventaris;
     data['spesifikasi'] = spesifikasi;
     data['tanggal'] = tanggal;
-    data['jumlah_awal'] = jumlahAwal;
-    data['jumlah_akhir'] = jumlahAkhir;
+    // data['jumlah_awal'] = jumlahAwal;
+    // data['jumlah_akhir'] = jumlahAkhir;
     data['id_divisi'] = idDivisi;
     data['id_status_barang'] = idStatusBarang;
     return data;

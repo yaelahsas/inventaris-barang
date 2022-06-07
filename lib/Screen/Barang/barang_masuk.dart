@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:inventaris_barang/Api/list_barang.dart';
 import 'package:inventaris_barang/Screen/Barang/componen/app_bar.dart';
 import 'package:inventaris_barang/Screen/Barang/tambah_barang_masuk.dart';
+import 'package:inventaris_barang/Screen/Barang/tambah_barang_masuk_baru.dart';
 import 'package:inventaris_barang/constants.dart';
 
 class BarangMasuk extends StatefulWidget {
@@ -151,6 +152,16 @@ class _BarangMasukState extends State<BarangMasuk> {
           ),
         ),
         backgroundColor: Colors.white,
+        floatingActionButton: FloatingActionButton(
+          onPressed: () {
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => TambahBarangMasukBaru(),
+                ));
+          },
+          child: const Icon(Icons.add),
+        ),
       ),
     );
   }

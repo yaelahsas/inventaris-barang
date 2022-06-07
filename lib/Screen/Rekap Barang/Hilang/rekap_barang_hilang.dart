@@ -3,7 +3,6 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:inventaris_barang/Api/list_rekap.dart';
 import 'package:inventaris_barang/Screen/Barang/componen/app_bar.dart';
 import 'package:inventaris_barang/Screen/Rekap%20Barang/Hilang/tambah_rekap_hilang.dart';
-import 'package:inventaris_barang/Screen/Rekap%20Barang/Masuk/tambah_rekap_masuk.dart';
 import 'package:inventaris_barang/constants.dart';
 
 class RekapBarangHilang extends StatefulWidget {
@@ -76,8 +75,8 @@ class _RekapBarangHilangState extends State<RekapBarangHilang> {
                         setState(() {
                           _searchResult = value;
                           _listDataFiltered = _listData
-                              .where((user) =>
-                                  user.inventaris!.contains(_searchResult))
+                              .where(
+                                  (user) => user.nama!.contains(_searchResult))
                               .toList();
                         });
                       }),
@@ -116,29 +115,9 @@ class _RekapBarangHilangState extends State<RekapBarangHilang> {
                             }
                             _listData.sort((a, b) {
                               if (_isAscending) {
-                                return a.inventaris!.compareTo(b.inventaris!);
+                                return a.nama!.compareTo(b.nama!);
                               } else {
-                                return b.inventaris!.compareTo(a.inventaris!);
-                              }
-                            });
-                          });
-                        }),
-                    DataColumn(
-                        label: const Text('Jumlah'),
-                        onSort: (index, _) {
-                          setState(() {
-                            _currentSortColumn = index;
-
-                            if (_isAscending == true) {
-                              _isAscending = false;
-                            } else {
-                              _isAscending = true;
-                            }
-                            _listData.sort((a, b) {
-                              if (_isAscending) {
-                                return a.jumlahAwal!.compareTo(b.jumlahAwal!);
-                              } else {
-                                return b.jumlahAwal!.compareTo(a.jumlahAwal!);
+                                return b.nama!.compareTo(a.nama!);
                               }
                             });
                           });
@@ -189,9 +168,7 @@ class _RekapBarangHilangState extends State<RekapBarangHilang> {
                       DataRow(
                         cells: [
                           DataCell(SizedBox(
-                              child: Text(_listDataFiltered[i].inventaris!))),
-                          DataCell(SizedBox(
-                              child: Text(_listDataFiltered[i].jumlahAwal!))),
+                              child: Text(_listDataFiltered[i].nama!))),
                           DataCell(SizedBox(
                               child: Text(_listDataFiltered[i].tanggal!))),
                           DataCell(SizedBox(

@@ -16,7 +16,8 @@ class _InfoBarangState extends State<InfoBarang> {
   final TextEditingController _cNamaDivisi = TextEditingController();
   final TextEditingController _cNamaSpesifikasi = TextEditingController();
   final TextEditingController _cTanggal = TextEditingController();
-  final TextEditingController _cJumlah = TextEditingController();
+  final TextEditingController _cKodeQr = TextEditingController();
+  final TextEditingController _cStatus = TextEditingController();
   String date = '';
 
   @override
@@ -28,7 +29,8 @@ class _InfoBarangState extends State<InfoBarang> {
     _cNamaDivisi.text = widget.data.namaDivisi!;
     _cNamaSpesifikasi.text = widget.data.spesifikasi!;
     _cTanggal.text = widget.data.tanggalMasuk!;
-    _cJumlah.text = widget.data.jumlahBarang!;
+    _cKodeQr.text = widget.data.kodeQrcode!;
+    _cStatus.text = widget.data.namaStatus!;
   }
 
   @override
@@ -39,7 +41,8 @@ class _InfoBarangState extends State<InfoBarang> {
     _cNamaDivisi.dispose();
     _cNamaSpesifikasi.dispose();
     _cTanggal.dispose();
-    _cJumlah.dispose();
+    _cKodeQr.dispose();
+    _cStatus.dispose();
   }
 
   @override
@@ -120,13 +123,13 @@ class _InfoBarangState extends State<InfoBarang> {
                       borderSide: BorderSide(color: Colors.red, width: 1.0),
                     ),
                     hintText: 'masukkan tanggal',
-                    labelText: 'Tanggal Keluar')),
+                    labelText: 'Tanggal Masuk')),
             const SizedBox(
               height: 10,
             ),
             TextFormField(
                 readOnly: true,
-                controller: _cJumlah,
+                controller: _cKodeQr,
                 decoration: const InputDecoration(
                     focusedBorder: OutlineInputBorder(
                       borderSide:
@@ -135,11 +138,24 @@ class _InfoBarangState extends State<InfoBarang> {
                     enabledBorder: OutlineInputBorder(
                       borderSide: BorderSide(color: Colors.red, width: 1.0),
                     ),
-                    hintText: '0',
-                    labelText: 'Jumlah')),
+                    hintText: 'qr',
+                    labelText: 'Kode QR')),
             const SizedBox(
               height: 10,
             ),
+            TextFormField(
+                readOnly: true,
+                controller: _cStatus,
+                decoration: const InputDecoration(
+                    focusedBorder: OutlineInputBorder(
+                      borderSide:
+                          BorderSide(color: Colors.greenAccent, width: 1.0),
+                    ),
+                    enabledBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color: Colors.red, width: 1.0),
+                    ),
+                    hintText: 'status',
+                    labelText: 'Status')),
           ],
         )),
       ),

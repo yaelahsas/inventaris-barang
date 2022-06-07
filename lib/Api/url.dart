@@ -1,3 +1,3 @@
 class Url {
-  static String web = "http://10.46.1.25/ap/api/";
+  static String web = "http://192.168.1.8/new/api/";
 }

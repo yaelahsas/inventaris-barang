@@ -70,8 +70,8 @@ class _RekapBarangGantiState extends State<RekapBarangGanti> {
                         setState(() {
                           _searchResult = value;
                           _listDataFiltered = _listData
-                              .where((user) =>
-                                  user.inventaris!.contains(_searchResult))
+                              .where(
+                                  (user) => user.nama!.contains(_searchResult))
                               .toList();
                         });
                       }),
@@ -110,29 +110,9 @@ class _RekapBarangGantiState extends State<RekapBarangGanti> {
                             }
                             _listData.sort((a, b) {
                               if (_isAscending) {
-                                return a.inventaris!.compareTo(b.inventaris!);
+                                return a.nama!.compareTo(b.nama!);
                               } else {
-                                return b.inventaris!.compareTo(a.inventaris!);
-                              }
-                            });
-                          });
-                        }),
-                    DataColumn(
-                        label: const Text('Jumlah'),
-                        onSort: (index, _) {
-                          setState(() {
-                            _currentSortColumn = index;
-
-                            if (_isAscending == true) {
-                              _isAscending = false;
-                            } else {
-                              _isAscending = true;
-                            }
-                            _listData.sort((a, b) {
-                              if (_isAscending) {
-                                return a.jumlahAwal!.compareTo(b.jumlahAwal!);
-                              } else {
-                                return b.jumlahAwal!.compareTo(a.jumlahAwal!);
+                                return b.nama!.compareTo(a.nama!);
                               }
                             });
                           });
@@ -183,9 +163,7 @@ class _RekapBarangGantiState extends State<RekapBarangGanti> {
                       DataRow(
                         cells: [
                           DataCell(SizedBox(
-                              child: Text(_listDataFiltered[i].inventaris!))),
-                          DataCell(SizedBox(
-                              child: Text(_listDataFiltered[i].jumlahAwal!))),
+                              child: Text(_listDataFiltered[i].nama!))),
                           DataCell(SizedBox(
                               child: Text(_listDataFiltered[i].tanggal!))),
                           DataCell(SizedBox(
