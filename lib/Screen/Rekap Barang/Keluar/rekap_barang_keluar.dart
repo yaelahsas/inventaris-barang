@@ -138,6 +138,26 @@ class _RekapBarangKeluarState extends State<RekapBarangKeluar> {
                           });
                         }),
                     DataColumn(
+                        label: const Text('Tanggal'),
+                        onSort: (index, _) {
+                          setState(() {
+                            _currentSortColumn = index;
+
+                            if (_isAscending == true) {
+                              _isAscending = false;
+                            } else {
+                              _isAscending = true;
+                            }
+                            _listData.sort((a, b) {
+                              if (_isAscending) {
+                                return a.tanggal!.compareTo(b.tanggal!);
+                              } else {
+                                return b.tanggal!.compareTo(a.tanggal!);
+                              }
+                            });
+                          });
+                        }),
+                    DataColumn(
                         label: const Text('Keterangan'),
                         onSort: (index, _) {
                           setState(() {

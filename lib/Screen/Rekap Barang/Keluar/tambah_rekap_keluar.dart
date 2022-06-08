@@ -7,6 +7,8 @@ import 'package:inventaris_barang/Api/tambah_rekap.dart';
 import 'package:inventaris_barang/Screen/Barang/componen/app_bar.dart';
 import 'package:inventaris_barang/constants.dart';
 
+import '../../../Api/list_barang.dart';
+
 class TambahRekapKeluar extends StatefulWidget {
   const TambahRekapKeluar({Key? key, required this.idRekap}) : super(key: key);
   final String idRekap;
@@ -23,8 +25,11 @@ class _TambahRekapKeluarState extends State<TambahRekapKeluar> {
   final TextEditingController _cPIC = TextEditingController();
 
   Divisi? dropdownValue;
+  Data? ddBarang;
+
   Status? dropdownValueStatus;
   List<Divisi>? spinnerItems;
+  List<Data>? spBarang;
   List<Status>? spinnerItemsStatus;
 
   @override
@@ -37,6 +42,10 @@ class _TambahRekapKeluarState extends State<TambahRekapKeluar> {
     });
     ListStatus.getStatus().then((value) {
       spinnerItemsStatus = value;
+      setState(() {});
+    });
+    ListBarang.connectToAPI().then((value) {
+      spBarang = value;
       setState(() {});
     });
   }
@@ -105,33 +114,36 @@ class _TambahRekapKeluarState extends State<TambahRekapKeluar> {
                 const SizedBox(
                   height: 10,
                 ),
-                TextFormField(
-                    controller: _cJumlahAwal,
-                    decoration: const InputDecoration(
-                        focusedBorder: OutlineInputBorder(
-                          borderSide:
-                              BorderSide(color: Colors.greenAccent, width: 1.0),
-                        ),
-                        enabledBorder: OutlineInputBorder(
-                          borderSide: BorderSide(color: Colors.red, width: 1.0),
-                        ),
-                        hintText: 'Jumlah Awal',
-                        labelText: 'Jumlah Awal')),
+                SizedBox(
+                  width: MediaQuery.of(context).size.width,
+                  child: DropdownButton<Data>(
+                      value: ddBarang,
+                      icon: const Icon(Icons.arrow_drop_down),
+                      iconSize: 24,
+                      elevation: 16,
+                      style: const TextStyle(color: Colors.red, fontSize: 18),
+                      underline: Container(
+                        height: 2,
+                        color: Colors.deepPurpleAccent,
+                      ),
+                      onChanged: (data) {
+                        setState(() {
+                          ddBarang = data;
+                        });
+                      },
+                      items: spBarang?.map((Data value) {
+                        return DropdownMenuItem<Data>(
+                            value: value,
+                            child: SizedBox(
+                                width: MediaQuery.of(context).size.width * 0.8,
+                                child: Text(value.kodeQrcode.toString() +
+                                    " - " +
+                                    value.namaBarang.toString())));
+                      }).toList()),
+                ),
                 const SizedBox(
                   height: 10,
                 ),
-                TextFormField(
-                    controller: _cJumlahAkhir,
-                    decoration: const InputDecoration(
-                        focusedBorder: OutlineInputBorder(
-                          borderSide:
-                              BorderSide(color: Colors.greenAccent, width: 1.0),
-                        ),
-                        enabledBorder: OutlineInputBorder(
-                          borderSide: BorderSide(color: Colors.red, width: 1.0),
-                        ),
-                        hintText: 'Jumlah Akhir',
-                        labelText: 'Jumlah Akhir')),
                 const SizedBox(
                   height: 10,
                 ),
@@ -190,11 +202,10 @@ class _TambahRekapKeluarState extends State<TambahRekapKeluar> {
                               _cInventaris.text,
                               _cSpesifikasi.text,
                               DateFormat('yyyy-MM-dd').format(time),
-                              _cJumlahAwal.text,
-                              _cJumlahAkhir.text,
                               dropdownValue!.id.toString(),
                               "5",
-                              widget.idRekap)
+                              widget.idRekap,
+                              ddBarang!.id.toString())
                           .then((value) => {
                                 if (value.success == true)
                                   {

@@ -33,8 +33,13 @@ class TambahBarang {
     return TambahBarang.fromJson(jsonResult);
   }
 
-  static Future<TambahBarang> barangMasukBaru(String nama, String spesifikasi,
-      String idDivisi, String tanggal, String jumlah) async {
+  static Future<TambahBarang> barangMasukBaru(
+      String nama,
+      String spesifikasi,
+      String idDivisi,
+      String tanggal,
+      String jumlah,
+      String status_barang) async {
     Uri apiUrl = Uri.parse(Url.web + "barang/masuk/tambah");
 
     var result = await http.post(apiUrl, body: {
@@ -43,18 +48,17 @@ class TambahBarang {
       'id_divisi': idDivisi,
       'tanggal_masuk': tanggal,
       'jumlah_barang': jumlah,
+      'id_status_barang': status_barang,
     });
     var jsonResult = json.decode(result.body);
     return TambahBarang.fromJson(jsonResult);
   }
 
-  static Future<TambahBarang> barangKeluar(
-      String id, String tanggal, String jumlah) async {
+  static Future<TambahBarang> barangKeluar(String id, String tanggal) async {
     Uri apiUrl = Uri.parse(Url.web + "barang/keluar/edit/" + id);
 
     var result = await http.post(apiUrl, body: {
       'tanggal_masuk': tanggal,
-      'jumlah_barang': jumlah,
     });
     var jsonResult = json.decode(result.body);
     return TambahBarang.fromJson(jsonResult);

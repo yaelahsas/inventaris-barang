@@ -183,7 +183,8 @@ class _TambahBarangMasukBaruState extends State<TambahBarangMasukBaru> {
                               _cNamaSpesifikasi.text,
                               dropdownValue!.id.toString(),
                               _cTanggal.text,
-                              _cJumlah.text)
+                              _cJumlah.text,
+                              '4')
                           .then((hasil) {
                         if (hasil.success == true) {
                           Fluttertoast.showToast(

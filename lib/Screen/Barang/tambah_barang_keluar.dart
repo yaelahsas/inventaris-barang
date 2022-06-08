@@ -24,7 +24,7 @@ class _TambahBarangKeluarState extends State<TambahBarangKeluar> {
   final TextEditingController _cNamaDivisi = TextEditingController();
   final TextEditingController _cNamaSpesifikasi = TextEditingController();
   final TextEditingController _cTanggal = TextEditingController();
-  final TextEditingController _cJumlah = TextEditingController();
+  // final TextEditingController _cJumlah = TextEditingController();
   String date = '';
 
   @override
@@ -45,7 +45,7 @@ class _TambahBarangKeluarState extends State<TambahBarangKeluar> {
     _cNamaDivisi.dispose();
     _cNamaSpesifikasi.dispose();
     _cTanggal.dispose();
-    _cJumlah.dispose();
+    // _cJumlah.dispose();
   }
 
   @override
@@ -141,23 +141,6 @@ class _TambahBarangKeluarState extends State<TambahBarangKeluar> {
               const SizedBox(
                 height: 10,
               ),
-              TextFormField(
-                  controller: _cJumlah,
-                  keyboardType: TextInputType.number,
-                  inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-                  decoration: const InputDecoration(
-                      focusedBorder: OutlineInputBorder(
-                        borderSide:
-                            BorderSide(color: Colors.greenAccent, width: 1.0),
-                      ),
-                      enabledBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: Colors.red, width: 1.0),
-                      ),
-                      hintText: '0',
-                      labelText: 'Jumlah')),
-              const SizedBox(
-                height: 10,
-              ),
               SizedBox(
                 width: MediaQuery.of(context).size.width,
                 child: ElevatedButton(
@@ -165,8 +148,7 @@ class _TambahBarangKeluarState extends State<TambahBarangKeluar> {
                       primary: kPrimaryColor,
                       textStyle: const TextStyle(fontSize: 20)),
                   onPressed: () {
-                    TambahBarang.barangKeluar(
-                            _cId.text, _cTanggal.text, _cJumlah.text)
+                    TambahBarang.barangKeluar(_cId.text, _cTanggal.text)
                         .then((hasil) {
                       if (hasil.success == true) {
                         Fluttertoast.showToast(

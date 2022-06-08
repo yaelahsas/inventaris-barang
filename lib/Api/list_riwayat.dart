@@ -54,7 +54,7 @@ class Data {
   int? id;
   String? namaBarang;
   String? spesifikasi;
-  String? jumlahBarang;
+  String? kodeQrcode;
   String? tanggal;
   int? idDivisi;
   int? idStatusBarang;
@@ -67,7 +67,7 @@ class Data {
       {this.id,
       this.namaBarang,
       this.spesifikasi,
-      this.jumlahBarang,
+      this.kodeQrcode,
       this.tanggal,
       this.idDivisi,
       this.idStatusBarang,
@@ -80,7 +80,7 @@ class Data {
     id = json['id'];
     namaBarang = json['nama_barang'];
     spesifikasi = json['spesifikasi'];
-    jumlahBarang = json['jumlah_barang'];
+    kodeQrcode = json['kode_qrcode'];
     tanggal = json['tanggal'];
     idDivisi = json['id_divisi'];
     idStatusBarang = json['id_status_barang'];
@@ -92,7 +92,7 @@ class Data {
 
   @override
   String toString() {
-    return 'Data{id: $id, namaBarang: $namaBarang, spesifikasi: $spesifikasi, jumlahBarang: $jumlahBarang, tanggal: $tanggal, idDivisi: $idDivisi, idStatusBarang: $idStatusBarang, createdAt: $createdAt, updatedAt: $updatedAt, namaStatus: $namaStatus, namaDivisi: $namaDivisi}';
+    return 'Data{id: $id, namaBarang: $namaBarang, spesifikasi: $spesifikasi, kodeqrcode: $kodeQrcode, tanggal: $tanggal, idDivisi: $idDivisi, idStatusBarang: $idStatusBarang, createdAt: $createdAt, updatedAt: $updatedAt, namaStatus: $namaStatus, namaDivisi: $namaDivisi}';
   }
 
   Map<String, dynamic> toJson() {
@@ -100,7 +100,7 @@ class Data {
     data['id'] = id;
     data['nama_barang'] = namaBarang;
     data['spesifikasi'] = spesifikasi;
-    data['jumlah_barang'] = jumlahBarang;
+    data['kode_qrcode'] = kodeQrcode;
     data['tanggal'] = tanggal;
     data['id_divisi'] = idDivisi;
     data['id_status_barang'] = idStatusBarang;

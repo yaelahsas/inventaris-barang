@@ -129,7 +129,7 @@ class _RiwayatBarangState extends State<RiwayatBarang> {
                               }),
                           DataColumn(label: const Text('Tanggal')),
                           DataColumn(
-                              label: const Text('Jumlah'),
+                              label: const Text('Kode Qr'),
                               onSort: (index, _) {
                                 setState(() {
                                   _currentSortColumn = index;
@@ -141,11 +141,11 @@ class _RiwayatBarangState extends State<RiwayatBarang> {
                                   }
                                   _listData.sort((a, b) {
                                     if (_isAscending) {
-                                      return a.jumlahBarang!
-                                          .compareTo(b.jumlahBarang!);
+                                      return a.kodeQrcode!
+                                          .compareTo(b.kodeQrcode!);
                                     } else {
-                                      return b.jumlahBarang!
-                                          .compareTo(a.jumlahBarang!);
+                                      return b.namaStatus!
+                                          .compareTo(a.kodeQrcode!);
                                     }
                                   });
                                 });
@@ -182,9 +182,8 @@ class _RiwayatBarangState extends State<RiwayatBarang> {
                                     child: Text(
                                         _listDataFiltered[i].namaBarang!))),
                                 DataCell(Text(_listDataFiltered[i].tanggal!)),
-                                DataCell(Text(_listDataFiltered[i]
-                                    .jumlahBarang!
-                                    .toString())),
+                                DataCell(
+                                    Text(_listDataFiltered[i].kodeQrcode!)),
                                 DataCell(
                                     Text(_listDataFiltered[i].namaStatus!)),
                               ],

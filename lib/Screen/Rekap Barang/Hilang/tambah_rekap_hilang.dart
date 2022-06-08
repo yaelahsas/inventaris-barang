@@ -1,11 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:intl/intl.dart';
+import 'package:inventaris_barang/Api/list_barang.dart';
 import 'package:inventaris_barang/Api/list_divisi.dart';
 import 'package:inventaris_barang/Api/list_status.dart';
 import 'package:inventaris_barang/Api/tambah_rekap.dart';
+import 'package:inventaris_barang/Screen/Barang/barang_masuk.dart';
 import 'package:inventaris_barang/Screen/Barang/componen/app_bar.dart';
 import 'package:inventaris_barang/constants.dart';
+
+import '../../../Api/tambah_barang.dart';
 
 class TambahRekapHilang extends StatefulWidget {
   const TambahRekapHilang({Key? key, required this.idRekap}) : super(key: key);
@@ -23,8 +27,12 @@ class _TambahRekapHilangState extends State<TambahRekapHilang> {
   final TextEditingController _cPIC = TextEditingController();
 
   Divisi? dropdownValue;
+  Data? ddBarang;
+
   Status? dropdownValueStatus;
   List<Divisi>? spinnerItems;
+  List<Data>? spBarang;
+
   List<Status>? spinnerItemsStatus;
 
   @override
@@ -37,6 +45,10 @@ class _TambahRekapHilangState extends State<TambahRekapHilang> {
     });
     ListStatus.getStatus().then((value) {
       spinnerItemsStatus = value;
+      setState(() {});
+    });
+    ListBarang.connectToAPI().then((value) {
+      spBarang = value;
       setState(() {});
     });
   }
@@ -105,33 +117,33 @@ class _TambahRekapHilangState extends State<TambahRekapHilang> {
                 const SizedBox(
                   height: 10,
                 ),
-                TextFormField(
-                    controller: _cJumlahAwal,
-                    decoration: const InputDecoration(
-                        focusedBorder: OutlineInputBorder(
-                          borderSide:
-                              BorderSide(color: Colors.greenAccent, width: 1.0),
-                        ),
-                        enabledBorder: OutlineInputBorder(
-                          borderSide: BorderSide(color: Colors.red, width: 1.0),
-                        ),
-                        hintText: 'Jumlah Awal',
-                        labelText: 'Jumlah Awal')),
-                const SizedBox(
-                  height: 10,
+                SizedBox(
+                  width: MediaQuery.of(context).size.width,
+                  child: DropdownButton<Data>(
+                      value: ddBarang,
+                      icon: const Icon(Icons.arrow_drop_down),
+                      iconSize: 24,
+                      elevation: 16,
+                      style: const TextStyle(color: Colors.red, fontSize: 18),
+                      underline: Container(
+                        height: 2,
+                        color: Colors.deepPurpleAccent,
+                      ),
+                      onChanged: (data) {
+                        setState(() {
+                          ddBarang = data;
+                        });
+                      },
+                      items: spBarang?.map((Data value) {
+                        return DropdownMenuItem<Data>(
+                            value: value,
+                            child: SizedBox(
+                                width: MediaQuery.of(context).size.width * 0.8,
+                                child: Text(value.kodeQrcode.toString() +
+                                    " - " +
+                                    value.namaBarang.toString())));
+                      }).toList()),
                 ),
-                TextFormField(
-                    controller: _cJumlahAkhir,
-                    decoration: const InputDecoration(
-                        focusedBorder: OutlineInputBorder(
-                          borderSide:
-                              BorderSide(color: Colors.greenAccent, width: 1.0),
-                        ),
-                        enabledBorder: OutlineInputBorder(
-                          borderSide: BorderSide(color: Colors.red, width: 1.0),
-                        ),
-                        hintText: 'Jumlah Akhir',
-                        labelText: 'Jumlah Akhir')),
                 const SizedBox(
                   height: 10,
                 ),
@@ -190,11 +202,10 @@ class _TambahRekapHilangState extends State<TambahRekapHilang> {
                               _cInventaris.text,
                               _cSpesifikasi.text,
                               DateFormat('yyyy-MM-dd').format(time),
-                              _cJumlahAwal.text,
-                              _cJumlahAkhir.text,
                               dropdownValue!.id.toString(),
                               "3",
-                              widget.idRekap)
+                              widget.idRekap,
+                              ddBarang!.id.toString())
                           .then((value) => {
                                 if (value.success == true)
                                   {
@@ -219,6 +230,13 @@ class _TambahRekapHilangState extends State<TambahRekapHilang> {
                                         fontSize: 16.0)
                                   }
                               });
+                      TambahBarang.barangMasukBaru(
+                          ddBarang!.namaBarang.toString(),
+                          ddBarang!.spesifikasi.toString(),
+                          dropdownValue!.id.toString(),
+                          DateFormat('yyyy-MM-dd').format(time),
+                          '1',
+                          '2');
                     },
                     child: const Text("Tambah"),
                   ),
