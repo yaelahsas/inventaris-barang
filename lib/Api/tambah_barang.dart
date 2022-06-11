@@ -58,7 +58,7 @@ class TambahBarang {
     Uri apiUrl = Uri.parse(Url.web + "barang/keluar/edit/" + id);
 
     var result = await http.post(apiUrl, body: {
-      'tanggal_masuk': tanggal,
+      'tanggal_keluar': tanggal,
     });
     var jsonResult = json.decode(result.body);
     return TambahBarang.fromJson(jsonResult);

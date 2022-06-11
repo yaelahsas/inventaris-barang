@@ -230,13 +230,13 @@ class _TambahRekapHilangState extends State<TambahRekapHilang> {
                                         fontSize: 16.0)
                                   }
                               });
-                      TambahBarang.barangMasukBaru(
-                          ddBarang!.namaBarang.toString(),
-                          ddBarang!.spesifikasi.toString(),
-                          dropdownValue!.id.toString(),
-                          DateFormat('yyyy-MM-dd').format(time),
-                          '1',
-                          '2');
+                      // TambahBarang.barangMasukBaru(
+                      //     ddBarang!.namaBarang.toString(),
+                      //     ddBarang!.spesifikasi.toString(),
+                      //     dropdownValue!.id.toString(),
+                      //     DateFormat('yyyy-MM-dd').format(time),
+                      //     '1',
+                      //     '2');
                     },
                     child: const Text("Tambah"),
                   ),

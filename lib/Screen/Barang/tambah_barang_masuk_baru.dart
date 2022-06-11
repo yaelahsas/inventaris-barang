@@ -137,7 +137,7 @@ class _TambahBarangMasukBaruState extends State<TambahBarangMasukBaru> {
                         lastDate: DateTime(2100),
                       ).then((hasil) {
                         if (hasil == null) return;
-                        date = DateFormat.yMd().format(hasil);
+                        date = DateFormat('yyyy-MM-dd').format(hasil);
                         _cTanggal.text = date;
                       });
                     },
