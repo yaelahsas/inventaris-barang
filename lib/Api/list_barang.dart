@@ -4,13 +4,15 @@ import 'dart:convert';
 import 'package:inventaris_barang/Api/url.dart';
 
 class ListBarang {
+//Model Untuk Menerima Response dari web
+
   List<Data>? data;
   Data? dataScan;
-
   bool? success;
   String? message;
   ListBarang({this.data, this.success, this.message});
 
+  //Untuk mengubah data darijson kedalam model
   ListBarang.fromJson(Map<String, dynamic> json) {
     success = json['success'];
     message = json['message'];
@@ -31,6 +33,7 @@ class ListBarang {
     return 'ListBarang{data: $data}';
   }
 
+//untuk mengubah data kedalam json
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
     data['success'] = success;
@@ -51,8 +54,46 @@ class ListBarang {
     return scan;
   }
 
+//fungsi untuk mengambil data barang masuk
   static Future<List<Data>> connectToAPI() async {
+    //deklarasikan url website
     Uri apiUrl = Uri.parse(Url.web + "barang/masuk");
+
+    //Memulai http get / memulai mengambil data dari web
+    var hasil = await http.get(apiUrl);
+    //hasil response dari web dikonvert kedalam objek
+    var result = jsonDecode(hasil.body);
+
+    //membuat listhasil pengambilan data dari objek data
+    //menggunakan dynamic agar bisa membaca data dengan tipe yang berbeda
+    List<dynamic> listHasil = (result as Map<String, dynamic>)['data'];
+    //membuat variable penampung datanya
+    List<Data> datas = [];
+    //data dimasukkan kedalam penampung
+    for (var i = 0; i < listHasil.length; i++) {
+      datas.add(Data.fromJson(listHasil[i]));
+    }
+    //hasil yang dikembalikan adalah wadah datanya tadi
+    //jadi ketika memanggil fungsi ini maka data yang dihasilkan merupakan list data
+    return datas;
+  }
+
+  static Future<List<Data>> barang_hilang() async {
+    Uri apiUrl = Uri.parse(Url.web + "barang/hilang");
+
+    var hasil = await http.get(apiUrl);
+    var result = jsonDecode(hasil.body);
+
+    List<dynamic> listHasil = (result as Map<String, dynamic>)['data'];
+    List<Data> datas = [];
+    for (var i = 0; i < listHasil.length; i++) {
+      datas.add(Data.fromJson(listHasil[i]));
+    }
+    return datas;
+  }
+
+  static Future<List<Data>> barang_keluar() async {
+    Uri apiUrl = Uri.parse(Url.web + "barang/keluar");
 
     var hasil = await http.get(apiUrl);
     var result = jsonDecode(hasil.body);

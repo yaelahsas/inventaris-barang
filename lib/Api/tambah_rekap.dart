@@ -26,7 +26,7 @@ class TambahRekap {
       String inventaris,
       String spesifikasi,
       String tanggal,
-      String idDivisi,
+      // String idDivisi,
       String idStatusBarang,
       String idRekap,
       String id_barang_masuk) async {
@@ -37,7 +37,7 @@ class TambahRekap {
       'inventaris': inventaris,
       'spesifikasi': spesifikasi,
       'tanggal': tanggal,
-      'id_divisi': idDivisi,
+      // 'id_divisi': idDivisi,
       'id_status_barang': idStatusBarang,
       'id_rekap': idRekap,
       'id_barang_masuk': id_barang_masuk,

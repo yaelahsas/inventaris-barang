@@ -25,7 +25,7 @@ class _RekapBarangKeluarState extends State<RekapBarangKeluar> {
   void initState() {
     super.initState();
 
-    ListRekap.getRekap("5", widget.idRekap).then((value) {
+    ListRekap.getRekap("1", widget.idRekap).then((value) {
       if (value.length == 0) {
         Fluttertoast.showToast(
             msg: "Data tidak ditemukan",
@@ -35,9 +35,11 @@ class _RekapBarangKeluarState extends State<RekapBarangKeluar> {
             backgroundColor: Colors.red,
             textColor: Colors.white,
             fontSize: 16.0);
+      } else {
+        _listData = value;
+        _listDataFiltered = _listData;
       }
-      _listData = value;
-      _listDataFiltered = _listData;
+
       setState(() {});
     });
   }
@@ -52,7 +54,7 @@ class _RekapBarangKeluarState extends State<RekapBarangKeluar> {
       },
       child: Scaffold(
         resizeToAvoidBottomInset: false,
-        appBar: const AppBarBarang(judul: "Rekap Barang Keluar"),
+        appBar: const AppBarBarang(judul: "Rekap Barang Rusak"),
         body: Container(
           width: double.infinity,
           padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 5),
@@ -138,26 +140,6 @@ class _RekapBarangKeluarState extends State<RekapBarangKeluar> {
                           });
                         }),
                     DataColumn(
-                        label: const Text('Tanggal'),
-                        onSort: (index, _) {
-                          setState(() {
-                            _currentSortColumn = index;
-
-                            if (_isAscending == true) {
-                              _isAscending = false;
-                            } else {
-                              _isAscending = true;
-                            }
-                            _listData.sort((a, b) {
-                              if (_isAscending) {
-                                return a.tanggal!.compareTo(b.tanggal!);
-                              } else {
-                                return b.tanggal!.compareTo(a.tanggal!);
-                              }
-                            });
-                          });
-                        }),
-                    DataColumn(
                         label: const Text('Keterangan'),
                         onSort: (index, _) {
                           setState(() {
@@ -211,7 +193,7 @@ class _RekapBarangKeluarState extends State<RekapBarangKeluar> {
               );
             })).then((value) {
               if (value) {
-                ListRekap.getRekap("5", widget.idRekap).then((value) {
+                ListRekap.getRekap("1", widget.idRekap).then((value) {
                   _listData = value;
                   _listDataFiltered = _listData;
                   setState(() {});

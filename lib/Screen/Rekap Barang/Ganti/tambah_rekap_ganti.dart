@@ -21,15 +21,15 @@ class _TambahRekapGantiState extends State<TambahRekapGanti> {
   DateTime time = DateTime.now();
   final TextEditingController _cInventaris = TextEditingController();
   final TextEditingController _cSpesifikasi = TextEditingController();
-  final TextEditingController _cJumlahAwal = TextEditingController();
+  final TextEditingController _cDivisi = TextEditingController();
   final TextEditingController _cJumlahAkhir = TextEditingController();
   final TextEditingController _cPIC = TextEditingController();
 
-  Divisi? dropdownValue;
+  // Divisi? dropdownValue;
   Data? ddBarang;
 
-  Status? dropdownValueStatus;
-  List<Divisi>? spinnerItems;
+  // Status? dropdownValueStatus;
+  // List<Divisi>? spinnerItems;
   List<Data>? spBarang;
 
   List<Status>? spinnerItemsStatus;
@@ -37,15 +37,15 @@ class _TambahRekapGantiState extends State<TambahRekapGanti> {
   void initState() {
     super.initState();
     print(DateFormat('yyyy-MM-dd').format(time));
-    ListDivisi.getDivisi().then((value) {
-      spinnerItems = value;
-      setState(() {});
-    });
+    // ListDivisi.getDivisi().then((value) {
+    //   spinnerItems = value;
+    //   setState(() {});
+    // });
     ListStatus.getStatus().then((value) {
       spinnerItemsStatus = value;
       setState(() {});
     });
-    ListBarang.connectToAPI().then((value) {
+    ListBarang.barang_hilang().then((value) {
       spBarang = value;
       setState(() {});
     });
@@ -57,7 +57,7 @@ class _TambahRekapGantiState extends State<TambahRekapGanti> {
 
     _cInventaris.dispose();
     _cSpesifikasi.dispose();
-    _cJumlahAwal.dispose();
+    _cDivisi.dispose();
     _cJumlahAkhir.dispose();
     _cPIC.dispose();
   }
@@ -130,6 +130,7 @@ class _TambahRekapGantiState extends State<TambahRekapGanti> {
                       onChanged: (data) {
                         setState(() {
                           ddBarang = data;
+                          _cDivisi.text = data!.namaDivisi.toString();
                         });
                       },
                       items: spBarang?.map((Data value) {
@@ -145,31 +146,19 @@ class _TambahRekapGantiState extends State<TambahRekapGanti> {
                 const SizedBox(
                   height: 10,
                 ),
-                SizedBox(
-                  width: MediaQuery.of(context).size.width,
-                  child: DropdownButton<Divisi>(
-                      value: dropdownValue,
-                      icon: const Icon(Icons.arrow_drop_down),
-                      iconSize: 24,
-                      elevation: 16,
-                      style: const TextStyle(color: Colors.red, fontSize: 18),
-                      underline: Container(
-                        height: 2,
-                        color: Colors.deepPurpleAccent,
-                      ),
-                      onChanged: (data) {
-                        setState(() {
-                          dropdownValue = data;
-                        });
-                      },
-                      items: spinnerItems?.map((Divisi value) {
-                        return DropdownMenuItem<Divisi>(
-                            value: value,
-                            child: SizedBox(
-                                width: MediaQuery.of(context).size.width * 0.8,
-                                child: Text(value.namaDivisi!)));
-                      }).toList()),
-                ),
+                TextFormField(
+                    controller: _cDivisi,
+                    readOnly: true,
+                    decoration: const InputDecoration(
+                        focusedBorder: OutlineInputBorder(
+                          borderSide:
+                              BorderSide(color: Colors.greenAccent, width: 1.0),
+                        ),
+                        enabledBorder: OutlineInputBorder(
+                          borderSide: BorderSide(color: Colors.red, width: 1.0),
+                        ),
+                        hintText: 'divisi',
+                        labelText: 'Divisi')),
                 const SizedBox(
                   height: 10,
                 ),
@@ -200,7 +189,6 @@ class _TambahRekapGantiState extends State<TambahRekapGanti> {
                               _cInventaris.text,
                               _cSpesifikasi.text,
                               DateFormat('yyyy-MM-dd').format(time),
-                              dropdownValue!.id.toString(),
                               "2",
                               widget.idRekap,
                               ddBarang!.id.toString())
@@ -228,13 +216,13 @@ class _TambahRekapGantiState extends State<TambahRekapGanti> {
                                         fontSize: 16.0)
                                   }
                               });
-                      TambahBarang.barangMasukBaru(
-                          _cInventaris.text,
-                          _cSpesifikasi.text,
-                          dropdownValue!.id.toString(),
-                          DateFormat('yyyy-MM-dd').format(time),
-                          '1',
-                          '2');
+                      // TambahBarang.barangMasukBaru(
+                      //     _cInventaris.text,
+                      //     _cSpesifikasi.text,
+                      //     dropdownValue!.id.toString(),
+                      //     DateFormat('yyyy-MM-dd').format(time),
+                      //     '1',
+                      //     '2');
                     },
                     child: const Text("Tambah"),
                   ),

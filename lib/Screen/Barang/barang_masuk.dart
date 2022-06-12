@@ -23,7 +23,9 @@ class _BarangMasukState extends State<BarangMasuk> {
   @override
   void initState() {
     super.initState();
-
+    //pertamakali dibuka android mengambil data dari web
+    //menggunakan fungsi connectToAPI
+    //dan jika sudah selesai dimasukkan kedalam variable _listData
     ListBarang.connectToAPI().then((value) {
       _listData = value;
       _listDataFiltered = _listData;
@@ -76,78 +78,87 @@ class _BarangMasukState extends State<BarangMasuk> {
                   ),
                 ),
               ),
-              DataTable(
-                  showCheckboxColumn: false,
-                  columnSpacing: 38,
-                  sortColumnIndex: _currentSortColumn,
-                  sortAscending: _isAscending,
-                  headingTextStyle: MaterialStateTextStyle.resolveWith(
-                      (states) => const TextStyle(color: kPrimaryLightColor)),
-                  headingRowColor: MaterialStateProperty.resolveWith(
-                      (states) => kPrimaryColor),
-                  columns: [
-                    DataColumn(
-                        label: const Text('Id'),
-                        numeric: true,
-                        onSort: (index, _) {
-                          setState(() {
-                            _currentSortColumn = index;
+              Expanded(
+                child: SingleChildScrollView(
+                  child: DataTable(
+                      showCheckboxColumn: false,
+                      columnSpacing: 38,
+                      sortColumnIndex: _currentSortColumn,
+                      sortAscending: _isAscending,
+                      headingTextStyle: MaterialStateTextStyle.resolveWith(
+                          (states) =>
+                              const TextStyle(color: kPrimaryLightColor)),
+                      headingRowColor: MaterialStateProperty.resolveWith(
+                          (states) => kPrimaryColor),
+                      columns: [
+                        DataColumn(
+                            label: const Text('Id'),
+                            numeric: true,
+                            onSort: (index, _) {
+                              setState(() {
+                                _currentSortColumn = index;
 
-                            if (_isAscending == true) {
-                              _isAscending = false;
-                            } else {
-                              _isAscending = true;
-                            }
-                            _listData.sort((a, b) {
-                              if (_isAscending) {
-                                return a.id!.compareTo(b.id!);
-                              } else {
-                                return b.id!.compareTo(a.id!);
-                              }
-                            });
-                          });
-                        }),
-                    DataColumn(
-                        label: const Text('Name'),
-                        onSort: (index, _) {
-                          setState(() {
-                            _currentSortColumn = index;
+                                if (_isAscending == true) {
+                                  _isAscending = false;
+                                } else {
+                                  _isAscending = true;
+                                }
+                                _listData.sort((a, b) {
+                                  if (_isAscending) {
+                                    return a.id!.compareTo(b.id!);
+                                  } else {
+                                    return b.id!.compareTo(a.id!);
+                                  }
+                                });
+                              });
+                            }),
+                        DataColumn(
+                            label: const Text('Name'),
+                            onSort: (index, _) {
+                              setState(() {
+                                _currentSortColumn = index;
 
-                            if (_isAscending == true) {
-                              _isAscending = false;
-                            } else {
-                              _isAscending = true;
-                            }
-                            _listData.sort((a, b) {
-                              if (_isAscending) {
-                                return a.namaBarang!.compareTo(b.namaBarang!);
-                              } else {
-                                return b.namaBarang!.compareTo(a.namaBarang!);
-                              }
-                            });
-                          });
-                        }),
-                  ],
-                  rows: [
-                    for (var i = 0; i < _listDataFiltered.length; i++)
-                      DataRow(
-                        cells: [
-                          DataCell(Text(_listDataFiltered[i].id.toString())),
-                          DataCell(SizedBox(
-                              width: size.width,
-                              child: Text(_listDataFiltered[i].namaBarang!))),
-                        ],
-                        onSelectChanged: (value) {
-                          // Kirim Data Ke Screen Lain
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => TambahBarangMasuk(
-                                    data: _listDataFiltered[i]),
-                              ));
-                        },
-                      ),
-                  ]),
+                                if (_isAscending == true) {
+                                  _isAscending = false;
+                                } else {
+                                  _isAscending = true;
+                                }
+                                _listData.sort((a, b) {
+                                  if (_isAscending) {
+                                    return a.namaBarang!
+                                        .compareTo(b.namaBarang!);
+                                  } else {
+                                    return b.namaBarang!
+                                        .compareTo(a.namaBarang!);
+                                  }
+                                });
+                              });
+                            }),
+                      ],
+                      rows: [
+                        for (var i = 0; i < _listDataFiltered.length; i++)
+                          DataRow(
+                            cells: [
+                              DataCell(
+                                  Text(_listDataFiltered[i].id.toString())),
+                              DataCell(SizedBox(
+                                  width: size.width,
+                                  child:
+                                      Text(_listDataFiltered[i].namaBarang!))),
+                            ],
+                            onSelectChanged: (value) {
+                              // Kirim Data Ke Screen Lain
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => TambahBarangMasuk(
+                                        data: _listDataFiltered[i]),
+                                  ));
+                            },
+                          ),
+                      ]),
+                ),
+              ),
             ],
           ),
         ),

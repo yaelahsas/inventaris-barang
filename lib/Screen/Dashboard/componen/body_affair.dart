@@ -30,25 +30,27 @@ class BodyAffair extends StatelessWidget {
           shrinkWrap: true,
           primary: false,
           children: [
-            InkWell(
-              onTap: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context) {
-                  return const BarangMasuk();
-                }));
-              },
-              child: Card(
-                elevation: 4,
-                margin: const EdgeInsets.all(10),
-                child: Column(children: const [
-                  Icon(
-                    Icons.warehouse_rounded,
-                    size: 120,
-                    color: Colors.blueAccent,
-                  ),
-                  Text("Barang Masuk",
-                      style:
-                          TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
-                ]),
+            SingleChildScrollView(
+              child: InkWell(
+                onTap: () {
+                  Navigator.push(context, MaterialPageRoute(builder: (context) {
+                    return const BarangMasuk();
+                  }));
+                },
+                child: Card(
+                  elevation: 4,
+                  margin: const EdgeInsets.all(10),
+                  child: Column(children: const [
+                    Icon(
+                      Icons.warehouse_rounded,
+                      size: 120,
+                      color: Colors.blueAccent,
+                    ),
+                    Text("Barang Masuk",
+                        style: TextStyle(
+                            fontSize: 16, fontWeight: FontWeight.bold)),
+                  ]),
+                ),
               ),
             ),
             InkWell(

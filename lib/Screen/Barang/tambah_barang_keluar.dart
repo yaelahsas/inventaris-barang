@@ -11,6 +11,7 @@ import '../../Api/list_barang.dart';
 class TambahBarangKeluar extends StatefulWidget {
   const TambahBarangKeluar({Key? key, required this.data}) : super(key: key);
 
+  //Tambah barang keluar meminta data sesuai dengan model Data
   final Data data;
 
   @override
@@ -30,7 +31,7 @@ class _TambahBarangKeluarState extends State<TambahBarangKeluar> {
   @override
   void initState() {
     super.initState();
-
+    //jadi kontroller text mengambil data yang dikirim dari screen sebelumnya
     _cId.text = widget.data.id.toString();
     _cName.text = widget.data.namaBarang!;
     _cNamaDivisi.text = widget.data.namaDivisi!;

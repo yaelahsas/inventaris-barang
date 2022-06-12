@@ -142,23 +142,6 @@ class _TambahBarangMasukState extends State<TambahBarangMasuk> {
               const SizedBox(
                 height: 10,
               ),
-              TextFormField(
-                  controller: _cJumlah,
-                  keyboardType: TextInputType.number,
-                  inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-                  decoration: const InputDecoration(
-                      focusedBorder: OutlineInputBorder(
-                        borderSide:
-                            BorderSide(color: Colors.greenAccent, width: 1.0),
-                      ),
-                      enabledBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: Colors.red, width: 1.0),
-                      ),
-                      hintText: '0',
-                      labelText: 'Jumlah')),
-              const SizedBox(
-                height: 10,
-              ),
               SizedBox(
                 width: MediaQuery.of(context).size.width,
                 child: ElevatedButton(

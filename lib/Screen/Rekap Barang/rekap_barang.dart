@@ -55,7 +55,7 @@ class RekapBarang extends StatelessWidget {
                         builder: (context) => RekapBarangKeluar(idRekap: id),
                       ));
                 },
-                child: const Text("Rekapan barang keluar"),
+                child: const Text("Rekapan barang rusak"),
               ),
             ),
             Container(
