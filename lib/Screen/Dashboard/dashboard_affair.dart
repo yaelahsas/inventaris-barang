@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:inventaris_barang/Api/list_barang.dart';
+import 'package:inventaris_barang/Api/scan.dart';
 import 'package:inventaris_barang/Screen/Dashboard/componen/body_affair.dart';
 import 'package:inventaris_barang/Screen/Dashboard/info_barang.dart';
 import 'package:inventaris_barang/Screen/Welcome/welcome_screen.dart';
@@ -41,12 +42,11 @@ class DashboarAffair extends StatelessWidget {
                 String? cameraScanResult = await scanner.scan();
                 if (cameraScanResult != null) {
                   var a = cameraScanResult;
-                  ListBarang.scanData(a).then((hasil) {
+                  ScanData.scan(a).then((hasil) {
                     Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) =>
-                              InfoBarang(data: hasil.dataScan!),
+                          builder: (context) => InfoBarang(data: hasil.data!),
                         ));
                   });
                 }

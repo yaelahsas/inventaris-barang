@@ -1,3 +1,7 @@
+import 'dart:convert';
+import 'package:http/http.dart' as http;
+import 'package:inventaris_barang/Api/url.dart';
+
 class ScanData {
   bool? success;
   String? message;
@@ -8,17 +12,25 @@ class ScanData {
   ScanData.fromJson(Map<String, dynamic> json) {
     success = json['success'];
     message = json['message'];
-    data = json['data'] != null ? Data.fromJson(json['data']) : null;
+    data = json['data'] != null ? new Data.fromJson(json['data']) : null;
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
-    data['success'] = success;
-    data['message'] = message;
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['success'] = this.success;
+    data['message'] = this.message;
     if (this.data != null) {
       data['data'] = this.data!.toJson();
     }
     return data;
+  }
+
+  static Future<ScanData> scan(String id) async {
+    Uri apiUrl = Uri.parse(Url.web + "barang/masuk/" + id);
+
+    var hasil = await http.get(apiUrl);
+    var result = jsonDecode(hasil.body);
+    return ScanData.fromJson(result);
   }
 }
 
@@ -29,11 +41,12 @@ class Data {
   String? updatedAt;
   String? namaDivisi;
   String? namaBarang;
+  String? namaBarangTambahan;
   String? spesifikasi;
-  String? jumlahBarang;
-  String? tanggalMasuk;
+  String? tanggal;
   int? idDivisi;
   String? kodeQrcode;
+  String? kodeQrcodeTambahan;
   int? idStatusBarang;
 
   Data(
@@ -43,11 +56,12 @@ class Data {
       this.updatedAt,
       this.namaDivisi,
       this.namaBarang,
+      this.namaBarangTambahan,
       this.spesifikasi,
-      this.jumlahBarang,
-      this.tanggalMasuk,
+      this.tanggal,
       this.idDivisi,
       this.kodeQrcode,
+      this.kodeQrcodeTambahan,
       this.idStatusBarang});
 
   Data.fromJson(Map<String, dynamic> json) {
@@ -57,28 +71,30 @@ class Data {
     updatedAt = json['updated_at'];
     namaDivisi = json['nama_divisi'];
     namaBarang = json['nama_barang'];
+    namaBarangTambahan = json['nama_barang_tambahan'];
     spesifikasi = json['spesifikasi'];
-    jumlahBarang = json['jumlah_barang'];
-    tanggalMasuk = json['tanggal_masuk'];
+    tanggal = json['tanggal'];
     idDivisi = json['id_divisi'];
     kodeQrcode = json['kode_qrcode'];
+    kodeQrcodeTambahan = json['kode_qrcode_tambahan'];
     idStatusBarang = json['id_status_barang'];
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
-    data['id'] = id;
-    data['nama_status'] = namaStatus;
-    data['created_at'] = createdAt;
-    data['updated_at'] = updatedAt;
-    data['nama_divisi'] = namaDivisi;
-    data['nama_barang'] = namaBarang;
-    data['spesifikasi'] = spesifikasi;
-    data['jumlah_barang'] = jumlahBarang;
-    data['tanggal_masuk'] = tanggalMasuk;
-    data['id_divisi'] = idDivisi;
-    data['kode_qrcode'] = kodeQrcode;
-    data['id_status_barang'] = idStatusBarang;
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['id'] = this.id;
+    data['nama_status'] = this.namaStatus;
+    data['created_at'] = this.createdAt;
+    data['updated_at'] = this.updatedAt;
+    data['nama_divisi'] = this.namaDivisi;
+    data['nama_barang'] = this.namaBarang;
+    data['nama_barang_tambahan'] = this.namaBarangTambahan;
+    data['spesifikasi'] = this.spesifikasi;
+    data['tanggal'] = this.tanggal;
+    data['id_divisi'] = this.idDivisi;
+    data['kode_qrcode'] = this.kodeQrcode;
+    data['kode_qrcode_tambahan'] = this.kodeQrcodeTambahan;
+    data['id_status_barang'] = this.idStatusBarang;
     return data;
   }
 }

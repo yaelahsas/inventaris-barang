@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:inventaris_barang/Api/list_barang.dart';
+import 'package:inventaris_barang/Api/scan.dart';
+
 import 'package:inventaris_barang/Screen/Dashboard/componen/body_petugas.dart';
 import 'package:inventaris_barang/Screen/Dashboard/info_barang.dart';
 import 'package:inventaris_barang/Screen/Welcome/welcome_screen.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:qrscan/qrscan.dart' as scanner;
+
+import '../../Api/list_barang.dart';
 
 class DashboarPetugas extends StatelessWidget {
   const DashboarPetugas({Key? key}) : super(key: key);
@@ -41,12 +44,11 @@ class DashboarPetugas extends StatelessWidget {
                 String? cameraScanResult = await scanner.scan();
                 if (cameraScanResult != null) {
                   var a = cameraScanResult;
-                  ListBarang.scanData(a).then((hasil) {
+                  ScanData.scan(a).then((hasil) {
                     Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) =>
-                              InfoBarang(data: hasil.dataScan!),
+                          builder: (context) => InfoBarang(data: hasil.data!),
                         ));
                   });
                 }

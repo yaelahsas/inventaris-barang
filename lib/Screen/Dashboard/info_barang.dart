@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:inventaris_barang/Api/list_barang.dart';
+
+import '../../Api/scan.dart';
 
 class InfoBarang extends StatefulWidget {
   const InfoBarang({Key? key, required this.data}) : super(key: key);
@@ -12,11 +13,13 @@ class InfoBarang extends StatefulWidget {
 class _InfoBarangState extends State<InfoBarang> {
   DateTime time = DateTime.now();
   final TextEditingController _cName = TextEditingController();
+  final TextEditingController _cNameGanti = TextEditingController();
   final TextEditingController _cId = TextEditingController();
   final TextEditingController _cNamaDivisi = TextEditingController();
   final TextEditingController _cNamaSpesifikasi = TextEditingController();
   final TextEditingController _cTanggal = TextEditingController();
   final TextEditingController _cKodeQr = TextEditingController();
+  final TextEditingController _cKodeQrGanti = TextEditingController();
   final TextEditingController _cStatus = TextEditingController();
   String date = '';
 
@@ -28,9 +31,11 @@ class _InfoBarangState extends State<InfoBarang> {
     _cName.text = widget.data.namaBarang!;
     _cNamaDivisi.text = widget.data.namaDivisi!;
     _cNamaSpesifikasi.text = widget.data.spesifikasi!;
-    _cTanggal.text = widget.data.tanggalMasuk!;
+    _cTanggal.text = widget.data.tanggal!;
     _cKodeQr.text = widget.data.kodeQrcode!;
     _cStatus.text = widget.data.namaStatus!;
+    _cKodeQrGanti.text = widget.data.kodeQrcodeTambahan!;
+    _cNameGanti.text = widget.data.namaBarangTambahan!;
   }
 
   @override
@@ -43,6 +48,8 @@ class _InfoBarangState extends State<InfoBarang> {
     _cTanggal.dispose();
     _cKodeQr.dispose();
     _cStatus.dispose();
+    _cNameGanti.dispose();
+    _cKodeQrGanti.dispose();
   }
 
   @override
@@ -156,6 +163,38 @@ class _InfoBarangState extends State<InfoBarang> {
                     ),
                     hintText: 'status',
                     labelText: 'Status')),
+            const SizedBox(
+              height: 10,
+            ),
+            TextFormField(
+                readOnly: true,
+                controller: _cNameGanti,
+                decoration: const InputDecoration(
+                    focusedBorder: OutlineInputBorder(
+                      borderSide:
+                          BorderSide(color: Colors.greenAccent, width: 1.0),
+                    ),
+                    enabledBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color: Colors.red, width: 1.0),
+                    ),
+                    hintText: 'barang ganti',
+                    labelText: 'Barang ganti')),
+            const SizedBox(
+              height: 10,
+            ),
+            TextFormField(
+                readOnly: true,
+                controller: _cKodeQrGanti,
+                decoration: const InputDecoration(
+                    focusedBorder: OutlineInputBorder(
+                      borderSide:
+                          BorderSide(color: Colors.greenAccent, width: 1.0),
+                    ),
+                    enabledBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color: Colors.red, width: 1.0),
+                    ),
+                    hintText: 'qr',
+                    labelText: 'Kode QR Barang Ganti')),
           ],
         )),
       ),
