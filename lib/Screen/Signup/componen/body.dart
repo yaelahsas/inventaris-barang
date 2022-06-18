@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:inventaris_barang/Api/list_role.dart';
 import 'package:inventaris_barang/Api/login.dart';
 
 import '../../../constants.dart';
@@ -12,10 +13,22 @@ class BodySignup extends StatefulWidget {
 }
 
 class _BodySignupState extends State<BodySignup> {
+  @override
+  void initState() {
+    super.initState();
+    Role.getRole().then((value) {
+      spinnerItems = value;
+      setState(() {});
+    });
+  }
+
   final TextEditingController _cNama = TextEditingController();
   final TextEditingController _cUsername = TextEditingController();
   final TextEditingController _cPassword = TextEditingController();
   AuthApi? result;
+
+  Roles? dropdownValue;
+  List<Roles>? spinnerItems;
 
   @override
   Widget build(BuildContext context) {
@@ -88,13 +101,38 @@ class _BodySignupState extends State<BodySignup> {
                 ),
               ),
             ),
+            SizedBox(
+              width: MediaQuery.of(context).size.width,
+              child: DropdownButton<Roles>(
+                  value: dropdownValue,
+                  icon: const Icon(Icons.arrow_drop_down),
+                  iconSize: 24,
+                  elevation: 16,
+                  style: const TextStyle(color: Colors.red, fontSize: 18),
+                  underline: Container(
+                    height: 2,
+                    color: Colors.deepPurpleAccent,
+                  ),
+                  onChanged: (data) {
+                    setState(() {
+                      dropdownValue = data;
+                    });
+                  },
+                  items: spinnerItems?.map((Roles value) {
+                    return DropdownMenuItem<Roles>(
+                        value: value,
+                        child: SizedBox(
+                            width: MediaQuery.of(context).size.width * 0.8,
+                            child: Text(value.namaRole.toString())));
+                  }).toList()),
+            ),
             Container(
               margin: const EdgeInsets.only(top: 20),
               child: ElevatedButton(
                 child: const Text("Daftar"),
                 onPressed: () {
-                  AuthApi.daftarAPI(
-                          _cUsername.text, _cPassword.text, _cNama.text)
+                  AuthApi.daftarAPI(_cUsername.text, _cPassword.text,
+                          _cNama.text, dropdownValue!.id.toString())
                       .then(
                     (value) {
                       result = value;

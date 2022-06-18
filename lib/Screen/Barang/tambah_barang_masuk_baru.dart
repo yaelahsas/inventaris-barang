@@ -7,6 +7,8 @@ import 'package:inventaris_barang/Api/tambah_barang.dart';
 import 'package:inventaris_barang/Screen/Barang/componen/app_bar.dart';
 import 'package:inventaris_barang/constants.dart';
 
+import '../../Api/list_barang.dart';
+
 class TambahBarangMasukBaru extends StatefulWidget {
   const TambahBarangMasukBaru({Key? key}) : super(key: key);
 
@@ -22,8 +24,10 @@ class _TambahBarangMasukBaruState extends State<TambahBarangMasukBaru> {
   final TextEditingController _cJumlah = TextEditingController();
   String date = '';
 
+  Data? ddBarang;
   Divisi? dropdownValue;
   List<Divisi>? spinnerItems;
+  List<Data>? spBarang;
 
   @override
   void initState() {
@@ -31,6 +35,10 @@ class _TambahBarangMasukBaruState extends State<TambahBarangMasukBaru> {
 
     ListDivisi.getDivisi().then((value) {
       spinnerItems = value;
+      setState(() {});
+    });
+    ListBarang.connectToAPI().then((value) {
+      spBarang = value;
       setState(() {});
     });
   }
@@ -66,10 +74,56 @@ class _TambahBarangMasukBaruState extends State<TambahBarangMasukBaru> {
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 const SizedBox(
+                  // height: 14,
+                  width: double.infinity,
+                  child: Text(
+                    "Pilih Barang",
+                    textAlign: TextAlign.left,
+                    style: TextStyle(
+                      fontSize: 14,
+                      fontWeight: FontWeight.w600,
+                      color: Colors.black,
+                    ),
+                  ),
+                ),
+                const SizedBox(
+                  height: 10,
+                ),
+                SizedBox(
+                  width: MediaQuery.of(context).size.width,
+                  child: DropdownButton<Data>(
+                      value: ddBarang,
+                      icon: const Icon(Icons.arrow_drop_down),
+                      iconSize: 24,
+                      elevation: 16,
+                      style: const TextStyle(color: Colors.red, fontSize: 18),
+                      underline: Container(
+                        height: 2,
+                        color: Colors.deepPurpleAccent,
+                      ),
+                      onChanged: (data) {
+                        setState(() {
+                          ddBarang = data;
+                          _cName.text = data!.namaBarang.toString();
+                          _cNamaSpesifikasi.text = data.spesifikasi.toString();
+                        });
+                      },
+                      items: spBarang?.map((Data value) {
+                        return DropdownMenuItem<Data>(
+                            value: value,
+                            child: SizedBox(
+                                width: MediaQuery.of(context).size.width * 0.8,
+                                child: Text(value.kodeQrcode.toString() +
+                                    " - " +
+                                    value.namaBarang.toString())));
+                      }).toList()),
+                ),
+                const SizedBox(
                   height: 10,
                 ),
                 TextFormField(
                   controller: _cName,
+                  readOnly: true,
                   decoration: const InputDecoration(
                       focusedBorder: OutlineInputBorder(
                         borderSide:
@@ -85,6 +139,7 @@ class _TambahBarangMasukBaruState extends State<TambahBarangMasukBaru> {
                   height: 10,
                 ),
                 TextFormField(
+                    readOnly: true,
                     controller: _cNamaSpesifikasi,
                     decoration: const InputDecoration(
                         focusedBorder: OutlineInputBorder(
@@ -96,34 +151,6 @@ class _TambahBarangMasukBaruState extends State<TambahBarangMasukBaru> {
                         ),
                         hintText: 'Spesifikasi',
                         labelText: 'Spesifikasi')),
-                const SizedBox(
-                  height: 10,
-                ),
-                SizedBox(
-                  width: MediaQuery.of(context).size.width,
-                  child: DropdownButton<Divisi>(
-                      value: dropdownValue,
-                      icon: const Icon(Icons.arrow_drop_down),
-                      iconSize: 24,
-                      elevation: 16,
-                      style: const TextStyle(color: Colors.red, fontSize: 18),
-                      underline: Container(
-                        height: 2,
-                        color: Colors.deepPurpleAccent,
-                      ),
-                      onChanged: (data) {
-                        setState(() {
-                          dropdownValue = data;
-                        });
-                      },
-                      items: spinnerItems?.map((Divisi value) {
-                        return DropdownMenuItem<Divisi>(
-                            value: value,
-                            child: SizedBox(
-                                width: MediaQuery.of(context).size.width * 0.8,
-                                child: Text(value.namaDivisi!)));
-                      }).toList()),
-                ),
                 const SizedBox(
                   height: 10,
                 ),

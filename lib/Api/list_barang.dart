@@ -152,7 +152,7 @@ class Data {
     namaBarang = json['nama_barang'];
     spesifikasi = json['spesifikasi'];
     // jumlahBarang = json['jumlah_barang'];
-    tanggalMasuk = json['tanggal'];
+    tanggalMasuk = json['tanggal_masuk'];
     idDivisi = json['id_divisi'];
     kodeQrcode = json['kode_qrcode'];
     idStatusBarang = json['id_status_barang'];
@@ -173,7 +173,7 @@ class Data {
     data['nama_barang'] = namaBarang;
     data['spesifikasi'] = spesifikasi;
     // data['jumlah_barang'] = jumlahBarang;
-    data['tanggal'] = tanggalMasuk;
+    data['tanggal_masuk'] = tanggalMasuk;
     data['id_divisi'] = idDivisi;
     data['kode_qrcode'] = kodeQrcode;
     data['id_status_barang'] = idStatusBarang;

@@ -83,6 +83,7 @@ class _BarangMasukState extends State<BarangMasuk> {
                   child: DataTable(
                       showCheckboxColumn: false,
                       columnSpacing: 38,
+                      dataRowHeight: size.height * 0.1,
                       sortColumnIndex: _currentSortColumn,
                       sortAscending: _isAscending,
                       headingTextStyle: MaterialStateTextStyle.resolveWith(
@@ -113,7 +114,7 @@ class _BarangMasukState extends State<BarangMasuk> {
                               });
                             }),
                         DataColumn(
-                            label: const Text('Name'),
+                            label: const Text('Barang'),
                             onSort: (index, _) {
                               setState(() {
                                 _currentSortColumn = index;
