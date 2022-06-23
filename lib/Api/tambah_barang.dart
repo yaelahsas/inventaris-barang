@@ -1,4 +1,8 @@
+import 'dart:io';
+import 'dart:typed_data';
+
 import 'package:http/http.dart' as http;
+import 'package:image_picker/image_picker.dart';
 import 'dart:convert';
 
 import 'package:inventaris_barang/Api/url.dart';
@@ -39,16 +43,26 @@ class TambahBarang {
       String idDivisi,
       String tanggal,
       String jumlah,
-      String status_barang) async {
+      String status_barang,
+      File uploadimage,
+      String id_pic,
+      String jam) async {
     Uri apiUrl = Uri.parse(Url.web + "barang/masuk/tambah");
+
+    List<int> imageBytes = uploadimage.readAsBytesSync();
+    String baseimage = base64Encode(imageBytes);
+    //convert file image to Base64 encoding
 
     var result = await http.post(apiUrl, body: {
       'nama_barang': nama,
       'spesifikasi': spesifikasi,
-      'id_divisi': idDivisi,
+      'id_barang': idDivisi,
       'tanggal_masuk': tanggal,
       'jumlah_barang': jumlah,
+      'foto_barang': baseimage,
       'id_status_barang': status_barang,
+      'id_pic': id_pic,
+      'jam': jam
     });
     var jsonResult = json.decode(result.body);
     return TambahBarang.fromJson(jsonResult);

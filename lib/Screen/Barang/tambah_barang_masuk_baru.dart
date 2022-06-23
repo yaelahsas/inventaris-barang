@@ -1,11 +1,18 @@
+import 'dart:convert';
+import 'dart:io';
+import 'dart:typed_data';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:inventaris_barang/Api/list_divisi.dart';
 import 'package:inventaris_barang/Api/tambah_barang.dart';
 import 'package:inventaris_barang/Screen/Barang/componen/app_bar.dart';
 import 'package:inventaris_barang/constants.dart';
+import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../Api/list_barang.dart';
 
@@ -23,7 +30,7 @@ class _TambahBarangMasukBaruState extends State<TambahBarangMasukBaru> {
   final TextEditingController _cTanggal = TextEditingController();
   final TextEditingController _cJumlah = TextEditingController();
   String date = '';
-
+  File? uploadimage;
   Data? ddBarang;
   Divisi? dropdownValue;
   List<Divisi>? spinnerItems;
@@ -47,11 +54,11 @@ class _TambahBarangMasukBaruState extends State<TambahBarangMasukBaru> {
   void dispose() {
     super.dispose();
 
-    // _cName.dispose();
+    _cName.dispose();
     // _cNamaDivisi.dispose();
-    // _cNamaSpesifikasi.dispose();
-    // _cTanggal.dispose();
-    // _cJumlah.dispose();
+    _cNamaSpesifikasi.dispose();
+    _cTanggal.dispose();
+    _cJumlah.dispose();
   }
 
   @override
@@ -73,6 +80,23 @@ class _TambahBarangMasukBaruState extends State<TambahBarangMasukBaru> {
                 child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
+                Container(
+                    //elese show uplaod button
+                    child: ElevatedButton.icon(
+                  onPressed: () {
+                    chooseImage();
+                    //start uploading image
+                  },
+                  icon: Icon(Icons.file_upload),
+                  label: Text("UPLOAD IMAGE"),
+                  // color: Colors.deepOrangeAccent,
+                  // colorBrightness: Brightness.dark,
+                  //set brghtness to dark, because deepOrangeAccent is darker coler
+                  //so that its text color is light
+                )),
+                const SizedBox(
+                  height: 10,
+                ),
                 const SizedBox(
                   // height: 14,
                   width: double.infinity,
@@ -86,7 +110,7 @@ class _TambahBarangMasukBaruState extends State<TambahBarangMasukBaru> {
                     ),
                   ),
                 ),
-                const SizedBox(
+                SizedBox(
                   height: 10,
                 ),
                 SizedBox(
@@ -204,14 +228,21 @@ class _TambahBarangMasukBaruState extends State<TambahBarangMasukBaru> {
                     style: ElevatedButton.styleFrom(
                         primary: kPrimaryColor,
                         textStyle: const TextStyle(fontSize: 20)),
-                    onPressed: () {
+                    onPressed: () async {
+                      var now = DateTime.now();
+                      var jam = DateFormat('HH:mm:ss').format(now).toString();
+                      SharedPreferences prefs =
+                          await SharedPreferences.getInstance();
                       TambahBarang.barangMasukBaru(
                               _cName.text,
                               _cNamaSpesifikasi.text,
-                              dropdownValue!.id.toString(),
+                              ddBarang!.id.toString(),
                               _cTanggal.text,
                               _cJumlah.text,
-                              '4')
+                              '4',
+                              uploadimage!,
+                              prefs.getInt('id_pic').toString(),
+                              jam)
                           .then((hasil) {
                         if (hasil.success == true) {
                           Fluttertoast.showToast(
@@ -243,5 +274,15 @@ class _TambahBarangMasukBaruState extends State<TambahBarangMasukBaru> {
         ),
       ),
     );
+  }
+
+  Future<void> chooseImage() async {
+    var choosedimage = await ImagePicker()
+        .getImage(source: ImageSource.camera, imageQuality: 50);
+    //set source: ImageSource.camera to get image from camera
+    setState(() {
+      File file = File(choosedimage!.path);
+      uploadimage = file;
+    });
   }
 }

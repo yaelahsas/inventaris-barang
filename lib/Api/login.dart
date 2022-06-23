@@ -42,15 +42,16 @@ class AuthApi {
     return AuthApi.fromJson(jsonResult);
   }
 
-  static Future<AuthApi> daftarAPI(
-      String username, String password, String nama, String role) async {
+  static Future<AuthApi> daftarAPI(String username, String password,
+      String nama, String role, String alamat) async {
     Uri apiUrl = Uri.parse(Url.web + "daftar");
 
     var result = await http.post(apiUrl, body: {
       'username': username,
       'password': password,
       'name': nama,
-      'id_role': role
+      'id_role': role,
+      'alamat': alamat
     });
     var jsonResult = json.decode(result.body);
     return AuthApi.fromJson(jsonResult);

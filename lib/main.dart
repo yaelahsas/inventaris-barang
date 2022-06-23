@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_downloader/flutter_downloader.dart';
 import 'package:inventaris_barang/Screen/Welcome/welcome_screen.dart';
+import 'package:inventaris_barang/Screen/profil/profile.dart';
 import 'package:inventaris_barang/constants.dart';
 
 void main() async {

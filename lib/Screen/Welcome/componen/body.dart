@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:inventaris_barang/Api/login.dart';
@@ -5,6 +7,10 @@ import 'package:inventaris_barang/Screen/Dashboard/dashboard_affair.dart';
 import 'package:inventaris_barang/Screen/Dashboard/dashboard_petugas.dart';
 import 'package:inventaris_barang/Screen/Signup/signup_screen.dart';
 import 'package:inventaris_barang/constants.dart';
+import 'package:permission_handler/permission_handler.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+import '../../../helper.dart';
 
 class BodySignin extends StatefulWidget {
   const BodySignin({Key? key}) : super(key: key);
@@ -14,6 +20,23 @@ class BodySignin extends StatefulWidget {
 }
 
 class _BodySigninState extends State<BodySignin> {
+  @override
+  void initState() {
+    super.initState();
+    // _isLogin();
+  }
+
+  void _setLogin(AuthApi data) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    setState(() {
+      prefs.setBool('isLogin', true);
+      prefs.setInt('idRole', data.data!.idRole!);
+      prefs.setString('nama', data.data!.name!);
+      prefs.setString('username', data.data!.username!);
+      prefs.setInt('id_pic', data.data!.id!);
+    });
+  }
+
   AuthApi? result;
 
   final TextEditingController _emailController = TextEditingController();
@@ -109,6 +132,7 @@ class _BodySigninState extends State<BodySignin> {
                             .then((value) {
                           result = value;
                           if (result?.success == true) {
+                            _setLogin(value);
                             Fluttertoast.showToast(
                                 msg: result!.message!,
                                 toastLength: Toast.LENGTH_SHORT,
@@ -122,7 +146,7 @@ class _BodySigninState extends State<BodySignin> {
                                   context,
                                   MaterialPageRoute(
                                       builder: (context) =>
-                                          const DashboarPetugas()));
+                                          const DashboardPetugas()));
                             } else if (result!.data!.idRole == 3) {
                               Navigator.pushReplacement(
                                   context,
