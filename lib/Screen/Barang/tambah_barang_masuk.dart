@@ -155,7 +155,7 @@ class _TambahBarangMasukState extends State<TambahBarangMasuk> {
                     SharedPreferences prefs =
                         await SharedPreferences.getInstance();
                     TambahBarang.barangMasuk(_cId.text, _cTanggal.text, "1",
-                            jam, prefs.getInt("id_pic")!)
+                            jam, prefs.getInt("id_pic")!.toString())
                         .then((hasil) {
                       if (hasil.success == true) {
                         Fluttertoast.showToast(

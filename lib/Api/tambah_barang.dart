@@ -25,8 +25,8 @@ class TambahBarang {
     return data;
   }
 
-  static Future<TambahBarang> barangMasuk(
-      String id, String tanggal, String jumlah, String jam, int id_pic) async {
+  static Future<TambahBarang> barangMasuk(String id, String tanggal,
+      String jumlah, String jam, String id_pic) async {
     Uri apiUrl = Uri.parse(Url.web + "barang/masuk/edit/" + id);
 
     var result = await http.post(apiUrl, body: {

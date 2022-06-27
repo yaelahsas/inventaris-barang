@@ -99,15 +99,15 @@ class ListLaporanGanti {
     Uri apiUrl = Uri.parse(Url.web + "laporan/ganti/create");
 
     var result = await http.post(apiUrl, body: {
-      'id_pic': 1,
-      'id_barang_pengganti': 5,
-      'tanggal_ganti': "22",
-      'jam_ganti': "22",
-      'id_divisi': 1,
-      'id_status_barang': 2,
-      'id_barang': 3,
-      'status_barang_lama': "aw",
-      'kode_qrcode_baru': "as12sa"
+      'id_pic': id,
+      'id_barang_pengganti': barangBaru.id.toString(),
+      'tanggal_ganti': tanggal,
+      'jam_ganti': jam,
+      'id_divisi': barangLama.idDivisi.toString(),
+      'id_status_barang': "2",
+      'id_barang': barangLama.id.toString(),
+      'status_barang_lama': barangLama.namaStatus,
+      'kode_qrcode_baru': barangBaru.kodeQrcode
     });
     var jsonResult = json.decode(result.body);
     return ListLaporanGanti.fromJson(jsonResult);
