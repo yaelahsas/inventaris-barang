@@ -1,66 +1,62 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:intl/intl.dart';
-import 'package:inventaris_barang/Api/tambah_barang.dart';
-import 'package:inventaris_barang/Screen/Barang/componen/app_bar.dart';
+import 'package:inventaris_barang/Api/laporan_ganti.dart';
 import 'package:inventaris_barang/constants.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import '../../Api/list_barang.dart';
-
-class TambahBarangMasuk extends StatefulWidget {
-  const TambahBarangMasuk({Key? key, required this.data}) : super(key: key);
-
-  final Data data;
+class TambahLaporanGanti extends StatefulWidget {
+  const TambahLaporanGanti({Key? key}) : super(key: key);
 
   @override
-  State<TambahBarangMasuk> createState() => _TambahBarangMasukState();
+  State<TambahLaporanGanti> createState() => _TambahLaporanGantiState();
 }
 
-class _TambahBarangMasukState extends State<TambahBarangMasuk> {
+class _TambahLaporanGantiState extends State<TambahLaporanGanti> {
   DateTime time = DateTime.now();
   final TextEditingController _cName = TextEditingController();
-  final TextEditingController _cId = TextEditingController();
+
   final TextEditingController _cNamaDivisi = TextEditingController();
-  final TextEditingController _cNamaSpesifikasi = TextEditingController();
+
   final TextEditingController _cTanggal = TextEditingController();
-  final TextEditingController _cJumlah = TextEditingController();
+
   String date = '';
+  BarangGanti? ddBarang;
+  List<BarangGanti>? spBarang;
+  BarangGantinya? ddBarangGantinya;
+  List<BarangGantinya>? spBarangGantinya;
+  _getName() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    setState(() {
+      _cName.text = prefs.getString("username")!.toLowerCase();
+    });
+  }
 
   @override
   void initState() {
     super.initState();
-
-    _cId.text = widget.data.id.toString();
-    _cName.text = widget.data.namaBarang!;
-    _cNamaDivisi.text = widget.data.namaDivisi!;
-    _cNamaSpesifikasi.text = widget.data.spesifikasi!;
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
-    _cId.dispose();
-    _cName.dispose();
-    _cNamaDivisi.dispose();
-    _cNamaSpesifikasi.dispose();
-    _cTanggal.dispose();
-    _cJumlah.dispose();
+    _getName();
+    ListLaporanGanti.barang_inventaris().then((value) {
+      spBarang = value;
+      setState(() {});
+    });
+    ListLaporanGanti.barang_gantinya().then((value) {
+      spBarangGantinya = value;
+      setState(() {});
+    });
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      resizeToAvoidBottomInset: false,
-      appBar: const AppBarBarang(judul: "Tambah Barang Masuk"),
-      body: SingleChildScrollView(
-        child: Container(
-          width: double.infinity,
-          padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 20),
-          height: MediaQuery.of(context).size.height,
-          child: Form(
-              child: Column(
+      appBar: AppBar(title: Text("Tambah")),
+      body: Container(
+        width: double.infinity,
+        padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 20),
+        height: MediaQuery.of(context).size.height,
+        child: Form(
+            child: SingleChildScrollView(
+          child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
               const SizedBox(
@@ -77,27 +73,52 @@ class _TambahBarangMasukState extends State<TambahBarangMasuk> {
                     enabledBorder: OutlineInputBorder(
                       borderSide: BorderSide(color: Colors.red, width: 1.0),
                     ),
-                    hintText: 'Name',
-                    labelText: 'Name'),
+                    hintText: 'PIC',
+                    labelText: 'PIC'),
               ),
               const SizedBox(
                 height: 10,
               ),
-              TextFormField(
-                  controller: _cNamaSpesifikasi,
-                  readOnly: true,
-                  decoration: const InputDecoration(
-                      focusedBorder: OutlineInputBorder(
-                        borderSide:
-                            BorderSide(color: Colors.greenAccent, width: 1.0),
-                      ),
-                      enabledBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: Colors.red, width: 1.0),
-                      ),
-                      hintText: 'Spesifikasi',
-                      labelText: 'Spesifikasi')),
               const SizedBox(
-                height: 10,
+                // height: 14,
+                width: double.infinity,
+                child: Text(
+                  "Pilih Barang",
+                  textAlign: TextAlign.left,
+                  style: TextStyle(
+                    fontSize: 14,
+                    fontWeight: FontWeight.w600,
+                    color: Colors.black,
+                  ),
+                ),
+              ),
+              SizedBox(
+                width: MediaQuery.of(context).size.width,
+                child: DropdownButton<BarangGanti>(
+                    value: ddBarang,
+                    icon: const Icon(Icons.arrow_drop_down),
+                    iconSize: 24,
+                    elevation: 16,
+                    style: const TextStyle(color: Colors.red, fontSize: 18),
+                    underline: Container(
+                      height: 2,
+                      color: Colors.deepPurpleAccent,
+                    ),
+                    onChanged: (data) {
+                      setState(() {
+                        ddBarang = data;
+                        _cNamaDivisi.text = data!.namaDivisi.toString();
+                      });
+                    },
+                    items: spBarang?.map((BarangGanti value) {
+                      return DropdownMenuItem<BarangGanti>(
+                          value: value,
+                          child: SizedBox(
+                              width: MediaQuery.of(context).size.width * 0.8,
+                              child: Text(value.kodeQrcode.toString() +
+                                  " - " +
+                                  value.namaBarang.toString())));
+                    }).toList()),
               ),
               TextFormField(
                   controller: _cNamaDivisi,
@@ -114,6 +135,46 @@ class _TambahBarangMasukState extends State<TambahBarangMasuk> {
                       labelText: 'Divisi')),
               const SizedBox(
                 height: 10,
+              ),
+              const SizedBox(
+                // height: 14,
+                width: double.infinity,
+                child: Text(
+                  "Pilih Barang Ganti",
+                  textAlign: TextAlign.left,
+                  style: TextStyle(
+                    fontSize: 14,
+                    fontWeight: FontWeight.w600,
+                    color: Colors.black,
+                  ),
+                ),
+              ),
+              SizedBox(
+                width: MediaQuery.of(context).size.width,
+                child: DropdownButton<BarangGantinya>(
+                    value: ddBarangGantinya,
+                    icon: const Icon(Icons.arrow_drop_down),
+                    iconSize: 24,
+                    elevation: 16,
+                    style: const TextStyle(color: Colors.red, fontSize: 18),
+                    underline: Container(
+                      height: 2,
+                      color: Colors.deepPurpleAccent,
+                    ),
+                    onChanged: (data) {
+                      setState(() {
+                        ddBarangGantinya = data;
+                      });
+                    },
+                    items: spBarangGantinya?.map((BarangGantinya value) {
+                      return DropdownMenuItem<BarangGantinya>(
+                          value: value,
+                          child: SizedBox(
+                              width: MediaQuery.of(context).size.width * 0.8,
+                              child: Text(value.kodeQrcode.toString() +
+                                  " - " +
+                                  value.namaBarang.toString())));
+                    }).toList()),
               ),
               TextFormField(
                   controller: _cTanggal,
@@ -154,8 +215,12 @@ class _TambahBarangMasukState extends State<TambahBarangMasuk> {
                     var jam = DateFormat('HH:mm:ss').format(now).toString();
                     SharedPreferences prefs =
                         await SharedPreferences.getInstance();
-                    TambahBarang.barangMasuk(_cId.text, _cTanggal.text, "1",
-                            jam, prefs.getInt("id_pic")!)
+                    ListLaporanGanti.postBarangGanti(
+                            prefs.getInt('id_pic')!.toString(),
+                            date,
+                            jam,
+                            ddBarang!,
+                            ddBarangGantinya!)
                         .then((hasil) {
                       if (hasil.success == true) {
                         Fluttertoast.showToast(
@@ -182,8 +247,8 @@ class _TambahBarangMasukState extends State<TambahBarangMasuk> {
                 ),
               ),
             ],
-          )),
-        ),
+          ),
+        )),
       ),
     );
   }

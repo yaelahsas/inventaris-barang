@@ -26,12 +26,14 @@ class TambahBarang {
   }
 
   static Future<TambahBarang> barangMasuk(
-      String id, String tanggal, String jumlah) async {
+      String id, String tanggal, String jumlah, String jam, int id_pic) async {
     Uri apiUrl = Uri.parse(Url.web + "barang/masuk/edit/" + id);
 
     var result = await http.post(apiUrl, body: {
       'tanggal_masuk': tanggal,
       'jumlah_barang': jumlah,
+      'jam': jam,
+      'id_pic': id_pic
     });
     var jsonResult = json.decode(result.body);
     return TambahBarang.fromJson(jsonResult);
@@ -40,26 +42,20 @@ class TambahBarang {
   static Future<TambahBarang> barangMasukBaru(
       String nama,
       String spesifikasi,
-      String idDivisi,
+      String idBarang,
       String tanggal,
       String jumlah,
       String status_barang,
-      File uploadimage,
       String id_pic,
       String jam) async {
     Uri apiUrl = Uri.parse(Url.web + "barang/masuk/tambah");
 
-    List<int> imageBytes = uploadimage.readAsBytesSync();
-    String baseimage = base64Encode(imageBytes);
-    //convert file image to Base64 encoding
-
     var result = await http.post(apiUrl, body: {
       'nama_barang': nama,
       'spesifikasi': spesifikasi,
-      'id_barang': idDivisi,
+      'id_barang': idBarang,
       'tanggal_masuk': tanggal,
       'jumlah_barang': jumlah,
-      'foto_barang': baseimage,
       'id_status_barang': status_barang,
       'id_pic': id_pic,
       'jam': jam

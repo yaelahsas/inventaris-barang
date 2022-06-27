@@ -80,20 +80,6 @@ class _TambahBarangMasukBaruState extends State<TambahBarangMasukBaru> {
                 child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                Container(
-                    //elese show uplaod button
-                    child: ElevatedButton.icon(
-                  onPressed: () {
-                    chooseImage();
-                    //start uploading image
-                  },
-                  icon: Icon(Icons.file_upload),
-                  label: Text("UPLOAD IMAGE"),
-                  // color: Colors.deepOrangeAccent,
-                  // colorBrightness: Brightness.dark,
-                  //set brghtness to dark, because deepOrangeAccent is darker coler
-                  //so that its text color is light
-                )),
                 const SizedBox(
                   height: 10,
                 ),
@@ -240,7 +226,6 @@ class _TambahBarangMasukBaruState extends State<TambahBarangMasukBaru> {
                               _cTanggal.text,
                               _cJumlah.text,
                               '4',
-                              uploadimage!,
                               prefs.getInt('id_pic').toString(),
                               jam)
                           .then((hasil) {

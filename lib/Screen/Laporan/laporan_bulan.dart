@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:inventaris_barang/Screen/Laporan/Barang%20Ganti/laporan_ganti.dart';
 import 'package:inventaris_barang/Screen/Laporan/laporan_barang.dart';
 import 'package:inventaris_barang/constants.dart';
 
@@ -9,7 +10,7 @@ class LaporanBulan extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Laporan Bulan"),
+        title: Text("Laporan Barang"),
       ),
       body: Container(
         height: MediaQuery.of(context).size.height,
@@ -17,245 +18,39 @@ class LaporanBulan extends StatelessWidget {
         child: SingleChildScrollView(
           child: Column(
             children: [
-              Container(
-                width: MediaQuery.of(context).size.width,
-                padding: const EdgeInsets.symmetric(horizontal: 10),
-                child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                      primary: kPrimaryColor,
-                      textStyle: const TextStyle(fontSize: 20)),
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const LaporanBarang(
-                          bulan: '01',
-                        ),
-                      ),
-                    );
-                  },
-                  child: const Text("Januari"),
-                ),
+              SizedBox(
+                height: 20,
               ),
               Container(
                 width: MediaQuery.of(context).size.width,
-                padding: const EdgeInsets.symmetric(horizontal: 10),
+                padding: EdgeInsets.symmetric(horizontal: 10),
                 child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                      primary: kPrimaryColor,
-                      textStyle: const TextStyle(fontSize: 20)),
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const LaporanBarang(
-                          bulan: '02',
-                        ),
-                      ),
-                    );
-                  },
-                  child: const Text("Februari"),
-                ),
+                    onPressed: () {}, child: Text("Barang Rusak")),
               ),
               Container(
                 width: MediaQuery.of(context).size.width,
-                padding: const EdgeInsets.symmetric(horizontal: 10),
+                padding: EdgeInsets.symmetric(horizontal: 10),
                 child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                      primary: kPrimaryColor,
-                      textStyle: const TextStyle(fontSize: 20)),
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const LaporanBarang(
-                          bulan: '03',
-                        ),
-                      ),
-                    );
-                  },
-                  child: const Text("Maret"),
-                ),
+                    onPressed: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => LaporanGanti(),
+                          ));
+                    },
+                    child: Text("Barang Ganti")),
               ),
               Container(
                 width: MediaQuery.of(context).size.width,
-                padding: const EdgeInsets.symmetric(horizontal: 10),
+                padding: EdgeInsets.symmetric(horizontal: 10),
                 child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                      primary: kPrimaryColor,
-                      textStyle: const TextStyle(fontSize: 20)),
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const LaporanBarang(
-                          bulan: '04',
-                        ),
-                      ),
-                    );
-                  },
-                  child: const Text("April"),
-                ),
+                    onPressed: () {}, child: Text("Barang Hilang")),
               ),
               Container(
                 width: MediaQuery.of(context).size.width,
-                padding: const EdgeInsets.symmetric(horizontal: 10),
+                padding: EdgeInsets.symmetric(horizontal: 10),
                 child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                      primary: kPrimaryColor,
-                      textStyle: const TextStyle(fontSize: 20)),
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const LaporanBarang(
-                          bulan: '05',
-                        ),
-                      ),
-                    );
-                  },
-                  child: const Text("Mei"),
-                ),
-              ),
-              Container(
-                width: MediaQuery.of(context).size.width,
-                padding: const EdgeInsets.symmetric(horizontal: 10),
-                child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                      primary: kPrimaryColor,
-                      textStyle: const TextStyle(fontSize: 20)),
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const LaporanBarang(
-                          bulan: '06',
-                        ),
-                      ),
-                    );
-                  },
-                  child: const Text("Juni"),
-                ),
-              ),
-              Container(
-                width: MediaQuery.of(context).size.width,
-                padding: const EdgeInsets.symmetric(horizontal: 10),
-                child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                      primary: kPrimaryColor,
-                      textStyle: const TextStyle(fontSize: 20)),
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const LaporanBarang(
-                          bulan: '07',
-                        ),
-                      ),
-                    );
-                  },
-                  child: const Text("Juli"),
-                ),
-              ),
-              Container(
-                width: MediaQuery.of(context).size.width,
-                padding: const EdgeInsets.symmetric(horizontal: 10),
-                child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                      primary: kPrimaryColor,
-                      textStyle: const TextStyle(fontSize: 20)),
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const LaporanBarang(
-                          bulan: '08',
-                        ),
-                      ),
-                    );
-                  },
-                  child: const Text("Agustus"),
-                ),
-              ),
-              Container(
-                width: MediaQuery.of(context).size.width,
-                padding: const EdgeInsets.symmetric(horizontal: 10),
-                child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                      primary: kPrimaryColor,
-                      textStyle: const TextStyle(fontSize: 20)),
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const LaporanBarang(
-                          bulan: '09',
-                        ),
-                      ),
-                    );
-                  },
-                  child: const Text("September"),
-                ),
-              ),
-              Container(
-                width: MediaQuery.of(context).size.width,
-                padding: const EdgeInsets.symmetric(horizontal: 10),
-                child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                      primary: kPrimaryColor,
-                      textStyle: const TextStyle(fontSize: 20)),
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const LaporanBarang(
-                          bulan: '10',
-                        ),
-                      ),
-                    );
-                  },
-                  child: const Text("Oktober"),
-                ),
-              ),
-              Container(
-                width: MediaQuery.of(context).size.width,
-                padding: const EdgeInsets.symmetric(horizontal: 10),
-                child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                      primary: kPrimaryColor,
-                      textStyle: const TextStyle(fontSize: 20)),
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const LaporanBarang(
-                          bulan: '11',
-                        ),
-                      ),
-                    );
-                  },
-                  child: const Text("November"),
-                ),
-              ),
-              Container(
-                width: MediaQuery.of(context).size.width,
-                padding: const EdgeInsets.symmetric(horizontal: 10),
-                child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                      primary: kPrimaryColor,
-                      textStyle: const TextStyle(fontSize: 20)),
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const LaporanBarang(
-                          bulan: '12',
-                        ),
-                      ),
-                    );
-                  },
-                  child: const Text("Desember"),
-                ),
+                    onPressed: () {}, child: Text("Laporan Inventaris")),
               ),
             ],
           ),

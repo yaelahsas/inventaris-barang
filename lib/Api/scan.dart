@@ -48,6 +48,8 @@ class Data {
   String? kodeQrcode;
   String? kodeQrcodeTambahan;
   int? idStatusBarang;
+  String? name_pic;
+  String? jam;
 
   Data(
       {this.id,
@@ -62,7 +64,9 @@ class Data {
       this.idDivisi,
       this.kodeQrcode,
       this.kodeQrcodeTambahan,
-      this.idStatusBarang});
+      this.idStatusBarang,
+      this.name_pic,
+      this.jam});
 
   Data.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -78,6 +82,8 @@ class Data {
     kodeQrcode = json['kode_qrcode'];
     kodeQrcodeTambahan = json['kode_qrcode_tambahan'];
     idStatusBarang = json['id_status_barang'];
+    jam = json['jam'];
+    name_pic = json['nama_pic'];
   }
 
   Map<String, dynamic> toJson() {
@@ -95,6 +101,8 @@ class Data {
     data['kode_qrcode'] = this.kodeQrcode;
     data['kode_qrcode_tambahan'] = this.kodeQrcodeTambahan;
     data['id_status_barang'] = this.idStatusBarang;
+    data['jam'] = this.jam;
+    data['nama_pic'] = this.name_pic;
     return data;
   }
 }
