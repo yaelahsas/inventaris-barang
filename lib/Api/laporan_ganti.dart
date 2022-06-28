@@ -107,7 +107,8 @@ class ListLaporanGanti {
       'id_status_barang': "2",
       'id_barang': barangLama.id.toString(),
       'status_barang_lama': barangLama.namaStatus,
-      'kode_qrcode_baru': barangBaru.kodeQrcode
+      'kode_qrcode_baru': barangBaru.kodeQrcode,
+      'kode_qrcode_lama': barangLama.kodeQrcode
     });
     var jsonResult = json.decode(result.body);
     return ListLaporanGanti.fromJson(jsonResult);

@@ -16,9 +16,9 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
   _isLogin() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     setState(() {
-      bool? login = prefs.getBool('isLogin');
-      int? role = prefs.getInt('idRole');
-      if (login! && role == 3) {
+      bool? login = prefs.getBool('isLogin') ?? false;
+      int? role = prefs.getInt('idRole') ?? 0;
+      if (login && role == 3) {
         Navigator.push(
           context,
           MaterialPageRoute(

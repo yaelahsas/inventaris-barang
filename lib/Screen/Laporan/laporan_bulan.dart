@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:inventaris_barang/Screen/Laporan/Barang%20Ganti/laporan_ganti.dart';
+import 'package:inventaris_barang/Screen/Laporan/Barang%20Hilang/laporan_hilang.dart';
+import 'package:inventaris_barang/Screen/Laporan/Barang%20Rusak/laporan_rusak.dart';
 import 'package:inventaris_barang/Screen/Laporan/laporan_barang.dart';
 import 'package:inventaris_barang/constants.dart';
 
@@ -25,7 +27,14 @@ class LaporanBulan extends StatelessWidget {
                 width: MediaQuery.of(context).size.width,
                 padding: EdgeInsets.symmetric(horizontal: 10),
                 child: ElevatedButton(
-                    onPressed: () {}, child: Text("Barang Rusak")),
+                    onPressed: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => LaporanRusak(),
+                          ));
+                    },
+                    child: Text("Barang Rusak")),
               ),
               Container(
                 width: MediaQuery.of(context).size.width,
@@ -44,7 +53,14 @@ class LaporanBulan extends StatelessWidget {
                 width: MediaQuery.of(context).size.width,
                 padding: EdgeInsets.symmetric(horizontal: 10),
                 child: ElevatedButton(
-                    onPressed: () {}, child: Text("Barang Hilang")),
+                    onPressed: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => LaporanHilang(),
+                          ));
+                    },
+                    child: Text("Barang Hilang")),
               ),
               Container(
                 width: MediaQuery.of(context).size.width,
