@@ -3,12 +3,15 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:inventaris_barang/Api/laporan_ganti.dart';
 import 'package:inventaris_barang/Screen/Laporan/Barang%20Ganti/tambah_laporan_ganti.dart';
 import 'package:inventaris_barang/Screen/Laporan/Barang%20Hilang/tambah_laporan_hilang.dart';
+import 'package:inventaris_barang/Screen/Laporan/Barang%20Rusak/laporan_rusak_pdf.dart';
+import 'package:inventaris_barang/Screen/Laporan/Barang%20Rusak/laporan_rusak_perbaiki.dart';
 import 'package:inventaris_barang/Screen/Laporan/Barang%20Rusak/tambah_laporan_rusak.dart';
 
 import '../../../Api/laporan_hilang.dart';
 import '../../../Api/list_barang.dart';
 import '../../../constants.dart';
 import '../../Barang/tambah_barang_masuk.dart';
+import 'laporan_rusak_ganti.dart';
 
 class LaporanRusak extends StatefulWidget {
   const LaporanRusak({Key? key}) : super(key: key);
@@ -42,7 +45,19 @@ class _LaporanGantiState extends State<LaporanRusak> {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
-      appBar: AppBar(title: Text("Laporan Rusak")),
+      appBar: AppBar(
+        title: Text("Laporan Rusak"),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.print_rounded),
+            onPressed: () {
+              Navigator.push(context, MaterialPageRoute(builder: (context) {
+                return LaporanRusakPdf();
+              }));
+            },
+          ),
+        ],
+      ),
       body: Container(
         width: double.infinity,
         padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 5),
@@ -161,12 +176,28 @@ class _LaporanGantiState extends State<LaporanRusak> {
                                         Text(_listDataFiltered[i].namaBarang!)),
                               )),
                               DataCell(InkWell(
+                                onTap: () {
+                                  Navigator.push(context,
+                                      MaterialPageRoute(builder: (context) {
+                                    return LaporanRusakGanti(
+                                      barang: _listDataFiltered[i],
+                                    );
+                                  }));
+                                },
                                 child: Icon(
                                   Icons.change_circle_outlined,
                                   color: Colors.blue,
                                 ),
                               )),
                               DataCell(InkWell(
+                                onTap: () {
+                                  Navigator.push(context,
+                                      MaterialPageRoute(builder: (context) {
+                                    return LaporanRusakPerbaiki(
+                                      barang: _listDataFiltered[i],
+                                    );
+                                  }));
+                                },
                                 child: Icon(
                                   Icons.home_repair_service_outlined,
                                   color: Colors.green,

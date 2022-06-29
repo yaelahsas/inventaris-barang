@@ -5,6 +5,7 @@ import 'package:inventaris_barang/Screen/Laporan/Barang%20Ganti/tambah_laporan_g
 import '../../../Api/list_barang.dart';
 import '../../../constants.dart';
 import '../../Barang/tambah_barang_masuk.dart';
+import 'laporan_ganti_pdf.dart';
 
 class LaporanGanti extends StatefulWidget {
   const LaporanGanti({Key? key}) : super(key: key);
@@ -38,7 +39,19 @@ class _LaporanGantiState extends State<LaporanGanti> {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
-      appBar: AppBar(title: Text("Laporan Ganti")),
+      appBar: AppBar(
+        title: Text("Laporan Ganti"),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.print_rounded),
+            onPressed: () {
+              Navigator.push(context, MaterialPageRoute(builder: (context) {
+                return LaporanGantiPdf();
+              }));
+            },
+          ),
+        ],
+      ),
       body: Container(
         width: double.infinity,
         padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 5),

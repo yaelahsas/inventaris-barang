@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:http/http.dart' as http;
+import 'package:inventaris_barang/Api/laporan_hilang.dart';
 import 'package:inventaris_barang/Api/url.dart';
 
 class ListLaporanGanti {
@@ -109,6 +110,48 @@ class ListLaporanGanti {
       'status_barang_lama': barangLama.namaStatus,
       'kode_qrcode_baru': barangBaru.kodeQrcode,
       'kode_qrcode_lama': barangLama.kodeQrcode
+    });
+    var jsonResult = json.decode(result.body);
+    return ListLaporanGanti.fromJson(jsonResult);
+  }
+
+  static Future<ListLaporanGanti> postBarangHilangGanti(
+      String id,
+      String tanggal,
+      String jam,
+      BarangHilang barangLama,
+      BarangGantinya barangBaru) async {
+    Uri apiUrl = Uri.parse(Url.web + "laporan/ganti/create");
+
+    var result = await http.post(apiUrl, body: {
+      'id_pic': id,
+      'id_barang_pengganti': barangBaru.id.toString(),
+      'tanggal_ganti': tanggal,
+      'jam_ganti': jam,
+      'id_divisi': barangLama.idDivisi.toString(),
+      'id_status_barang': "2",
+      'id_barang': barangLama.id.toString(),
+      'status_barang_lama': barangLama.namaStatus,
+      'kode_qrcode_baru': barangBaru.kodeQrcode,
+      'kode_qrcode_lama': barangLama.kodeQrcode
+    });
+    var jsonResult = json.decode(result.body);
+    return ListLaporanGanti.fromJson(jsonResult);
+  }
+
+  static Future<ListLaporanGanti> postBarangRusakPerbaiki(String id,
+      String tanggal, String jam, BarangHilang barangLama, String ket) async {
+    Uri apiUrl = Uri.parse(Url.web + "laporan/rusak/perbaiki");
+
+    var result = await http.post(apiUrl, body: {
+      'id_pic': id,
+      'id_inventaris': barangLama.id.toString(),
+      'tanggal_perbaikan': tanggal,
+      'jam_perbaikan': jam,
+      'id_divisi': barangLama.idDivisi.toString(),
+      'id_status_barang': "6",
+      'ket': ket,
+      'id_barang_diperbaiki': barangLama.idBarang.toString(),
     });
     var jsonResult = json.decode(result.body);
     return ListLaporanGanti.fromJson(jsonResult);

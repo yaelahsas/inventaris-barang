@@ -6,27 +6,26 @@ import 'package:inventaris_barang/Api/laporan_hilang.dart';
 import 'package:inventaris_barang/constants.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import '../../../Api/list_barang.dart';
-
-class TambahLaporanRusak extends StatefulWidget {
-  const TambahLaporanRusak({Key? key}) : super(key: key);
-
+class LaporanRusakPerbaiki extends StatefulWidget {
+  const LaporanRusakPerbaiki({Key? key, required this.barang})
+      : super(key: key);
+  final BarangHilang barang;
   @override
-  State<TambahLaporanRusak> createState() => _TambahLaporanGantiState();
+  State<LaporanRusakPerbaiki> createState() => _TambahLaporanGantiState();
 }
 
-class _TambahLaporanGantiState extends State<TambahLaporanRusak> {
+class _TambahLaporanGantiState extends State<LaporanRusakPerbaiki> {
   DateTime time = DateTime.now();
   final TextEditingController _cName = TextEditingController();
-
+  final TextEditingController _cBarang = TextEditingController();
   final TextEditingController _cNamaDivisi = TextEditingController();
-
   final TextEditingController _cTanggal = TextEditingController();
+  final TextEditingController _cKet = TextEditingController();
 
   String date = '';
-  Data? ddBarang;
-  List<Data>? spBarang;
 
+  BarangGantinya? ddBarangGantinya;
+  List<BarangGantinya>? spBarangGantinya;
   _getName() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     setState(() {
@@ -35,11 +34,23 @@ class _TambahLaporanGantiState extends State<TambahLaporanRusak> {
   }
 
   @override
+  void dispose() {
+    super.dispose();
+    _cBarang.dispose();
+    _cNamaDivisi.dispose();
+    _cTanggal.dispose();
+    _cName.dispose();
+    _cKet.dispose();
+  }
+
+  @override
   void initState() {
     super.initState();
     _getName();
-    ListBarang.connectToAPI().then((value) {
-      spBarang = value;
+    _cBarang.text = widget.barang.namaBarang.toString();
+    _cNamaDivisi.text = widget.barang.namaDivisi.toString();
+    ListLaporanGanti.barang_gantinya().then((value) {
+      spBarangGantinya = value;
       setState(() {});
     });
   }
@@ -77,46 +88,22 @@ class _TambahLaporanGantiState extends State<TambahLaporanRusak> {
               const SizedBox(
                 height: 10,
               ),
-              const SizedBox(
-                // height: 14,
-                width: double.infinity,
-                child: Text(
-                  "Pilih Barang",
-                  textAlign: TextAlign.left,
-                  style: TextStyle(
-                    fontSize: 14,
-                    fontWeight: FontWeight.w600,
-                    color: Colors.black,
-                  ),
-                ),
-              ),
-              SizedBox(
-                width: MediaQuery.of(context).size.width,
-                child: DropdownButton<Data>(
-                    value: ddBarang,
-                    icon: const Icon(Icons.arrow_drop_down),
-                    iconSize: 24,
-                    elevation: 16,
-                    style: const TextStyle(color: Colors.red, fontSize: 18),
-                    underline: Container(
-                      height: 2,
-                      color: Colors.deepPurpleAccent,
+              TextFormField(
+                controller: _cBarang,
+                readOnly: true,
+                decoration: const InputDecoration(
+                    focusedBorder: OutlineInputBorder(
+                      borderSide:
+                          BorderSide(color: Colors.greenAccent, width: 1.0),
                     ),
-                    onChanged: (data) {
-                      setState(() {
-                        ddBarang = data;
-                        _cNamaDivisi.text = data!.namaDivisi.toString();
-                      });
-                    },
-                    items: spBarang?.map((Data value) {
-                      return DropdownMenuItem<Data>(
-                          value: value,
-                          child: SizedBox(
-                              width: MediaQuery.of(context).size.width * 0.8,
-                              child: Text(value.kodeQrcode.toString() +
-                                  " - " +
-                                  value.namaBarang.toString())));
-                    }).toList()),
+                    enabledBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color: Colors.red, width: 1.0),
+                    ),
+                    hintText: 'Barang',
+                    labelText: 'Barang'),
+              ),
+              const SizedBox(
+                height: 10,
               ),
               TextFormField(
                   controller: _cNamaDivisi,
@@ -158,7 +145,23 @@ class _TambahLaporanGantiState extends State<TambahLaporanRusak> {
                         borderSide: BorderSide(color: Colors.red, width: 1.0),
                       ),
                       hintText: 'masukkan tanggal',
-                      labelText: 'Tanggal Rusak')),
+                      labelText: 'Tanggal Perbaikan')),
+              const SizedBox(
+                height: 10,
+              ),
+              TextFormField(
+                controller: _cKet,
+                decoration: const InputDecoration(
+                    focusedBorder: OutlineInputBorder(
+                      borderSide:
+                          BorderSide(color: Colors.greenAccent, width: 1.0),
+                    ),
+                    enabledBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color: Colors.red, width: 1.0),
+                    ),
+                    hintText: 'Keterangan',
+                    labelText: 'Keterangan'),
+              ),
               const SizedBox(
                 height: 10,
               ),
@@ -173,12 +176,13 @@ class _TambahLaporanGantiState extends State<TambahLaporanRusak> {
                     var jam = DateFormat('HH:mm:ss').format(now).toString();
                     SharedPreferences prefs =
                         await SharedPreferences.getInstance();
-                    ListLaporanHilang.postBarangRusak(
-                      prefs.getInt('id_pic')!.toString(),
-                      date,
-                      jam,
-                      ddBarang!,
-                    ).then((hasil) {
+                    ListLaporanGanti.postBarangRusakPerbaiki(
+                            prefs.getInt('id_pic')!.toString(),
+                            date,
+                            jam,
+                            widget.barang,
+                            _cKet.text)
+                        .then((hasil) {
                       if (hasil.success == true) {
                         Fluttertoast.showToast(
                             msg: hasil.message!,

@@ -56,8 +56,8 @@ class ListLaporanHilang {
     var result = await http.post(apiUrl, body: {
       'id_pic': id,
       // 'id_barang_pengganti': barangHilang.id.toString(),
-      'tanggal_hilang': tanggal,
-      'jam_hilang': jam,
+      'tanggal_rusak': tanggal,
+      'jam_rusak': jam,
       'id_divisi': barangHilang.idDivisi.toString(),
       'id_status_barang': "1",
       'id_barang': barangHilang.id.toString(),
