@@ -11,14 +11,14 @@ import 'package:syncfusion_flutter_pdfviewer/pdfviewer.dart';
 
 import '../../../Api/url.dart';
 
-class LaporanGantiPdf extends StatefulWidget {
-  const LaporanGantiPdf({Key? key}) : super(key: key);
+class LaporanInventarisPdf extends StatefulWidget {
+  const LaporanInventarisPdf({Key? key}) : super(key: key);
 
   @override
-  State<LaporanGantiPdf> createState() => _RekapPdfState();
+  State<LaporanInventarisPdf> createState() => _RekapPdfState();
 }
 
-class _RekapPdfState extends State<LaporanGantiPdf> {
+class _RekapPdfState extends State<LaporanInventarisPdf> {
   final ReceivePort _port = ReceivePort();
 
   @override
@@ -84,7 +84,7 @@ class _RekapPdfState extends State<LaporanGantiPdf> {
         ),
         body: Container(
           color: kPrimaryColor,
-          child: SfPdfViewer.network(Url.laporan + "cetak_barang_ganti"),
+          child: SfPdfViewer.network(Url.laporan + "cetak_laporan_inventaris"),
         ));
   }
 
@@ -92,19 +92,19 @@ class _RekapPdfState extends State<LaporanGantiPdf> {
     var status = await Permission.storage.status;
     if (status.isGranted) {
       final baseDir = await getExternalStorageDirectory();
-      final String url = Url.laporan + 'cetak_barang_ganti';
-      final String url2 = Url.laporan + 'export_barang_ganti';
+      final String url = Url.laporan + 'cetak_laporan_inventaris';
+      final String url2 = Url.laporan + 'export_inventaris';
 
       final taskId = await FlutterDownloader.enqueue(
         url: url,
-        fileName: "barang_ganti.pdf",
+        fileName: "laporan_inventaris.pdf",
         savedDir: baseDir!.path,
         showNotification: true,
         openFileFromNotification: true,
       );
       final taskId2 = await FlutterDownloader.enqueue(
         url: url2,
-        fileName: "barang_ganti.xlsx",
+        fileName: "laporan_inventaris.xlsx",
         savedDir: baseDir.path,
         showNotification: true,
         openFileFromNotification: true,

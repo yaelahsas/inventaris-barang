@@ -88,73 +88,105 @@ class _LaporanGantiState extends State<LaporanGanti> {
             ),
             Expanded(
               child: SingleChildScrollView(
-                child: DataTable(
-                    showCheckboxColumn: false,
-                    columnSpacing: 38,
-                    dataRowHeight: size.height * 0.1,
-                    sortColumnIndex: _currentSortColumn,
-                    sortAscending: _isAscending,
-                    headingTextStyle: MaterialStateTextStyle.resolveWith(
-                        (states) => const TextStyle(color: kPrimaryLightColor)),
-                    headingRowColor: MaterialStateProperty.resolveWith(
-                        (states) => kPrimaryColor),
-                    columns: [
-                      DataColumn(
-                          label: const Text('Id'),
-                          numeric: true,
-                          onSort: (index, _) {
-                            setState(() {
-                              _currentSortColumn = index;
+                child: Container(
+                  width: size.width,
+                  child: DataTable(
+                      showCheckboxColumn: false,
+                      columnSpacing: 38,
+                      dataRowHeight: size.height * 0.1,
+                      sortColumnIndex: _currentSortColumn,
+                      sortAscending: _isAscending,
+                      headingTextStyle: MaterialStateTextStyle.resolveWith(
+                          (states) =>
+                              const TextStyle(color: kPrimaryLightColor)),
+                      headingRowColor: MaterialStateProperty.resolveWith(
+                          (states) => kPrimaryColor),
+                      columns: [
+                        DataColumn(
+                            label: const Text('Id'),
+                            numeric: true,
+                            onSort: (index, _) {
+                              setState(() {
+                                _currentSortColumn = index;
 
-                              if (_isAscending == true) {
-                                _isAscending = false;
-                              } else {
-                                _isAscending = true;
-                              }
-                              _listData.sort((a, b) {
-                                if (_isAscending) {
-                                  return a.id!.compareTo(b.id!);
+                                if (_isAscending == true) {
+                                  _isAscending = false;
                                 } else {
-                                  return b.id!.compareTo(a.id!);
+                                  _isAscending = true;
                                 }
+                                _listData.sort((a, b) {
+                                  if (_isAscending) {
+                                    return a.id!.compareTo(b.id!);
+                                  } else {
+                                    return b.id!.compareTo(a.id!);
+                                  }
+                                });
                               });
-                            });
-                          }),
-                      DataColumn(
-                          label: const Text('Barang'),
-                          onSort: (index, _) {
-                            setState(() {
-                              _currentSortColumn = index;
+                            }),
+                        DataColumn(
+                            label: const Text('Barang Baru'),
+                            onSort: (index, _) {
+                              setState(() {
+                                _currentSortColumn = index;
 
-                              if (_isAscending == true) {
-                                _isAscending = false;
-                              } else {
-                                _isAscending = true;
-                              }
-                              _listData.sort((a, b) {
-                                if (_isAscending) {
-                                  return a.namaBarang!.compareTo(b.namaBarang!);
+                                if (_isAscending == true) {
+                                  _isAscending = false;
                                 } else {
-                                  return b.namaBarang!.compareTo(a.namaBarang!);
+                                  _isAscending = true;
                                 }
+                                _listData.sort((a, b) {
+                                  if (_isAscending) {
+                                    return a.namaBarang!
+                                        .compareTo(b.namaBarang!);
+                                  } else {
+                                    return b.namaBarang!
+                                        .compareTo(a.namaBarang!);
+                                  }
+                                });
                               });
-                            });
-                          }),
-                    ],
-                    rows: [
-                      for (var i = 0; i < _listDataFiltered.length; i++)
-                        DataRow(
-                          cells: [
-                            DataCell(Text(_listDataFiltered[i].id.toString())),
-                            DataCell(SizedBox(
-                                width: size.width,
-                                child: Text(_listDataFiltered[i].namaBarang!))),
-                          ],
-                          onSelectChanged: (value) {
-                            // Kirim Data Ke Screen Lain
-                          },
-                        ),
-                    ]),
+                            }),
+                        DataColumn(
+                            label: const Text('Barang Lama'),
+                            onSort: (index, _) {
+                              setState(() {
+                                _currentSortColumn = index;
+
+                                if (_isAscending == true) {
+                                  _isAscending = false;
+                                } else {
+                                  _isAscending = true;
+                                }
+                                _listData.sort((a, b) {
+                                  if (_isAscending) {
+                                    return a.nama_barang_lama!
+                                        .compareTo(b.nama_barang_lama!);
+                                  } else {
+                                    return b.nama_barang_lama!
+                                        .compareTo(a.nama_barang_lama!);
+                                  }
+                                });
+                              });
+                            }),
+                      ],
+                      rows: [
+                        for (var i = 0; i < _listDataFiltered.length; i++)
+                          DataRow(
+                            cells: [
+                              DataCell(
+                                  Text(_listDataFiltered[i].id.toString())),
+                              DataCell(SizedBox(
+                                  child:
+                                      Text(_listDataFiltered[i].namaBarang!))),
+                              DataCell(SizedBox(
+                                  child: Text(
+                                      _listDataFiltered[i].nama_barang_lama!))),
+                            ],
+                            onSelectChanged: (value) {
+                              // Kirim Data Ke Screen Lain
+                            },
+                          ),
+                      ]),
+                ),
               ),
             ),
           ],

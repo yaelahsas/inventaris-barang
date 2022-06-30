@@ -77,7 +77,7 @@ class _RekapPdfState extends State<LaporanRusakPdf> {
               color: kPrimaryLightColor,
               icon: const Icon(Icons.file_download),
               onPressed: () {
-                // _downloadPdf();
+                _downloadPdf();
               },
             ),
           ],
@@ -88,29 +88,29 @@ class _RekapPdfState extends State<LaporanRusakPdf> {
         ));
   }
 
-  // void _downloadPdf() async {
-  // var status = await Permission.storage.status;
-  // if (status.isGranted) {
-  //   final baseDir = await getExternalStorageDirectory();
-  //   final String url = Url.web + 'rekap/download/' + widget.idRekap;
-  //   final String url2 = Url.web + 'rekap/excel/' + widget.idRekap;
+  void _downloadPdf() async {
+    var status = await Permission.storage.status;
+    if (status.isGranted) {
+      final baseDir = await getExternalStorageDirectory();
+      final String url = Url.laporan + 'cetak_barang_rusak';
+      final String url2 = Url.laporan + 'export_barang_rusak';
 
-  //   final taskId = await FlutterDownloader.enqueue(
-  //     url: url,
-  //     fileName: "Rekap.pdf",
-  //     savedDir: baseDir!.path,
-  //     showNotification: true,
-  //     openFileFromNotification: true,
-  //   );
-  //   final taskId2 = await FlutterDownloader.enqueue(
-  //     url: url2,
-  //     fileName: "Rekap_excel.xlsx",
-  //     savedDir: baseDir.path,
-  //     showNotification: true,
-  //     openFileFromNotification: true,
-  //   );
-  // } else {
-  //   await Permission.storage.request();
-  // }
-  // }
+      final taskId = await FlutterDownloader.enqueue(
+        url: url,
+        fileName: "barang_rusak.pdf",
+        savedDir: baseDir!.path,
+        showNotification: true,
+        openFileFromNotification: true,
+      );
+      final taskId2 = await FlutterDownloader.enqueue(
+        url: url2,
+        fileName: "barang_rusak.xlsx",
+        savedDir: baseDir.path,
+        showNotification: true,
+        openFileFromNotification: true,
+      );
+    } else {
+      await Permission.storage.request();
+    }
+  }
 }

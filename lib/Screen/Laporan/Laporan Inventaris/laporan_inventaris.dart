@@ -8,17 +8,17 @@ import 'package:inventaris_barang/Screen/Laporan/Laporan%20Inventaris/laporan_in
 import '../../../Api/laporan_hilang.dart';
 import '../../../Api/list_barang.dart';
 import '../../../constants.dart';
-
+import '../../Barang/tambah_barang_masuk.dart';
 // import 'laporan_hilang_pdf.dart';
 
-class RiwayatBarang extends StatefulWidget {
-  const RiwayatBarang({Key? key}) : super(key: key);
+class LaporanInventaris extends StatefulWidget {
+  const LaporanInventaris({Key? key}) : super(key: key);
 
   @override
-  State<RiwayatBarang> createState() => _LaporanGantiState();
+  State<LaporanInventaris> createState() => _LaporanGantiState();
 }
 
-class _LaporanGantiState extends State<RiwayatBarang> {
+class _LaporanGantiState extends State<LaporanInventaris> {
   int _currentSortColumn = 0;
   bool _isAscending = true;
   late List<BarangHilang> _listData = [];
@@ -44,17 +44,17 @@ class _LaporanGantiState extends State<RiwayatBarang> {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(
-        title: Text("Riwayat"),
-        // actions: [
-        //   IconButton(
-        //     icon: const Icon(Icons.print_rounded),
-        //     onPressed: () {
-        //       Navigator.push(context, MaterialPageRoute(builder: (context) {
-        //         return LaporanInventarisPdf();
-        //       }));
-        //     },
-        //   ),
-        // ],
+        title: Text("Laporan Inventaris"),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.print_rounded),
+            onPressed: () {
+              Navigator.push(context, MaterialPageRoute(builder: (context) {
+                return LaporanInventarisPdf();
+              }));
+            },
+          ),
+        ],
       ),
       body: Container(
         width: double.infinity,
@@ -183,6 +183,17 @@ class _LaporanGantiState extends State<RiwayatBarang> {
             ),
           ],
         ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => TambahLaporanHilang(),
+              ));
+        },
+        child: Icon(Icons.add),
+        backgroundColor: kPrimaryColor,
       ),
     );
   }

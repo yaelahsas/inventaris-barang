@@ -168,7 +168,7 @@ class _LaporanGantiState extends State<LaporanHilang> {
                               DataCell(Text(
                                   _listDataFiltered[i].kodeQrcode.toString())),
                               DataCell(
-                                  Text(_listDataFiltered[i].idPic.toString())),
+                                  Text(_listDataFiltered[i].name.toString())),
                               DataCell(InkWell(
                                 onTap: () {
                                   Navigator.push(context,

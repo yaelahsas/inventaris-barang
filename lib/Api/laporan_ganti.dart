@@ -177,6 +177,7 @@ class BarangGanti {
   String? terima;
   int? idBarang;
   int? idBarangMasuk;
+  String? nama_barang_lama;
 
   BarangGanti(
       {this.id,
@@ -196,7 +197,8 @@ class BarangGanti {
       this.idStatusBarang,
       this.terima,
       this.idBarang,
-      this.idBarangMasuk});
+      this.idBarangMasuk,
+      this.nama_barang_lama});
 
   BarangGanti.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -217,6 +219,7 @@ class BarangGanti {
     terima = json['terima'];
     idBarang = json['id_barang'];
     idBarangMasuk = json['id_barang_masuk'];
+    nama_barang_lama = json['nama_barang_lama'] ?? "";
   }
 
   Map<String, dynamic> toJson() {
@@ -239,6 +242,7 @@ class BarangGanti {
     data['terima'] = this.terima;
     data['id_barang'] = this.idBarang;
     data['id_barang_masuk'] = this.idBarangMasuk;
+    data['nama_barang_lama'] = this.nama_barang_lama ?? "";
     return data;
   }
 }

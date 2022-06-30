@@ -93,6 +93,20 @@ class ListLaporanHilang {
     }
     return datas;
   }
+
+  static Future<List<BarangHilang>> barang_laporan() async {
+    Uri apiUrl = Uri.parse(Url.web + "laporan");
+
+    var hasil = await http.get(apiUrl);
+    var result = jsonDecode(hasil.body);
+
+    List<dynamic> listHasil = (result as Map<String, dynamic>)['data'];
+    List<BarangHilang> datas = [];
+    for (var i = 0; i < listHasil.length; i++) {
+      datas.add(BarangHilang.fromJson(listHasil[i]));
+    }
+    return datas;
+  }
 }
 
 class BarangHilang {
@@ -116,6 +130,7 @@ class BarangHilang {
   int? idBarang;
   int? idBarangMasuk;
   int? idRekap;
+  String? keterangan;
 
   BarangHilang(
       {this.id,
@@ -137,7 +152,8 @@ class BarangHilang {
       this.terima,
       this.idBarang,
       this.idBarangMasuk,
-      this.idRekap});
+      this.idRekap,
+      this.keterangan});
 
   BarangHilang.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -160,6 +176,7 @@ class BarangHilang {
     idBarang = json['id_barang'];
     idBarangMasuk = json['id_barang_masuk'];
     idRekap = json['id_rekap'];
+    keterangan = json['keterangan'] ?? "";
   }
 
   Map<String, dynamic> toJson() {
@@ -184,6 +201,7 @@ class BarangHilang {
     data['id_barang'] = this.idBarang;
     data['id_barang_masuk'] = this.idBarangMasuk;
     data['id_rekap'] = this.idRekap;
+    data['keterangan'] = this.keterangan ?? "";
     return data;
   }
 }
