@@ -78,6 +78,29 @@ class ListBarang {
     return datas;
   }
 
+  static Future<List<Data>> barangAll() async {
+    //deklarasikan url website
+    Uri apiUrl = Uri.parse(Url.web + "barang/masuk/all");
+
+    //Memulai http get / memulai mengambil data dari web
+    var hasil = await http.get(apiUrl);
+    //hasil response dari web dikonvert kedalam objek
+    var result = jsonDecode(hasil.body);
+
+    //membuat listhasil pengambilan data dari objek data
+    //menggunakan dynamic agar bisa membaca data dengan tipe yang berbeda
+    List<dynamic> listHasil = (result as Map<String, dynamic>)['data'];
+    //membuat variable penampung datanya
+    List<Data> datas = [];
+    //data dimasukkan kedalam penampung
+    for (var i = 0; i < listHasil.length; i++) {
+      datas.add(Data.fromJson(listHasil[i]));
+    }
+    //hasil yang dikembalikan adalah wadah datanya tadi
+    //jadi ketika memanggil fungsi ini maka data yang dihasilkan merupakan list data
+    return datas;
+  }
+
   static Future<List<Data>> barang_hilang() async {
     Uri apiUrl = Uri.parse(Url.web + "barang/hilang");
 
@@ -148,12 +171,12 @@ class Data {
     namaStatus = json['nama_status'];
     createdAt = json['created_at'];
     updatedAt = json['updated_at'];
-    namaDivisi = json['nama_divisi'];
+    namaDivisi = json['nama_divisi'] ?? "";
     namaBarang = json['nama_barang'];
     spesifikasi = json['spesifikasi'];
     // jumlahBarang = json['jumlah_barang'];
     tanggalMasuk = json['tanggal_masuk'];
-    idDivisi = json['id_divisi'];
+    idDivisi = json['id_divisi'] ?? "";
     kodeQrcode = json['kode_qrcode'];
     idStatusBarang = json['id_status_barang'];
   }
@@ -169,12 +192,12 @@ class Data {
     data['nama_status'] = namaStatus;
     data['created_at'] = createdAt;
     data['updated_at'] = updatedAt;
-    data['nama_divisi'] = namaDivisi;
+    data['nama_divisi'] = namaDivisi ?? "";
     data['nama_barang'] = namaBarang;
     data['spesifikasi'] = spesifikasi;
     // data['jumlah_barang'] = jumlahBarang;
     data['tanggal_masuk'] = tanggalMasuk;
-    data['id_divisi'] = idDivisi;
+    data['id_divisi'] = idDivisi ?? "";
     data['kode_qrcode'] = kodeQrcode;
     data['id_status_barang'] = idStatusBarang;
     return data;

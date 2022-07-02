@@ -44,7 +44,7 @@ class _TambahBarangMasukBaruState extends State<TambahBarangMasukBaru> {
       spinnerItems = value;
       setState(() {});
     });
-    ListBarang.connectToAPI().then((value) {
+    ListBarang.barangAll().then((value) {
       spBarang = value;
       setState(() {});
     });

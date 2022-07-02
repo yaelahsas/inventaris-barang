@@ -106,7 +106,7 @@ class ListLaporanGanti {
       'jam_ganti': jam,
       'id_divisi': barangLama.idDivisi.toString(),
       'id_status_barang': "2",
-      'id_barang': barangLama.id.toString(),
+      'id_barang': barangLama.idBarangMasuk.toString(),
       'status_barang_lama': barangLama.namaStatus,
       'kode_qrcode_baru': barangBaru.kodeQrcode,
       'kode_qrcode_lama': barangLama.kodeQrcode
