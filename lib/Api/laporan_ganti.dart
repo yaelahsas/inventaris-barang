@@ -115,6 +115,32 @@ class ListLaporanGanti {
     return ListLaporanGanti.fromJson(jsonResult);
   }
 
+  static Future<ListLaporanGanti> postRekapGanti(
+      String id,
+      String tanggal,
+      String jam,
+      BarangGanti barangLama,
+      BarangGantinya barangBaru,
+      String idRekap) async {
+    Uri apiUrl = Uri.parse(Url.web + "rekap/tambah/ganti");
+
+    var result = await http.post(apiUrl, body: {
+      'id_pic': id,
+      'id_barang_pengganti': barangBaru.id.toString(),
+      'tanggal_ganti': tanggal,
+      'jam_ganti': jam,
+      'id_rekap': idRekap.toString(),
+      'id_divisi': barangLama.idDivisi.toString(),
+      'id_status_barang': "2",
+      'id_barang': barangLama.idBarangMasuk.toString(),
+      'status_barang_lama': barangLama.namaStatus,
+      'kode_qrcode_baru': barangBaru.kodeQrcode,
+      'kode_qrcode_lama': barangLama.kodeQrcode
+    });
+    var jsonResult = json.decode(result.body);
+    return ListLaporanGanti.fromJson(jsonResult);
+  }
+
   static Future<ListLaporanGanti> postBarangHilangGanti(
       String id,
       String tanggal,

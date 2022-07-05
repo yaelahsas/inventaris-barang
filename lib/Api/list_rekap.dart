@@ -64,6 +64,7 @@ class Rekap {
   // String? jumlahAwal;
   // String? jumlahAkhir;
   int? idDivisi;
+  String? nama_barang;
   int? idStatusBarang;
 
   Rekap(
@@ -78,6 +79,7 @@ class Rekap {
       this.tanggal,
       // this.jumlahAwal,
       // this.jumlahAkhir,
+      this.nama_barang,
       this.idDivisi,
       this.idStatusBarang});
 
@@ -88,6 +90,7 @@ class Rekap {
     updatedAt = json['updated_at'];
     namaDivisi = json['nama_divisi'];
     nama = json['nama'];
+    nama_barang = json['nama_barang'];
     // inventaris = json['inventaris'];
     spesifikasi = json['spesifikasi'];
     tanggal = json['tanggal'];
@@ -110,6 +113,7 @@ class Rekap {
     data['updated_at'] = updatedAt;
     data['nama_divisi'] = namaDivisi;
     data['nama'] = nama;
+    data['nama_barang'] = nama_barang;
     // data['inventaris'] = inventaris;
     data['spesifikasi'] = spesifikasi;
     data['tanggal'] = tanggal;

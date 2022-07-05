@@ -22,9 +22,8 @@ class TambahRekap {
   }
 
   static Future<TambahRekap> barangMasuk(
-      String nama,
-      String inventaris,
-      String spesifikasi,
+      String id_pic,
+      String jam,
       String tanggal,
       // String idDivisi,
       String idStatusBarang,
@@ -33,16 +32,13 @@ class TambahRekap {
     Uri apiUrl = Uri.parse(Url.web + "rekap/tambah/masuk");
 
     var result = await http.post(apiUrl, body: {
-      'nama': nama,
-      'inventaris': inventaris,
-      'spesifikasi': spesifikasi,
+      'id_pic': id_pic,
+      'jam': jam,
       'tanggal': tanggal,
       // 'id_divisi': idDivisi,
       'id_status_barang': idStatusBarang,
       'id_rekap': idRekap,
       'id_barang_masuk': id_barang_masuk,
-    }, headers: {
-      'Connection': 'keep-alive',
     });
     var jsonResult = json.decode(result.body);
     return TambahRekap.fromJson(jsonResult);

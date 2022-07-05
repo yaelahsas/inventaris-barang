@@ -6,6 +6,7 @@ import 'package:inventaris_barang/Api/list_status.dart';
 import 'package:inventaris_barang/Api/tambah_rekap.dart';
 import 'package:inventaris_barang/Screen/Barang/componen/app_bar.dart';
 import 'package:inventaris_barang/constants.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../Api/list_barang.dart';
 
@@ -23,7 +24,9 @@ class _TambahRekapKeluarState extends State<TambahRekapKeluar> {
   final TextEditingController _cDivisi = TextEditingController();
   final TextEditingController _cJumlahAkhir = TextEditingController();
   final TextEditingController _cPIC = TextEditingController();
+  final TextEditingController _cTanggal = TextEditingController();
 
+  String date = '';
   Divisi? dropdownValue;
   Data? ddBarang;
 
@@ -35,7 +38,7 @@ class _TambahRekapKeluarState extends State<TambahRekapKeluar> {
   @override
   void initState() {
     super.initState();
-    print(DateFormat('yyyy-MM-dd').format(time));
+
     ListDivisi.getDivisi().then((value) {
       spinnerItems = value;
       setState(() {});
@@ -48,6 +51,7 @@ class _TambahRekapKeluarState extends State<TambahRekapKeluar> {
       spBarang = value;
       setState(() {});
     });
+    _getName();
   }
 
   @override
@@ -59,6 +63,14 @@ class _TambahRekapKeluarState extends State<TambahRekapKeluar> {
     _cDivisi.dispose();
     _cJumlahAkhir.dispose();
     _cPIC.dispose();
+    _cTanggal.dispose();
+  }
+
+  _getName() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    setState(() {
+      _cPIC.text = prefs.getString("username")!.toLowerCase();
+    });
   }
 
   @override
@@ -80,8 +92,34 @@ class _TambahRekapKeluarState extends State<TambahRekapKeluar> {
                 child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
+                TextFormField(
+                    readOnly: true,
+                    controller: _cPIC,
+                    decoration: const InputDecoration(
+                        focusedBorder: OutlineInputBorder(
+                          borderSide:
+                              BorderSide(color: Colors.greenAccent, width: 1.0),
+                        ),
+                        enabledBorder: OutlineInputBorder(
+                          borderSide: BorderSide(color: Colors.red, width: 1.0),
+                        ),
+                        hintText: 'PIC',
+                        labelText: 'PIC')),
                 const SizedBox(
                   height: 10,
+                ),
+                const SizedBox(
+                  // height: 14,
+                  width: double.infinity,
+                  child: Text(
+                    "Pilih Barang",
+                    textAlign: TextAlign.left,
+                    style: TextStyle(
+                      fontSize: 14,
+                      fontWeight: FontWeight.w600,
+                      color: Colors.black,
+                    ),
+                  ),
                 ),
                 SizedBox(
                   width: MediaQuery.of(context).size.width,
@@ -131,7 +169,20 @@ class _TambahRekapKeluarState extends State<TambahRekapKeluar> {
                   height: 10,
                 ),
                 TextFormField(
-                    controller: _cPIC,
+                    controller: _cTanggal,
+                    onTap: () {
+                      showDatePicker(
+                        context: context,
+                        initialDate: time,
+                        firstDate: DateTime(2015),
+                        lastDate: DateTime(2100),
+                      ).then((hasil) {
+                        if (hasil == null) return;
+
+                        date = DateFormat('yyyy-MM-dd').format(hasil);
+                        _cTanggal.text = date;
+                      });
+                    },
                     decoration: const InputDecoration(
                         focusedBorder: OutlineInputBorder(
                           borderSide:
@@ -140,8 +191,8 @@ class _TambahRekapKeluarState extends State<TambahRekapKeluar> {
                         enabledBorder: OutlineInputBorder(
                           borderSide: BorderSide(color: Colors.red, width: 1.0),
                         ),
-                        hintText: 'PIC',
-                        labelText: 'PIC')),
+                        hintText: 'masukkan tanggal',
+                        labelText: 'Tanggal Rusak')),
                 const SizedBox(
                   height: 10,
                 ),
@@ -151,14 +202,17 @@ class _TambahRekapKeluarState extends State<TambahRekapKeluar> {
                     style: ElevatedButton.styleFrom(
                         primary: kPrimaryColor,
                         textStyle: const TextStyle(fontSize: 20)),
-                    onPressed: () {
+                    onPressed: () async {
+                      var now = DateTime.now();
+                      var jam = DateFormat('HH:mm:ss').format(now).toString();
+                      SharedPreferences prefs =
+                          await SharedPreferences.getInstance();
                       TambahRekap.barangMasuk(
-                              _cPIC.text,
-                              _cInventaris.text,
-                              _cSpesifikasi.text,
+                              prefs.getInt('id_pic')!.toString(),
+                              jam,
                               DateFormat('yyyy-MM-dd').format(time),
                               "1",
-                              widget.idRekap,
+                              widget.idRekap.toString(),
                               ddBarang!.id.toString())
                           .then((value) => {
                                 if (value.success == true)

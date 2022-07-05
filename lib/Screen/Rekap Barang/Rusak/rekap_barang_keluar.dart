@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:inventaris_barang/Api/list_rekap.dart';
 import 'package:inventaris_barang/Screen/Barang/componen/app_bar.dart';
-import 'package:inventaris_barang/Screen/Rekap%20Barang/Keluar/tambah_rekap_keluar.dart';
+import 'package:inventaris_barang/Screen/Rekap%20Barang/Rusak/tambah_rekap_keluar.dart';
 import 'package:inventaris_barang/constants.dart';
 
 class RekapBarangKeluar extends StatefulWidget {
@@ -100,7 +100,7 @@ class _RekapBarangKeluarState extends State<RekapBarangKeluar> {
                       (states) => kPrimaryColor),
                   columns: [
                     DataColumn(
-                        label: const Text('Name'),
+                        label: const Text('PIC'),
                         onSort: (index, _) {
                           setState(() {
                             _currentSortColumn = index;
@@ -115,6 +115,26 @@ class _RekapBarangKeluarState extends State<RekapBarangKeluar> {
                                 return a.nama!.compareTo(b.nama!);
                               } else {
                                 return b.nama!.compareTo(a.nama!);
+                              }
+                            });
+                          });
+                        }),
+                    DataColumn(
+                        label: const Text('Barang'),
+                        onSort: (index, _) {
+                          setState(() {
+                            _currentSortColumn = index;
+
+                            if (_isAscending == true) {
+                              _isAscending = false;
+                            } else {
+                              _isAscending = true;
+                            }
+                            _listData.sort((a, b) {
+                              if (_isAscending) {
+                                return a.nama_barang!.compareTo(b.nama_barang!);
+                              } else {
+                                return b.nama_barang!.compareTo(a.nama_barang!);
                               }
                             });
                           });
@@ -166,6 +186,8 @@ class _RekapBarangKeluarState extends State<RekapBarangKeluar> {
                         cells: [
                           DataCell(SizedBox(
                               child: Text(_listDataFiltered[i].nama!))),
+                          DataCell(SizedBox(
+                              child: Text(_listDataFiltered[i].nama_barang!))),
                           DataCell(SizedBox(
                               child: Text(_listDataFiltered[i].tanggal!))),
                           DataCell(SizedBox(

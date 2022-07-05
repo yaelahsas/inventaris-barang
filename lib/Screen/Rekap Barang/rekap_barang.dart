@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:inventaris_barang/Screen/Rekap%20Barang/Keluar/rekap_barang_keluar.dart';
+import 'package:inventaris_barang/Screen/Rekap%20Barang/Rusak/rekap_barang_keluar.dart';
 import 'package:inventaris_barang/Screen/Rekap%20Barang/rekap_pdf.dart';
 
 import '../../constants.dart';

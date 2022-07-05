@@ -1,10 +1,11 @@
-import 'package:date_format/date_format.dart';
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
-import 'package:inventaris_barang/Api/list_rekap.dart';
-import 'package:inventaris_barang/Screen/Barang/componen/app_bar.dart';
+import 'package:inventaris_barang/Api/laporan_ganti.dart';
+import 'package:inventaris_barang/Screen/Laporan/Barang%20Ganti/tambah_laporan_ganti.dart';
 import 'package:inventaris_barang/Screen/Rekap%20Barang/Ganti/tambah_rekap_ganti.dart';
-import 'package:inventaris_barang/constants.dart';
+
+import '../../../Api/list_barang.dart';
+import '../../../constants.dart';
+import '../../Barang/tambah_barang_masuk.dart';
 
 class RekapBarangGanti extends StatefulWidget {
   const RekapBarangGanti({Key? key, required this.idRekap}) : super(key: key);
@@ -16,26 +17,18 @@ class RekapBarangGanti extends StatefulWidget {
 class _RekapBarangGantiState extends State<RekapBarangGanti> {
   int _currentSortColumn = 0;
   bool _isAscending = true;
-  late List<Rekap> _listData = [];
-  late List<Rekap> _listDataFiltered = [];
+  late List<BarangGanti> _listData = [];
+  late List<BarangGanti> _listDataFiltered = [];
   final TextEditingController _searchController = TextEditingController();
   String _searchResult = '';
 
   @override
   void initState() {
     super.initState();
-
-    ListRekap.getRekap("2", widget.idRekap).then((value) {
-      if (value.length == 0) {
-        Fluttertoast.showToast(
-            msg: "Data tidak ditemukan",
-            toastLength: Toast.LENGTH_SHORT,
-            gravity: ToastGravity.BOTTOM,
-            timeInSecForIosWeb: 1,
-            backgroundColor: Colors.red,
-            textColor: Colors.white,
-            fontSize: 16.0);
-      }
+    //pertamakali dibuka android mengambil data dari web
+    //menggunakan fungsi connectToAPI
+    //dan jika sudah selesai dimasukkan kedalam variable _listData
+    ListLaporanGanti.barang_ganti().then((value) {
       _listData = value;
       _listDataFiltered = _listData;
       setState(() {});
@@ -45,163 +38,172 @@ class _RekapBarangGantiState extends State<RekapBarangGanti> {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
-    return WillPopScope(
-      onWillPop: () {
-        Navigator.pop(context);
-        return Future.value(false);
-      },
-      child: Scaffold(
-        resizeToAvoidBottomInset: false,
-        appBar: const AppBarBarang(judul: "Rekap Barang Ganti"),
-        body: Container(
-          width: double.infinity,
-          padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 5),
-          margin: const EdgeInsets.only(top: 10),
-          child: Column(
-            children: [
-              Card(
-                child: ListTile(
-                  leading: const Icon(Icons.search),
-                  title: TextField(
-                      controller: _searchController,
-                      decoration: const InputDecoration(
-                          hintText: 'Search', border: InputBorder.none),
-                      onChanged: (value) {
-                        setState(() {
-                          _searchResult = value;
-                          _listDataFiltered = _listData
-                              .where(
-                                  (user) => user.nama!.contains(_searchResult))
-                              .toList();
-                        });
-                      }),
-                  trailing: IconButton(
-                    icon: const Icon(Icons.cancel),
-                    onPressed: () {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text("Laporan Ganti"),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.print_rounded),
+            onPressed: () {
+              // Navigator.push(context, MaterialPageRoute(builder: (context) {
+              //   return LaporanGantiPdf();
+              // }));
+            },
+          ),
+        ],
+      ),
+      body: Container(
+        width: double.infinity,
+        padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 5),
+        margin: const EdgeInsets.only(top: 10),
+        child: Column(
+          children: [
+            Card(
+              child: ListTile(
+                leading: const Icon(Icons.search),
+                title: TextField(
+                    controller: _searchController,
+                    decoration: const InputDecoration(
+                        hintText: 'Search', border: InputBorder.none),
+                    onChanged: (value) {
                       setState(() {
-                        _searchController.clear();
-                        _searchResult = '';
-                        _listDataFiltered = _listData;
+                        _searchResult = value;
+                        _listDataFiltered = _listData
+                            .where((user) =>
+                                user.namaBarang!.contains(_searchResult))
+                            .toList();
                       });
-                    },
-                  ),
+                    }),
+                trailing: IconButton(
+                  icon: const Icon(Icons.cancel),
+                  onPressed: () {
+                    setState(() {
+                      _searchController.clear();
+                      _searchResult = '';
+                      _listDataFiltered = _listData;
+                    });
+                  },
                 ),
               ),
-              DataTable(
-                  showCheckboxColumn: false,
-                  columnSpacing: 30,
-                  sortColumnIndex: _currentSortColumn,
-                  sortAscending: _isAscending,
-                  headingTextStyle: MaterialStateTextStyle.resolveWith(
-                      (states) => const TextStyle(color: kPrimaryLightColor)),
-                  headingRowColor: MaterialStateProperty.resolveWith(
-                      (states) => kPrimaryColor),
-                  columns: [
-                    DataColumn(
-                        label: const Text('Name'),
-                        onSort: (index, _) {
-                          setState(() {
-                            _currentSortColumn = index;
+            ),
+            Expanded(
+              child: SingleChildScrollView(
+                child: Container(
+                  width: size.width,
+                  child: DataTable(
+                      showCheckboxColumn: false,
+                      columnSpacing: 38,
+                      dataRowHeight: size.height * 0.1,
+                      sortColumnIndex: _currentSortColumn,
+                      sortAscending: _isAscending,
+                      headingTextStyle: MaterialStateTextStyle.resolveWith(
+                          (states) =>
+                              const TextStyle(color: kPrimaryLightColor)),
+                      headingRowColor: MaterialStateProperty.resolveWith(
+                          (states) => kPrimaryColor),
+                      columns: [
+                        DataColumn(
+                            label: const Text('Id'),
+                            numeric: true,
+                            onSort: (index, _) {
+                              setState(() {
+                                _currentSortColumn = index;
 
-                            if (_isAscending == true) {
-                              _isAscending = false;
-                            } else {
-                              _isAscending = true;
-                            }
-                            _listData.sort((a, b) {
-                              if (_isAscending) {
-                                return a.nama!.compareTo(b.nama!);
-                              } else {
-                                return b.nama!.compareTo(a.nama!);
-                              }
-                            });
-                          });
-                        }),
-                    DataColumn(
-                        label: const Text('Tanggal'),
-                        onSort: (index, _) {
-                          setState(() {
-                            _currentSortColumn = index;
+                                if (_isAscending == true) {
+                                  _isAscending = false;
+                                } else {
+                                  _isAscending = true;
+                                }
+                                _listData.sort((a, b) {
+                                  if (_isAscending) {
+                                    return a.id!.compareTo(b.id!);
+                                  } else {
+                                    return b.id!.compareTo(a.id!);
+                                  }
+                                });
+                              });
+                            }),
+                        DataColumn(
+                            label: const Text('Barang Baru'),
+                            onSort: (index, _) {
+                              setState(() {
+                                _currentSortColumn = index;
 
-                            if (_isAscending == true) {
-                              _isAscending = false;
-                            } else {
-                              _isAscending = true;
-                            }
-                            _listData.sort((a, b) {
-                              if (_isAscending) {
-                                return a.tanggal!.compareTo(b.tanggal!);
-                              } else {
-                                return b.tanggal!.compareTo(a.tanggal!);
-                              }
-                            });
-                          });
-                        }),
-                    DataColumn(
-                        label: const Text('Keterangan'),
-                        onSort: (index, _) {
-                          setState(() {
-                            _currentSortColumn = index;
+                                if (_isAscending == true) {
+                                  _isAscending = false;
+                                } else {
+                                  _isAscending = true;
+                                }
+                                _listData.sort((a, b) {
+                                  if (_isAscending) {
+                                    return a.namaBarang!
+                                        .compareTo(b.namaBarang!);
+                                  } else {
+                                    return b.namaBarang!
+                                        .compareTo(a.namaBarang!);
+                                  }
+                                });
+                              });
+                            }),
+                        DataColumn(
+                            label: const Text('Barang Lama'),
+                            onSort: (index, _) {
+                              setState(() {
+                                _currentSortColumn = index;
 
-                            if (_isAscending == true) {
-                              _isAscending = false;
-                            } else {
-                              _isAscending = true;
-                            }
-                            _listData.sort((a, b) {
-                              if (_isAscending) {
-                                return a.namaStatus!.compareTo(b.namaStatus!);
-                              } else {
-                                return b.namaStatus!.compareTo(a.namaStatus!);
-                              }
-                            });
-                          });
-                        }),
-                  ],
-                  rows: [
-                    for (var i = 0; i < _listDataFiltered.length; i++)
-                      DataRow(
-                        cells: [
-                          DataCell(SizedBox(
-                              child: Text(_listDataFiltered[i].nama!))),
-                          DataCell(SizedBox(
-                              child: Text(_listDataFiltered[i].tanggal!))),
-                          DataCell(SizedBox(
-                              child: Text(_listDataFiltered[i].namaStatus!))),
-                        ],
-                        onSelectChanged: (value) {
-                          // Kirim Data Ke Screen Lain
-                          // Navigator.push(
-                          //     context,
-                          //     MaterialPageRoute(
-                          //       builder: (context) => TambahRekapBarangHilang(
-                          //           data: _listDataFiltered[i]),
-                          //     ));
-                        },
-                      ),
-                  ]),
-            ],
-          ),
+                                if (_isAscending == true) {
+                                  _isAscending = false;
+                                } else {
+                                  _isAscending = true;
+                                }
+                                _listData.sort((a, b) {
+                                  if (_isAscending) {
+                                    return a.nama_barang_lama!
+                                        .compareTo(b.nama_barang_lama!);
+                                  } else {
+                                    return b.nama_barang_lama!
+                                        .compareTo(a.nama_barang_lama!);
+                                  }
+                                });
+                              });
+                            }),
+                      ],
+                      rows: [
+                        for (var i = 0; i < _listDataFiltered.length; i++)
+                          DataRow(
+                            cells: [
+                              DataCell(
+                                  Text(_listDataFiltered[i].id.toString())),
+                              DataCell(SizedBox(
+                                  child:
+                                      Text(_listDataFiltered[i].namaBarang!))),
+                              DataCell(SizedBox(
+                                  child: Text(
+                                      _listDataFiltered[i].nama_barang_lama!))),
+                            ],
+                            onSelectChanged: (value) {
+                              // Kirim Data Ke Screen Lain
+                            },
+                          ),
+                      ]),
+                ),
+              ),
+            ),
+          ],
         ),
-        floatingActionButton: FloatingActionButton(
-          onPressed: () {
-            Navigator.push(context, MaterialPageRoute(builder: (context) {
-              print(widget.idRekap);
-              return TambahRekapGanti(idRekap: widget.idRekap);
-            })).then((value) {
-              if (value) {
-                ListRekap.getRekap("2", widget.idRekap).then((value) {
-                  _listData = value;
-                  _listDataFiltered = _listData;
-                  setState(() {});
-                });
-              }
-            });
-          },
-          backgroundColor: kPrimaryColor,
-          child: const Icon(Icons.add),
-        ),
-        backgroundColor: Colors.white,
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => TambahRekapGanti(
+                  idRekap: widget.idRekap,
+                ),
+              ));
+        },
+        child: Icon(Icons.add),
+        backgroundColor: kPrimaryColor,
       ),
     );
   }

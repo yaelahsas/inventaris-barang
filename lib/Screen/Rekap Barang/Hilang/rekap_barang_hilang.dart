@@ -103,7 +103,7 @@ class _RekapBarangHilangState extends State<RekapBarangHilang> {
                       (states) => kPrimaryColor),
                   columns: [
                     DataColumn(
-                        label: const Text('Name'),
+                        label: const Text('PIC'),
                         onSort: (index, _) {
                           setState(() {
                             _currentSortColumn = index;
@@ -118,6 +118,26 @@ class _RekapBarangHilangState extends State<RekapBarangHilang> {
                                 return a.nama!.compareTo(b.nama!);
                               } else {
                                 return b.nama!.compareTo(a.nama!);
+                              }
+                            });
+                          });
+                        }),
+                    DataColumn(
+                        label: const Text('Barang'),
+                        onSort: (index, _) {
+                          setState(() {
+                            _currentSortColumn = index;
+
+                            if (_isAscending == true) {
+                              _isAscending = false;
+                            } else {
+                              _isAscending = true;
+                            }
+                            _listData.sort((a, b) {
+                              if (_isAscending) {
+                                return a.nama_barang!.compareTo(b.nama_barang!);
+                              } else {
+                                return b.nama_barang!.compareTo(a.nama_barang!);
                               }
                             });
                           });
@@ -169,6 +189,8 @@ class _RekapBarangHilangState extends State<RekapBarangHilang> {
                         cells: [
                           DataCell(SizedBox(
                               child: Text(_listDataFiltered[i].nama!))),
+                          DataCell(SizedBox(
+                              child: Text(_listDataFiltered[i].nama_barang!))),
                           DataCell(SizedBox(
                               child: Text(_listDataFiltered[i].tanggal!))),
                           DataCell(SizedBox(

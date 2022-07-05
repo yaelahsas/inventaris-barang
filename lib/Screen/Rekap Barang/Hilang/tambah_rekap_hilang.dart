@@ -8,6 +8,7 @@ import 'package:inventaris_barang/Api/tambah_rekap.dart';
 import 'package:inventaris_barang/Screen/Barang/barang_masuk.dart';
 import 'package:inventaris_barang/Screen/Barang/componen/app_bar.dart';
 import 'package:inventaris_barang/constants.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../Api/tambah_barang.dart';
 
@@ -25,10 +26,11 @@ class _TambahRekapHilangState extends State<TambahRekapHilang> {
   final TextEditingController _cDivisi = TextEditingController();
   final TextEditingController _cJumlahAkhir = TextEditingController();
   final TextEditingController _cPIC = TextEditingController();
+  final TextEditingController _cTanggal = TextEditingController();
 
   Divisi? dropdownValue;
   Data? ddBarang;
-
+  String date = '';
   Status? dropdownValueStatus;
   List<Divisi>? spinnerItems;
   List<Data>? spBarang;
@@ -51,6 +53,14 @@ class _TambahRekapHilangState extends State<TambahRekapHilang> {
       spBarang = value;
 
       setState(() {});
+    });
+    _getName();
+  }
+
+  _getName() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    setState(() {
+      _cPIC.text = prefs.getString("username")!.toLowerCase();
     });
   }
 
@@ -171,6 +181,7 @@ class _TambahRekapHilangState extends State<TambahRekapHilang> {
                   height: 10,
                 ),
                 TextFormField(
+                    readOnly: true,
                     controller: _cPIC,
                     decoration: const InputDecoration(
                         focusedBorder: OutlineInputBorder(
@@ -185,20 +196,48 @@ class _TambahRekapHilangState extends State<TambahRekapHilang> {
                 const SizedBox(
                   height: 10,
                 ),
+                TextFormField(
+                    controller: _cTanggal,
+                    onTap: () {
+                      showDatePicker(
+                        context: context,
+                        initialDate: time,
+                        firstDate: DateTime(2015),
+                        lastDate: DateTime(2100),
+                      ).then((hasil) {
+                        if (hasil == null) return;
+
+                        date = DateFormat('yyyy-MM-dd').format(hasil);
+                        _cTanggal.text = date;
+                      });
+                    },
+                    decoration: const InputDecoration(
+                        focusedBorder: OutlineInputBorder(
+                          borderSide:
+                              BorderSide(color: Colors.greenAccent, width: 1.0),
+                        ),
+                        enabledBorder: OutlineInputBorder(
+                          borderSide: BorderSide(color: Colors.red, width: 1.0),
+                        ),
+                        hintText: 'masukkan tanggal',
+                        labelText: 'Tanggal Rusak')),
                 SizedBox(
                   width: MediaQuery.of(context).size.width,
                   child: ElevatedButton(
                     style: ElevatedButton.styleFrom(
                         primary: kPrimaryColor,
                         textStyle: const TextStyle(fontSize: 20)),
-                    onPressed: () {
+                    onPressed: () async {
+                      var now = DateTime.now();
+                      var jam = DateFormat('HH:mm:ss').format(now).toString();
+                      SharedPreferences prefs =
+                          await SharedPreferences.getInstance();
                       TambahRekap.barangMasuk(
-                              _cPIC.text,
-                              _cInventaris.text,
-                              _cSpesifikasi.text,
+                              prefs.getInt('id_pic')!.toString(),
+                              jam,
                               DateFormat('yyyy-MM-dd').format(time),
                               "3",
-                              widget.idRekap,
+                              widget.idRekap.toString(),
                               ddBarang!.id.toString())
                           .then((value) => {
                                 if (value.success == true)
