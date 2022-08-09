@@ -39,7 +39,9 @@ class _TambahBarangMasukBaruState extends State<TambahBarangMasukBaru> {
   @override
   void initState() {
     super.initState();
-
+    var now = new DateTime.now();
+    date = DateFormat('yyyy-MM-dd').format(now);
+    _cTanggal.text = date;
     ListDivisi.getDivisi().then((value) {
       spinnerItems = value;
       setState(() {});
@@ -165,18 +167,19 @@ class _TambahBarangMasukBaruState extends State<TambahBarangMasukBaru> {
                   height: 10,
                 ),
                 TextFormField(
+                    readOnly: true,
                     controller: _cTanggal,
                     onTap: () {
-                      showDatePicker(
-                        context: context,
-                        initialDate: time,
-                        firstDate: DateTime(2015),
-                        lastDate: DateTime(2100),
-                      ).then((hasil) {
-                        if (hasil == null) return;
-                        date = DateFormat('yyyy-MM-dd').format(hasil);
-                        _cTanggal.text = date;
-                      });
+                      // showDatePicker(
+                      //   context: context,
+                      //   initialDate: time,
+                      //   firstDate: DateTime(2015),
+                      //   lastDate: DateTime(2100),
+                      // ).then((hasil) {
+                      //   if (hasil == null) return;
+                      //   date = DateFormat('yyyy-MM-dd').format(hasil);
+                      //   _cTanggal.text = date;
+                      // });
                     },
                     decoration: const InputDecoration(
                         focusedBorder: OutlineInputBorder(

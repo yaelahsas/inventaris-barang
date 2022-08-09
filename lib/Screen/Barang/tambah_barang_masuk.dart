@@ -31,7 +31,9 @@ class _TambahBarangMasukState extends State<TambahBarangMasuk> {
   @override
   void initState() {
     super.initState();
-
+    var now = new DateTime.now();
+    date = DateFormat('yyyy-MM-dd').format(now);
+    _cTanggal.text = date;
     _cId.text = widget.data.id.toString();
     _cName.text = widget.data.namaBarang!;
     _cNamaDivisi.text = widget.data.namaDivisi!;
@@ -116,20 +118,9 @@ class _TambahBarangMasukState extends State<TambahBarangMasuk> {
                 height: 10,
               ),
               TextFormField(
+                  readOnly: true,
                   controller: _cTanggal,
-                  onTap: () {
-                    showDatePicker(
-                      context: context,
-                      initialDate: time,
-                      firstDate: DateTime(2015),
-                      lastDate: DateTime(2100),
-                    ).then((hasil) {
-                      if (hasil == null) return;
-
-                      date = DateFormat('yyyy-MM-dd').format(hasil);
-                      _cTanggal.text = date;
-                    });
-                  },
+                  onTap: () {},
                   decoration: const InputDecoration(
                       focusedBorder: OutlineInputBorder(
                         borderSide:
